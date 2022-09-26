@@ -22,9 +22,14 @@ export type IthemeType = keyof typeof ThemeNameType
 export type Inavigation = {
   Home: undefined
   Settings: undefined
+  Secret: {
+    id: string
+  }
+  CreateSecret: undefined
 }
 
 export interface ISecret {
+  id: string
   name: string
   type: string
   value: string

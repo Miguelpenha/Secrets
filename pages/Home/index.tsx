@@ -2,16 +2,19 @@ import { useTheme } from 'styled-components'
 import { useState } from 'react'
 import ContainerPd from '../../components/ContainerPd'
 import { FlatList, ListRenderItemInfo, RefreshControl, Platform } from 'react-native'
-import secrets from './secrets'
 import { ISecret } from '../../types'
 import Secret from './Secret'
 import Header from './Header'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { Loading } from './style'
+import { Message, Loading } from './style'
+import useSecrets from '../../contexts/secretsContext'
+import useShowEmoji from '../../contexts/emojiContext'
 
 export default function Home() {
   const theme = useTheme()
   const [refreshing, setRefreshing] = useState(false)
+  const { secrets } = useSecrets()
+  const { showEmoji } = useShowEmoji()
 
   async function onRefreshAction() {
     setRefreshing(true)
@@ -21,11 +24,12 @@ export default function Home() {
     setRefreshing(false)
   }
 
-  if (true) {
+  if (secrets) {
     return (
       <ContainerPd>
         <FlatList
           data={secrets}
+          ListEmptyComponent={() => <Message>Você não possui segredos cadastrados ainda{showEmoji && <> &#x1F615;</>}</Message>}
           renderItem={({ item: secret }: ListRenderItemInfo<ISecret>) => (
             <Secret secret={secret}/>
           )}

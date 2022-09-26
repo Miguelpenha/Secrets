@@ -11,6 +11,7 @@ import Constants from 'expo-constants'
 import { blue, red, magenta, yellow } from '../../utils/colorsLogs'
 import Toast from 'react-native-toast-message'
 import useShowEmoji from '../../contexts/emojiContext'
+import useSecrets from '../../contexts/secretsContext'
 
 function Settings() {
     const navigation = useNavigation()
@@ -18,6 +19,7 @@ function Settings() {
     const [dark, setDark] = useState(themeName==='light' ? false : true)
     const [checkUpdating, setCheckUpdating] = useState(false)
     const { showEmoji, setShowEmoji, loadShowEmoji } = useShowEmoji()
+    const { loadSecrets } = useSecrets()
     
     return (
         <ContainerPd>
@@ -55,24 +57,28 @@ function Settings() {
                 </ContainerSwitch>
                 <Button onPress={async () => {
                     AsyncStorage.removeItem('@secrets:theme').then(() => {
-                        AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
-                            console.log(yellow('>> All data has been deleted'))
-                            console.log(red('   >> @secrets:theme'))
-                            console.log(red('   >> @secrets:showEmoji'))
-
-                            Toast.show({
-                                type: 'error',
-                                text1: 'Dados Apagados'
-                            })
-
-                            await loadTheme()
-                            await loadShowEmoji()
-                            
-                            navigation.reset({
-                                index: 0,
-                                routes: [{
-                                    name: 'Home'
-                                }]
+                        AsyncStorage.removeItem('@secrets:secrets').then(async () => {
+                            AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
+                                console.log(yellow('>> All data has been deleted'))
+                                console.log(red('   >> @secrets:theme'))
+                                console.log(red('   >> @secrets:secrets'))
+                                console.log(red('   >> @secrets:showEmoji'))
+    
+                                Toast.show({
+                                    type: 'error',
+                                    text1: 'Dados Apagados'
+                                })
+    
+                                await loadTheme()
+                                await loadSecrets()
+                                await loadShowEmoji()
+                                
+                                navigation.reset({
+                                    index: 0,
+                                    routes: [{
+                                        name: 'Home'
+                                    }]
+                                })
                             })
                         })
                     })

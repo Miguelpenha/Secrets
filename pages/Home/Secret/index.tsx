@@ -5,6 +5,7 @@ import { Container, Icon, Name, ContainerNext, Next } from './style'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import limitText from '../../../utils/limitText'
 import { Dimensions } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 
 interface Iprops {
     secret: ISecret
@@ -14,6 +15,7 @@ const Secret: FC<Iprops> = ({ secret }) => {
     const pressed = useSharedValue(1)
     const pressedIcon = useSharedValue(1)
     const pressedNext = useSharedValue(0)
+    const navigation = useNavigation()
 
     const styleAnimationPressed = useAnimatedStyle(() => ({
         transform: [{ scale: pressed.value }]
@@ -47,6 +49,10 @@ const Secret: FC<Iprops> = ({ secret }) => {
                     }), withTiming(0, {
                         duration: 200
                     }))
+
+                    navigation.navigate('Secret', {
+                        id: secret.id
+                    })
                 }}
                 activeOpacity={0.5}
                 onPressIn={() => {

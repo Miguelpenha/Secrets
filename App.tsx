@@ -3,6 +3,7 @@ import updateApp from './utils/updateApp'
 import AppLoading from 'expo-app-loading'
 import { green } from './utils/colorsLogs'
 import { ThemeProvider } from './theme'
+import { SecretsProvider } from './contexts/secretsContext'
 import { EmojiProvider } from './contexts/emojiContext'
 import Routes from './routes'
 import 'react-native-gesture-handler'
@@ -22,9 +23,11 @@ function App() {
 
     return (
       <ThemeProvider>
-        <EmojiProvider>
-          <Routes/>
-        </EmojiProvider>
+        <SecretsProvider>
+          <EmojiProvider>
+            <Routes/>
+          </EmojiProvider>
+        </SecretsProvider>
       </ThemeProvider>
     )
   }
