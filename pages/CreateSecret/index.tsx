@@ -14,6 +14,7 @@ import optionsModalize from '../../components/optionsModalize'
 import { MaterialIcons } from '@expo/vector-icons'
 import icons from './icons'
 import ButtonIcon from './ButtonIcon'
+import { ScrollView } from 'react-native-gesture-handler'
 
 function CreateSecret() {
     const navigation = useNavigation()
@@ -38,117 +39,119 @@ function CreateSecret() {
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <ContainerPd>
-                <HeaderBack onClick={() => navigation.goBack()} title="Criar segredo"/>
                 <KeyboardAvoidingView behavior="height" enabled>
-                    <ContainerButtonSelectIcon style={styleAnimationButtonSelectIcon}>
-                        <ButtonSelectIcon
-                            onPress={() => {
-                                pressed.value = withTiming(0.8, {
-                                    duration: 100
-                                })
-                
-                                pressedIcon.value = withTiming(0.8, {
-                                    duration: 200
-                                })
-                                
-                                setTimeout(() => {
+                    <ScrollView>
+                        <HeaderBack onClick={() => navigation.goBack()} title="Criar segredo"/>
+                        <ContainerButtonSelectIcon style={styleAnimationButtonSelectIcon}>
+                            <ButtonSelectIcon
+                                onPress={() => {
+                                    pressed.value = withSequence(
+                                        withTiming(0.8, {
+                                            duration: 100
+                                        }),
+                                        withTiming(1, {
+                                            duration: 100
+                                        })
+                                    )
+                    
+                                    pressedIcon.value = withSequence(
+                                        withTiming(0.8, {
+                                            duration: 200
+                                        }),
+                                        withTiming(1, {
+                                            duration: 200
+                                        })
+                                    )
+                                    
                                     modalizeSelectIcon.current.open()
-                
-                                    pressed.value = withTiming(1, {
-                                        duration: 100
+                                }}
+                                activeOpacity={0.5}
+                                onPressIn={() => {
+                                    pressed.value = withTiming(0.8)
+                    
+                                    pressedIcon.value = withTiming(0.8, {
+                                        duration: 900
                                     })
+                                }}
+                                onPressOut={() => {
+                                    pressed.value = withTiming(1)
                     
                                     pressedIcon.value = withTiming(1, {
-                                        duration: 200
+                                        duration: 900
                                     })
-                                }, 200)
-                            }}
-                            activeOpacity={0.5}
-                            onPressIn={() => {
-                                pressed.value = withTiming(0.8)
-                
-                                pressedIcon.value = withTiming(0.8, {
-                                    duration: 900
-                                })
-                            }}
-                            onPressOut={() => {
-                                pressed.value = withTiming(1)
-                
-                                pressedIcon.value = withTiming(1, {
-                                    duration: 900
-                                })
+                                }}
+                            >
+                                <Animated.View style={styleAnimationIconSelected}>
+                                    <IconSelected name={icon} size={35}/>
+                                </Animated.View>
+                            </ButtonSelectIcon>
+                        </ContainerButtonSelectIcon>
+                        <Field>
+                            <Label>Nome do segredo</Label>
+                            <Input
+                                value={name}
+                                onChangeText={setName}
+                                placeholder="Nome..."
+                                selectionColor={theme.primary}
+                                placeholderTextColor={theme.primary}
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Tipo do segredo</Label>
+                            <Input
+                                value={type}
+                                onChangeText={setType}
+                                placeholder="Tipo..."
+                                selectionColor={theme.primary}
+                                placeholderTextColor={theme.primary}
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Valor do segredo</Label>
+                            <Input
+                                multiline
+                                value={value}
+                                placeholder="Valor..."
+                                onChangeText={setValue}
+                                selectionColor={theme.primary}
+                                placeholderTextColor={theme.primary}
+                            />
+                        </Field>
+                        <ButtonSubmit
+                            onPress={async () => {
+                                if (icons && name && type && value) {
+                                    await createSecret({
+                                        name,
+                                        type,
+                                        value,
+                                        icon,
+                                        id: String(uuid.v4())
+                                    })
+
+                                    navigation.navigate('Home')
+
+                                    Toast.show({
+                                        type: 'success',
+                                        text1: 'Segredo criado com sucesso',
+                                        onPress() {
+                                            Toast.hide()
+                                        }
+                                    })
+                                } else {
+                                    Toast.show({
+                                        type: 'error',
+                                        text1: 'Campos não preenchidos',
+                                        onPress() {
+                                            Toast.hide()
+                                        }
+                                    })
+                                }
                             }}
                         >
-                            <Animated.View style={styleAnimationIconSelected}>
-                                <IconSelected name={icon} size={35}/>
-                            </Animated.View>
-                        </ButtonSelectIcon>
-                    </ContainerButtonSelectIcon>
-                    <Field>
-                        <Label>Nome do segredo</Label>
-                        <Input
-                            value={name}
-                            onChangeText={setName}
-                            placeholder="Nome..."
-                            selectionColor={theme.primary}
-                            placeholderTextColor={theme.primary}
-                        />
-                    </Field>
-                    <Field>
-                        <Label>Tipo do segredo</Label>
-                        <Input
-                            value={type}
-                            onChangeText={setType}
-                            placeholder="Tipo..."
-                            selectionColor={theme.primary}
-                            placeholderTextColor={theme.primary}
-                        />
-                    </Field>
-                    <Field>
-                        <Label>Valor do segredo</Label>
-                        <Input
-                            multiline
-                            value={value}
-                            placeholder="Valor..."
-                            onChangeText={setValue}
-                            selectionColor={theme.primary}
-                            placeholderTextColor={theme.primary}
-                        />
-                    </Field>
+                            <TextButtonSubmit>Criar</TextButtonSubmit>
+                        </ButtonSubmit>
+                    </ScrollView>
                 </KeyboardAvoidingView>
-                <ButtonSubmit
-                    onPress={async () => {
-                        if (icons && name && type && value) {
-                            await createSecret({
-                                name,
-                                type,
-                                value,
-                                icon,
-                                id: String(uuid.v4())
-                            })
-
-                            navigation.navigate('Home')
-
-                            Toast.show({
-                                type: 'success',
-                                text1: 'Segredo criado com sucesso',
-                                onPress() {
-                                    Toast.hide()
-                                }
-                            })
-                        } else {
-                            Toast.show({
-                                type: 'error',
-                                text1: 'Campos não preenchidos',
-                                onPress() {
-                                    Toast.hide()
-                                }
-                            })
-                        }
-                    }}
-                >
-                    <TextButtonSubmit>Criar</TextButtonSubmit>
-                </ButtonSubmit>
                 <Modalize
                     ref={modalizeSelectIcon}
                     {...optionsModalize(theme, 90, 64)}

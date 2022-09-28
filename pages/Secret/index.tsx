@@ -4,7 +4,7 @@ import useSecrets, { useSecret } from '../../contexts/secretsContext'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
 import limitText from '../../utils/limitText'
-import { ContainerButtonDelete, ButtonDelete, IconButtonDelete, Loading } from './style'
+import { ContainerButtonDelete, ButtonDelete, IconButtonDelete, Value, Loading } from './style'
 import { Platform } from 'react-native'
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
 import Toast from 'react-native-toast-message'
@@ -81,11 +81,12 @@ function Secret() {
                       }}
                 >
                     <Animated.View style={styleAnimationIconButtonCreate}>
-                        <IconButtonDelete name="delete" size={30}/>
+                        <IconButtonDelete name="delete" size={28}/>
                     </Animated.View>
                 </ButtonDelete>
             </ContainerButtonDelete>
-            </ContainerPd>
+            <Value>{secret.value}</Value>
+        </ContainerPd>
         )
     } else {
         return <Loading color={theme.primary} size={Platform.OS === 'android' ? 50 : 'large'}/>

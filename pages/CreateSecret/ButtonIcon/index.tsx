@@ -1,6 +1,6 @@
 import { MaterialIcons } from '@expo/vector-icons'
 import { Dispatch, SetStateAction, FC, memo } from 'react'
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated'
+import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated'
 import { Container, Button, Icon } from './style'
 
 interface Iprops {
@@ -25,26 +25,28 @@ const ButtonIcon: FC<Iprops> = ({ icon, setIcon, onPress }) => {
         <Container style={styleAnimationButtonSelectIcon}>
             <Button
                 onPress={() => {
-                    pressed.value = withTiming(0.8, {
-                        duration: 100
-                    })
+                    pressed.value = withSequence(
+                        withTiming(0.8, {
+                            duration: 100
+                        }),
+                        withTiming(1, {
+                            duration: 100
+                        })
+                    )
     
-                    pressedIcon.value = withTiming(0.8, {
-                        duration: 200
-                    })
+                    pressedIcon.value = withSequence(
+                        withTiming(0.8, {
+                            duration: 200
+                        }),
+                        withTiming(1, {
+                            duration: 200
+                        })
+                    )
                     
                     setTimeout(() => {
                         setIcon(icon)
                         onPress()
-    
-                        pressed.value = withTiming(1, {
-                            duration: 100
-                        })
-        
-                        pressedIcon.value = withTiming(1, {
-                            duration: 200
-                        })
-                    }, 200)
+                    }, 300)
                 }}
                 activeOpacity={0.5}
                 onPressIn={() => {
