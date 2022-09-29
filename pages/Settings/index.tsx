@@ -12,11 +12,12 @@ import { blue, red, magenta, yellow } from '../../utils/colorsLogs'
 import Toast from 'react-native-toast-message'
 import useShowEmoji from '../../contexts/emojiContext'
 import useSecrets from '../../contexts/secretsContext'
+import usePassword from '../../contexts/passwordContext'
 
 function Settings() {
     const navigation = useNavigation()
+    const { password, loadPassword } = usePassword()
     const { theme, themeName, mutateTheme, loadTheme } = useTheme()
-    const [dark, setDark] = useState(themeName==='light' ? false : true)
     const [checkUpdating, setCheckUpdating] = useState(false)
     const { showEmoji, setShowEmoji, loadShowEmoji } = useShowEmoji()
     const { loadSecrets } = useSecrets()
@@ -28,16 +29,14 @@ function Settings() {
                 <ContainerSwitch>
                     <TextSwitch>Tema escuro</TextSwitch>
                     <Switch
-                        value={dark}
-                        thumbColor={dark ? theme.primary : theme.primary}
+                        value={themeName==='light' ? false : true}
+                        thumbColor={themeName==='light' ? theme.primary : theme.primary}
                         trackColor={{false: theme.secondary, true: theme.secondary}}
                         onChange={() => {
-                            dark ? setDark(false) : setDark(true)
+                            themeName==='light' ? mutateTheme('dark') : mutateTheme('light')
                             
                             console.log(blue(`>> Theme changed`))
-                            console.log(magenta(`   >> ${dark ? 'light' : 'dark'}`))
-                            
-                            mutateTheme()
+                            console.log(magenta(`   >> ${themeName==='light' ? 'dark' : 'light'}`))
                         }}
                     />
                 </ContainerSwitch>
@@ -56,28 +55,26 @@ function Settings() {
                     />
                 </ContainerSwitch>
                 <Button onPress={async () => {
-                    AsyncStorage.removeItem('@secrets:theme').then(() => {
-                        AsyncStorage.removeItem('@secrets:secrets').then(async () => {
-                            AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
-                                console.log(yellow('>> All data has been deleted'))
-                                console.log(red('   >> @secrets:theme'))
-                                console.log(red('   >> @secrets:secrets'))
-                                console.log(red('   >> @secrets:showEmoji'))
-    
-                                Toast.show({
-                                    type: 'error',
-                                    text1: 'Dados Apagados'
-                                })
-    
-                                await loadTheme()
-                                await loadSecrets()
-                                await loadShowEmoji()
-                                
-                                navigation.reset({
-                                    index: 0,
-                                    routes: [{
-                                        name: 'Home'
-                                    }]
+                    AsyncStorage.removeItem('@secrets:password').then(() => {
+                        AsyncStorage.removeItem('@secrets:theme').then(() => {
+                            AsyncStorage.removeItem('@secrets:secrets').then(() => {
+                                AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
+                                    console.log(yellow('>> All data has been deleted'))
+                                    console.log(red('   >> @secrets:password'))
+                                    console.log(red('   >> @secrets:theme'))
+                                    console.log(red('   >> @secrets:secrets'))
+                                    console.log(red('   >> @secrets:showEmoji'))
+        
+                                    Toast.show({
+                                        type: 'error',
+                                        text1: 'Dados Apagados'
+                                    })
+        
+                                    await loadPassword()
+                                    await loadTheme()
+                                    await loadShowEmoji()
+                                    
+                                    !password && navigation.goBack()
                                 })
                             })
                         })

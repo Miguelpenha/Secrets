@@ -4,7 +4,7 @@ import { useState, useRef } from 'react'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ListRenderItemInfo } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { ContainerButtonSelectIcon, ButtonSelectIcon, IconSelected, Field, Label, Input, ButtonSubmit, TextButtonSubmit } from './style'
+import { ContainerButtonSelectIcon, ButtonSelectIcon, IconSelected, Field, Label, ContainerInput, ContainerIconShow, IconShow, Input, ContainerSwitch, TextSwitch, Switch, ButtonSubmit, TextButtonSubmit } from './style'
 import useSecrets from '../../contexts/secretsContext'
 import uuid from 'react-native-uuid'
 import Toast from 'react-native-toast-message'
@@ -23,7 +23,9 @@ function CreateSecret() {
     const [name, setName] = useState('')
     const [type, setType] = useState('')
     const [value, setValue] = useState('')
+    const [hideIcon, setHideIcon] = useState<boolean>(false)
     const { createSecret } = useSecrets()
+    const [showValue, setShowValue] = useState(false)
     const pressed = useSharedValue(1)
     const pressedIcon = useSharedValue(1)
     const modalizeSelectIcon = useRef<Modalize>(null)
@@ -90,8 +92,8 @@ function CreateSecret() {
                             <Label>Nome do segredo</Label>
                             <Input
                                 value={name}
-                                onChangeText={setName}
                                 placeholder="Nome..."
+                                onChangeText={setName}
                                 selectionColor={theme.primary}
                                 placeholderTextColor={theme.primary}
                             />
@@ -100,23 +102,40 @@ function CreateSecret() {
                             <Label>Tipo do segredo</Label>
                             <Input
                                 value={type}
-                                onChangeText={setType}
                                 placeholder="Tipo..."
+                                onChangeText={setType}
                                 selectionColor={theme.primary}
                                 placeholderTextColor={theme.primary}
                             />
                         </Field>
                         <Field>
                             <Label>Valor do segredo</Label>
-                            <Input
-                                multiline
-                                value={value}
-                                placeholder="Valor..."
-                                onChangeText={setValue}
-                                selectionColor={theme.primary}
-                                placeholderTextColor={theme.primary}
-                            />
+                            <ContainerInput>
+                                <ContainerIconShow onPress={() => setShowValue(!showValue)}>
+                                    <IconShow name={`visibility${showValue ? '' : '-off'}`} size={25}/>
+                                </ContainerIconShow>
+                                <Input
+                                    value={value}
+                                    autoCapitalize="none"
+                                    placeholder="Valor..."
+                                    onChangeText={setValue}
+                                    autoCompleteType="password"
+                                    secureTextEntry={!showValue}
+                                    selectionColor={theme.primary}
+                                    placeholderTextColor={theme.primary}
+                                    keyboardType={showValue ? 'visible-password' : 'default'}
+                                />
+                            </ContainerInput>
                         </Field>
+                        <ContainerSwitch>
+                            <TextSwitch>Esconder ícone</TextSwitch>
+                            <Switch
+                                value={hideIcon}
+                                thumbColor={hideIcon ? theme.primary : theme.primary}
+                                trackColor={{false: theme.secondary, true: theme.secondary}}
+                                onChange={() => hideIcon ? setHideIcon(false) : setHideIcon(true)}
+                            />
+                        </ContainerSwitch>
                         <ButtonSubmit
                             onPress={async () => {
                                 if (icons && name && type && value) {
@@ -125,7 +144,8 @@ function CreateSecret() {
                                         type,
                                         value,
                                         icon,
-                                        id: String(uuid.v4())
+                                        id: String(uuid.v4()),
+                                        hideIcon
                                     })
 
                                     navigation.navigate('Home')

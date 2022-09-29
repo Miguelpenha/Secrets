@@ -18,7 +18,7 @@ export const Settings = styled(MaterialIcons)`
     color: ${props => props.theme.primary};
 `
 
-export const Title = styled(Animated.Text)`
+export const Title = styled.Text`
     margin-top: 18%;
     font-weight: bold;
     align-self: center;
@@ -26,7 +26,7 @@ export const Title = styled(Animated.Text)`
     color: ${props => props.theme.primary};
 `
 
-export const EmojiTitle = styled(Animated.Text)`
+export const EmojiTitle = styled.Text`
     margin-top: 18%;
     font-weight: bold;
     align-self: center;

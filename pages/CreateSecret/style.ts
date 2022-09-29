@@ -33,12 +33,46 @@ export const Label = styled.Text`
     color: ${props => props.theme.secondaryColor};
 `
 
+export const ContainerInput = styled.View`
+    flex-direction: row;
+`
+
+export const ContainerIconShow = styled.TouchableOpacity`
+    margin-right: 5%;
+    align-self: center; 
+`
+
+export const IconShow = styled(MaterialIcons)`
+    color: ${props => props.theme.primary};
+`
+
 export const Input = styled.TextInput`
+    width: 80%;
     padding: 2%;
     font-size: ${RFPercentage(2.5)}px;
     border-radius: ${RFPercentage(1)}px;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColorSecondary};
+`
+
+export const ContainerSwitch = styled.View`
+    margin-top: 2%;
+    margin-left: 10%;
+    margin-bottom: 2%;
+    align-items: center;
+    flex-direction: row;
+    align-self: flex-start;
+    justify-content: center;
+`
+
+export const TextSwitch = styled.Text`
+    font-size: ${RFPercentage(3)}px;
+    line-height: ${RFPercentage(3.2)}px;
+    color: ${props => props.theme.primary};
+`
+
+export const Switch = styled.Switch`
+    margin-left: 1%;
 `
 
 export const ButtonSubmit = styled.TouchableOpacity`

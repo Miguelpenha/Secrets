@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import updateApp from './utils/updateApp'
 import AppLoading from 'expo-app-loading'
 import { green } from './utils/colorsLogs'
+import { PasswordProvider } from './contexts/passwordContext'
 import { ThemeProvider } from './theme'
 import { SecretsProvider } from './contexts/secretsContext'
 import { EmojiProvider } from './contexts/emojiContext'
@@ -22,13 +23,15 @@ function App() {
     console.log(green('>> App Started'))
 
     return (
-      <ThemeProvider>
-        <SecretsProvider>
-          <EmojiProvider>
-            <Routes/>
-          </EmojiProvider>
-        </SecretsProvider>
-      </ThemeProvider>
+      <PasswordProvider>
+        <ThemeProvider>
+          <SecretsProvider>
+            <EmojiProvider>
+              <Routes/>
+            </EmojiProvider>
+          </SecretsProvider>
+        </ThemeProvider>
+      </PasswordProvider>
     )
   }
 }

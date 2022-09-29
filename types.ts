@@ -26,6 +26,7 @@ export type Inavigation = {
     id: string
   }
   CreateSecret: undefined
+  Password: undefined
 }
 
 export interface ISecret {

@@ -1,5 +1,5 @@
 import { useTheme } from 'styled-components'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ContainerPd from '../../components/ContainerPd'
 import { FlatList, ListRenderItemInfo, RefreshControl, Platform } from 'react-native'
 import { ISecret } from '../../types'
@@ -13,18 +13,24 @@ import useShowEmoji from '../../contexts/emojiContext'
 export default function Home() {
   const theme = useTheme()
   const [refreshing, setRefreshing] = useState(false)
-  const { secrets } = useSecrets()
+  const { secrets, loadSecrets } = useSecrets()
   const { showEmoji } = useShowEmoji()
 
   async function onRefreshAction() {
     setRefreshing(true)
 
-    // await loadSecrets()
+    await loadSecrets()
 
     setRefreshing(false)
   }
 
-  if (secrets) {
+  useEffect(() => {
+    setRefreshing(true)
+
+    loadSecrets().then(() => setRefreshing(false))
+  }, [])
+
+  if (secrets && !refreshing) {
     return (
       <ContainerPd>
         <FlatList
