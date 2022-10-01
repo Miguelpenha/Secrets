@@ -1,20 +1,18 @@
 import { useNavigation } from '@react-navigation/native'
 import { useTheme } from 'styled-components'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ListRenderItemInfo } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { ContainerButtonSelectIcon, ButtonSelectIcon, IconSelected, Field, Label, ContainerInput, ContainerIconShow, IconShow, Input, ContainerSwitch, TextSwitch, Switch, ButtonSubmit, TextButtonSubmit } from './style'
+import ButtonSelectIconAnimated from './ButtonSelectIconAnimated'
+import { Field, Label, ContainerInput, ContainerIconShow, IconShow, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import useSecrets from '../../contexts/secretsContext'
-import uuid from 'react-native-uuid'
-import Toast from 'react-native-toast-message'
-import Animated, { useAnimatedStyle, useSharedValue, withSequence, withTiming } from 'react-native-reanimated'
 import { Modalize } from 'react-native-modalize'
 import optionsModalize from '../../components/optionsModalize'
 import { MaterialIcons } from '@expo/vector-icons'
 import icons from './icons'
-import ButtonIcon from './ButtonIcon'
-import { ScrollView } from 'react-native'
+import { Switch } from 'react-native'
+import onSubmit from './onSubmit'
 
 function CreateSecret() {
     const navigation = useNavigation()
@@ -29,68 +27,19 @@ function CreateSecret() {
     const [showValue, setShowValue] = useState(false)
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
-    const pressed = useSharedValue(1)
-    const pressedIcon = useSharedValue(1)
     const modalizeSelectIcon = useRef<Modalize>(null)
 
-    const styleAnimationButtonSelectIcon = useAnimatedStyle(() => ({
-        transform: [{ scale: pressed.value }]
-    }), [])
-  
-    const styleAnimationIconSelected = useAnimatedStyle(() => ({
-        transform: [{ scale: pressedIcon.value }]
-    }), [])
+    useEffect(() => {
+        secure && setHideIcon(true)
+    }, [secure, hideIcon])
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ContainerPd scroll>
+            <>
                 <KeyboardAvoidingView behavior="height" enabled>
-                    <ScrollView>
+                    <ContainerPd scroll>
                         <HeaderBack onClick={() => navigation.goBack()} title="Criar segredo"/>
-                        <ContainerButtonSelectIcon style={styleAnimationButtonSelectIcon}>
-                            <ButtonSelectIcon
-                                onPress={() => {
-                                    pressed.value = withSequence(
-                                        withTiming(0.8, {
-                                            duration: 100
-                                        }),
-                                        withTiming(1, {
-                                            duration: 100
-                                        })
-                                    )
-                    
-                                    pressedIcon.value = withSequence(
-                                        withTiming(0.8, {
-                                            duration: 200
-                                        }),
-                                        withTiming(1, {
-                                            duration: 200
-                                        })
-                                    )
-                                    
-                                    modalizeSelectIcon.current.open()
-                                }}
-                                activeOpacity={0.5}
-                                onPressIn={() => {
-                                    pressed.value = withTiming(0.8)
-                    
-                                    pressedIcon.value = withTiming(0.8, {
-                                        duration: 900
-                                    })
-                                }}
-                                onPressOut={() => {
-                                    pressed.value = withTiming(1)
-                    
-                                    pressedIcon.value = withTiming(1, {
-                                        duration: 900
-                                    })
-                                }}
-                            >
-                                <Animated.View style={styleAnimationIconSelected}>
-                                    <IconSelected name={icon} size={35}/>
-                                </Animated.View>
-                            </ButtonSelectIcon>
-                        </ContainerButtonSelectIcon>
+                        <ButtonSelectIconAnimated icon={icon} onPress={() => modalizeSelectIcon.current.open()}/>
                         <Field>
                             <Label>Nome do segredo</Label>
                             <Input
@@ -164,7 +113,7 @@ function CreateSecret() {
                                         notFullWidth
                                         value={password}
                                         autoCapitalize="none"
-                                        placeholder="Valor..."
+                                        placeholder="Senha..."
                                         onChangeText={setPassword}
                                         autoCompleteType="password"
                                         selectionColor={theme.primary}
@@ -175,42 +124,12 @@ function CreateSecret() {
                                 </ContainerInput>
                             </Field>
                         )}
-                        <ButtonSubmit
-                            onPress={async () => {
-                                if (icon && name && type && value && (!secure || secure && password)) {
-                                    await createSecret({
-                                        name,
-                                        type,
-                                        value,
-                                        icon,
-                                        id: String(uuid.v4()),
-                                        hideIcon,
-                                        password
-                                    })
-
-                                    navigation.navigate('Home')
-
-                                    Toast.show({
-                                        type: 'success',
-                                        text1: 'Segredo criado com sucesso',
-                                        onPress() {
-                                            Toast.hide()
-                                        }
-                                    })
-                                } else {
-                                    Toast.show({
-                                        type: 'error',
-                                        text1: 'Campos não preenchidos',
-                                        onPress() {
-                                            Toast.hide()
-                                        }
-                                    })
-                                }
-                            }}
-                        >
+                        <ButtonSubmit onPress={async () => (
+                            await onSubmit(icon, name, type, value, hideIcon, secure, password, createSecret, navigation as any)
+                        )}>
                             <TextButtonSubmit>Criar</TextButtonSubmit>
                         </ButtonSubmit>
-                    </ScrollView>
+                    </ContainerPd>
                 </KeyboardAvoidingView>
                 <Modalize
                     ref={modalizeSelectIcon}
@@ -218,12 +137,12 @@ function CreateSecret() {
                     childrenStyle={{ width: '110%', alignItems: 'center' }}
                     flatListProps={{
                         data: icons,
-                        keyExtractor: (item, index) => String(index),
+                        keyExtractor: item => item,
                         renderItem: ({ item }: ListRenderItemInfo<keyof typeof MaterialIcons.glyphMap>) => (
-                            <ButtonIcon icon={item} setIcon={setIcon} onPress={() => {
+                            <ButtonSelectIconAnimated big icon={item} onPress={icon => {
+                                setIcon(icon)
+
                                 modalizeSelectIcon.current.close()
-                
-                                pressedIcon.value = withSequence(withTiming(0.7), withTiming(1))
                             }}/>
                         ),
                         numColumns: 2,
@@ -233,7 +152,7 @@ function CreateSecret() {
                         }
                     }}
                 />
-            </ContainerPd>
+            </>
         </TouchableWithoutFeedback>
     )
 }

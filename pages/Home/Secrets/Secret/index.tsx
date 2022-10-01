@@ -10,30 +10,29 @@ import useAnimations from './useAnimations'
 
 interface Iprops {
     secret: ISecret
+    onVerify: (id: string) => void
 }
 
-const Secret: FC<Iprops> = ({ secret }) => {
+const Secret: FC<Iprops> = ({ secret, onVerify }) => {
     const navigation = useNavigation()
     const { animationPressed, animationPressedIcon, animationPressedNext, events } = useAnimations()
-
+    
     return (
         <Animated.View style={animationPressed}>
-            <Container
-                {...events(() => navigation.navigate('Secret', {
-                    id: secret.id
-                }))}
-            >
+            <Container {...events(() => {
+                if (secret.secure) {
+                    onVerify(secret.id)
+                } else {
+                    navigation.navigate('Secret', { id: secret.id })
+                }
+            })}>
                 <Animated.View style={animationPressedIcon}>
                     <Icon
                         size={RFPercentage(4)}
                         name={(!secret.secure || !secret.hideIcon) ? (!secret.hideIcon ? secret.icon : 'lock') : 'lock'}
                     />
                 </Animated.View>
-                <Name
-                    editable={false}
-                    numberOfLines={1}
-                    secureTextEntry={secret.secure}
-                >
+                <Name editable={false} numberOfLines={1} secureTextEntry={secret.secure}>
                     {!secret.secure ? limitText(secret.name, Dimensions.get('window').scale*8) : '                   '}
                 </Name>
                 <Animated.View style={[animationPressedNext, ContainerNext]}>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState, memo } from 'react'
 import { useSecrets } from '../../../contexts/secretsContext'
 import useShowEmoji from '../../../contexts/emojiContext'
 import { FlatList } from 'react-native'
@@ -7,7 +7,11 @@ import Secret from './Secret'
 import RefreshControl from '../../../components/RefreshControl'
 import { Message } from './style'
 
-function Secrets() {
+interface Iprops {
+  onVerify: (id: string) => void
+}
+
+const Secrets: FC<Iprops> = ({ onVerify }) => {
   const [refreshing, setRefreshing] = useState(false)
   const { secrets, loadSecrets } = useSecrets()
   const { showEmoji } = useShowEmoji()
@@ -25,7 +29,7 @@ function Secrets() {
       data={secrets}
       ListHeaderComponent={Header}
       keyExtractor={item => item.id}
-      renderItem={({ item }) => <Secret secret={item}/>}
+      renderItem={({ item }) => <Secret secret={item} onVerify={onVerify}/>}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshAction}/>}
       ListEmptyComponent={
         <Message>Você não possui segredos cadastrados ainda{showEmoji && <> &#x1F615;</>}</Message>
@@ -34,4 +38,4 @@ function Secrets() {
   )
 }
 
-export default Secrets
+export default memo(Secrets)

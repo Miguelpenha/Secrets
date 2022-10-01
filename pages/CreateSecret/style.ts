@@ -1,23 +1,6 @@
 import styled from 'styled-components/native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import Animated from 'react-native-reanimated'
-
-export const ContainerButtonSelectIcon = styled(Animated.View)`
-    margin-top: 4%;
-    margin-bottom: 4%;
-    align-self: center;
-`
-
-export const ButtonSelectIcon = styled.TouchableOpacity`
-    padding: 4%;
-    border-radius: ${RFPercentage(2)}px;
-    background-color: ${props => props.theme.backgroundColorSecondary};
-`
-
-export const IconSelected = styled(MaterialIcons)`
-    color: ${props => props.theme.primary};
-`
 
 export const Field = styled.View`
     width: 80%;
@@ -60,23 +43,17 @@ export const Input = styled.TextInput<IInput>`
 `
 
 export const ContainerSwitch = styled.View`
-    margin-top: 2%;
+    width: 75%;
     margin-left: 10%;
-    margin-bottom: 2%;
     align-items: center;
     flex-direction: row;
-    align-self: flex-start;
-    justify-content: center;
+    justify-content: space-between;
 `
 
 export const TextSwitch = styled.Text`
     font-size: ${RFPercentage(3)}px;
     line-height: ${RFPercentage(3.2)}px;
     color: ${props => props.theme.primary};
-`
-
-export const Switch = styled.Switch`
-    margin-left: 1%;
 `
 
 export const ButtonSubmit = styled.TouchableOpacity`
