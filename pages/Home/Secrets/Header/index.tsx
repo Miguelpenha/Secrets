@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import useShowEmoji from '../../../contexts/emojiContext'
-import Animated, { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import useShowEmoji from '../../../../contexts/emojiContext'
+import Animated, { useSharedValue, useAnimatedStyle, withSequence, withTiming } from 'react-native-reanimated'
 import { Container, ContainerSettings, Settings, Title, EmojiTitle, ContainerButtonCreate, ButtonCreate, IconButtonCreate } from './style'
 import { memo } from 'react'
 
@@ -27,41 +27,41 @@ function Header() {
             <ContainerButtonCreate style={styleAnimationButtonCreate}>
                 <ButtonCreate
                     onPress={() => {
-                        pressed.value = withTiming(0.8, {
-                          duration: 100
-                        })
-          
-                        pressedIcon.value = withTiming(0.8, {
-                          duration: 200
-                        })
-                        
-                        setTimeout(() => {
-                            navigation.navigate('CreateSecret')
-          
-                            pressed.value = withTiming(1, {
+                        pressed.value = withSequence(
+                            withTiming(0.8, {
+                                duration: 100
+                            }),
+                            withTiming(1, {
                                 duration: 100
                             })
-            
-                            pressedIcon.value = withTiming(1, {
+                        )
+          
+                        pressedIcon.value = withSequence(
+                            withTiming(0.8, {
+                                duration: 200
+                            }),
+                            withTiming(1, {
                                 duration: 200
                             })
-                        }, 200)
-                      }}
-                      activeOpacity={0.5}
-                      onPressIn={() => {
-                          pressed.value = withTiming(0.8)
+                        )
+                        
+                        setTimeout(() => navigation.navigate('CreateSecret'), 200)
+                    }}
+                    activeOpacity={0.5}
+                    onPressIn={() => {
+                        pressed.value = withTiming(0.8)
           
-                          pressedIcon.value = withTiming(0.8, {
-                              duration: 900
-                          })
-                      }}
-                      onPressOut={() => {
-                          pressed.value = withTiming(1)
-          
-                          pressedIcon.value = withTiming(1, {
-                              duration: 900
-                          })
-                      }}
+                        pressedIcon.value = withTiming(0.8, {
+                            duration: 900
+                        })
+                    }}
+                    onPressOut={() => {
+                        pressed.value = withTiming(1)
+        
+                        pressedIcon.value = withTiming(1, {
+                            duration: 900
+                        })
+                    }}
                 >
                     <Animated.View style={styleAnimationIconButtonCreate}>
                         <IconButtonCreate name="add" size={40}/>

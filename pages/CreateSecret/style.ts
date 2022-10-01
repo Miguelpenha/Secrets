@@ -46,12 +46,16 @@ export const IconShow = styled(MaterialIcons)`
     color: ${props => props.theme.primary};
 `
 
-export const Input = styled.TextInput`
-    width: 80%;
+interface IInput {
+    notFullWidth?: boolean
+}
+
+export const Input = styled.TextInput<IInput>`
     padding: 2%;
     font-size: ${RFPercentage(2.5)}px;
     border-radius: ${RFPercentage(1)}px;
     color: ${props => props.theme.color};
+    width: ${props => !props.notFullWidth ? 93 : 80}%;
     background-color: ${props => props.theme.backgroundColorSecondary};
 `
 

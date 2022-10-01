@@ -17,7 +17,6 @@ export const Container = styled.TouchableOpacity`
 
 export const Icon = styled(MaterialIcons)`
     margin-left: 5.5%;
-    margin-right: auto;
     color: ${props => props.theme.primary};
 `
 

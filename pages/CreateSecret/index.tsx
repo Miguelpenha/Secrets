@@ -115,6 +115,7 @@ function CreateSecret() {
                                     <IconShow name={`visibility${showValue ? '' : '-off'}`} size={25}/>
                                 </ContainerIconShow>
                                 <Input
+                                    notFullWidth
                                     value={value}
                                     autoCapitalize="none"
                                     placeholder="Valor..."

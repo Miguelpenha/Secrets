@@ -8,12 +8,7 @@ export const Message = styled.Text`
     text-align: center;
     align-self: center;
     font-size: ${RFPercentage(3.5)}px;
-    line-height: ${RFPercentage(5)}px;
     border-radius: ${RFPercentage(2)}px;
     color: ${props => props.theme.primary};
     background-color: ${props => props.theme.backgroundColorSecondary};
-`
-
-export const Loading = styled.ActivityIndicator`
-    margin: auto;
 `

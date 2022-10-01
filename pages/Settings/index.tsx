@@ -31,7 +31,7 @@ function Settings() {
                     <Switch
                         value={themeName==='light' ? false : true}
                         thumbColor={themeName==='light' ? theme.primary : theme.primary}
-                        trackColor={{false: theme.secondary, true: theme.secondary}}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
                         onChange={() => {
                             themeName==='light' ? mutateTheme('dark') : mutateTheme('light')
                             
@@ -45,7 +45,7 @@ function Settings() {
                     <Switch
                         value={showEmoji}
                         thumbColor={showEmoji ? theme.primary : theme.primary}
-                        trackColor={{false: theme.secondary, true: theme.secondary}}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
                         onChange={() => {
                             showEmoji ? setShowEmoji(false) : setShowEmoji(true)
                             

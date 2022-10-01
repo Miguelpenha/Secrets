@@ -1,7 +1,7 @@
 import styled from 'styled-components/native'
 import { MaterialIcons } from '@expo/vector-icons'
-import Animated from 'react-native-reanimated'
 import { RFPercentage } from 'react-native-responsive-fontsize'
+import Animated from 'react-native-reanimated'
 
 export const Container = styled.View`
     margin-top: 12%;
@@ -27,9 +27,6 @@ export const Title = styled.Text`
 `
 
 export const EmojiTitle = styled.Text`
-    margin-top: 18%;
-    font-weight: bold;
-    align-self: center;
     font-size: ${RFPercentage(3.8)}px;
     color: ${props => props.theme.primary};
 `
