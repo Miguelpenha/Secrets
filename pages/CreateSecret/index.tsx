@@ -14,7 +14,7 @@ import optionsModalize from '../../components/optionsModalize'
 import { MaterialIcons } from '@expo/vector-icons'
 import icons from './icons'
 import ButtonIcon from './ButtonIcon'
-import { ScrollView } from 'react-native-gesture-handler'
+import { ScrollView } from 'react-native'
 
 function CreateSecret() {
     const navigation = useNavigation()
@@ -23,9 +23,12 @@ function CreateSecret() {
     const [name, setName] = useState('')
     const [type, setType] = useState('')
     const [value, setValue] = useState('')
-    const [hideIcon, setHideIcon] = useState<boolean>(false)
+    const [hideIcon, setHideIcon] = useState(false)
+    const [secure, setSecure] = useState(false)
     const { createSecret } = useSecrets()
     const [showValue, setShowValue] = useState(false)
+    const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const pressed = useSharedValue(1)
     const pressedIcon = useSharedValue(1)
     const modalizeSelectIcon = useRef<Modalize>(null)
@@ -40,7 +43,7 @@ function CreateSecret() {
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ContainerPd>
+            <ContainerPd scroll>
                 <KeyboardAvoidingView behavior="height" enabled>
                     <ScrollView>
                         <HeaderBack onClick={() => navigation.goBack()} title="Criar segredo"/>
@@ -132,21 +135,57 @@ function CreateSecret() {
                             <TextSwitch>Esconder ícone</TextSwitch>
                             <Switch
                                 value={hideIcon}
+                                onChange={() => setHideIcon(!hideIcon)}
                                 thumbColor={hideIcon ? theme.primary : theme.primary}
-                                trackColor={{false: theme.secondary, true: theme.secondary}}
-                                onChange={() => hideIcon ? setHideIcon(false) : setHideIcon(true)}
+                                trackColor={{false: theme.secondary, true: theme.primary}}
                             />
                         </ContainerSwitch>
+                        <ContainerSwitch>
+                            <TextSwitch>Seguro</TextSwitch>
+                            <Switch
+                                value={secure}
+                                onChange={() => {
+                                    setPassword('')
+                                    setShowPassword(false)
+                                    setSecure(!secure)
+                                }}
+                                thumbColor={secure ? theme.primary : theme.primary}
+                                trackColor={{false: theme.secondary, true: theme.primary}}
+                            />
+                        </ContainerSwitch>
+                        {secure && (
+                            <Field>
+                                <Label>Senha para o segredo</Label>
+                                <ContainerInput>
+                                    <ContainerIconShow onPress={() => setShowPassword(!showPassword)}>
+                                        <IconShow name={`visibility${showPassword ? '' : '-off'}`} size={25}/>
+                                    </ContainerIconShow>
+                                    <Input
+                                        notFullWidth
+                                        value={password}
+                                        autoCapitalize="none"
+                                        placeholder="Valor..."
+                                        onChangeText={setPassword}
+                                        autoCompleteType="password"
+                                        selectionColor={theme.primary}
+                                        secureTextEntry={!showPassword}
+                                        placeholderTextColor={theme.primary}
+                                        keyboardType={showPassword ? 'visible-password' : 'default'}
+                                    />
+                                </ContainerInput>
+                            </Field>
+                        )}
                         <ButtonSubmit
                             onPress={async () => {
-                                if (icons && name && type && value) {
+                                if (icon && name && type && value && (!secure || secure && password)) {
                                     await createSecret({
                                         name,
                                         type,
                                         value,
                                         icon,
                                         id: String(uuid.v4()),
-                                        hideIcon
+                                        hideIcon,
+                                        password
                                     })
 
                                     navigation.navigate('Home')

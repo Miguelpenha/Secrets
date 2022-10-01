@@ -82,7 +82,8 @@ export const Switch = styled.Switch`
 export const ButtonSubmit = styled.TouchableOpacity`
     width: 60%;
     padding: 4% 0%;
-    margin-top: 10%;
+    margin-top: 15%;
+    margin-bottom: 10%;
     align-self: center;
     border-radius: ${RFPercentage(2)}px;
     background-color: ${props => props.theme.backgroundColorSecondary};

@@ -24,7 +24,7 @@ const Secret: FC<Iprops> = ({ secret }) => {
                 }))}
             >
                 <Animated.View style={animationPressedIcon}>
-                    <Icon 
+                    <Icon
                         size={RFPercentage(4)}
                         name={(!secret.secure || !secret.hideIcon) ? (!secret.hideIcon ? secret.icon : 'lock') : 'lock'}
                     />

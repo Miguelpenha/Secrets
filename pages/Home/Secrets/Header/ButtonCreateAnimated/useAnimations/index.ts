@@ -6,13 +6,13 @@ function useAnimations() {
     const pressedIcon = useSharedValue(1)
 
     return {
-        animationButtonDelete: useAnimatedStyle(() => ({
+        animationButtonCreate: useAnimatedStyle(() => ({
             transform: [{ scale: pressed.value }]
         })),
-        animationIconButtonDelete: useAnimatedStyle(() => ({
+        animationIconButtonCreate: useAnimatedStyle(() => ({
             transform: [{ scale: pressedIcon.value }]
         })),
-        events: (onPress: () => Promise<void>) => events(pressed, pressedIcon, onPress)
+        events: (onPress: () => void) => events(pressed, pressedIcon, onPress)
     }
 }
 
