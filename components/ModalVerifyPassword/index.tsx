@@ -8,11 +8,12 @@ import Toast from 'react-native-toast-message'
 
 interface Iprops {
     id: string
+    hideToastFinal?: boolean
     onSubmit: (id: string) => void
     setOpenModal: Dispatch<SetStateAction<string | null>>
 }
 
-const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit }) => {
+const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToastFinal }) => {
     const secret = useSecret(id)
     const [showPassword, setShowPassword] = useState(false)
     const [password, setPassword] = useState('')
@@ -24,7 +25,7 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit }) => {
 
             onSubmit(id)
 
-            Toast.show({
+            !hideToastFinal && Toast.show({
                 text1: 'Senha validada com sucesso!',
                 type: 'success',
                 onPress() {

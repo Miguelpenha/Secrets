@@ -24,7 +24,7 @@ function Secret() {
             <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(secret.name, 32)}/>
             {secret ? <>
                 <ButtonDeleteAnimated onPress={() => {
-                    setOpenModalVerify(id)
+                    secret.secure ? setOpenModalVerify(id) : setOpenModalDelete(true)
                 }}/>
                 <Icon name={secret.icon} size={35}/>
                 <Value>{secret.value}</Value>
@@ -41,7 +41,7 @@ function Secret() {
                 onBackdropPress={() => setOpenModalDelete(false)}
                 onBackButtonPress={() => setOpenModalDelete(false)}
             >
-                <ModalVerifyPassword id={id} onSubmit={() => setOpenModalDelete(true)} setOpenModal={setOpenModalVerify}/>
+                <ModalVerifyPassword hideToastFinal id={id} onSubmit={() => setOpenModalDelete(true)} setOpenModal={setOpenModalVerify}/>
             </Modal>
         </ContainerPd>
     )
