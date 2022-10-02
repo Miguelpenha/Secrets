@@ -1,7 +1,6 @@
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
-import LoadingRow from '../../../components/Loading'
 
 export const Container = styled.View`
     padding-bottom: 12%;
@@ -56,10 +55,4 @@ export const TextButtonSubmit = styled.Text`
     align-self: center;
     font-size: ${RFPercentage(3.5)}px;
     color: ${props => props.theme.primary};
-`
-
-export const Loading = styled(LoadingRow)`
-    left: 44%;
-    top: 900%;
-    position: absolute;
 `

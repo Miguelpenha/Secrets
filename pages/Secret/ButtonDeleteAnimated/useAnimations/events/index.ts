@@ -3,7 +3,7 @@ import onPressInOrOut from './onPressInOrOut'
 import onPress from './onPress'
 import { TouchableOpacityProps } from 'react-native'
 
-function events(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, onPressFunction: () => Promise<void>) {
+function events(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, onPressFunction: () => void) {
     return {
         activeOpacity: 0.5,
         onPressOut: () => onPressInOrOut(pressed, pressedIcon, 1),

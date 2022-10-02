@@ -8,6 +8,7 @@ import Header from './Header'
 import { Title, EmojiTitle, Field, ButtonIconShow, IconShow, Input, ButtonSubmit, TextButtonSubmit } from './style'
 import Toast from 'react-native-toast-message'
 import { green } from '../../utils/colorsLogs'
+import handleSubmit from './handleSubmit'
 
 export default function Password() {
   const { showEmoji } = useShowEmoji()
@@ -35,35 +36,12 @@ export default function Password() {
               selectionColor={theme.primary}
               placeholderTextColor={theme.primary}
               keyboardType={!showPassword ? 'visible-password' : 'default'}
+              onSubmitEditing={async () => await handleSubmit(password, mutatePassword)}
             />
         </Field>
-        <ButtonSubmit
-          onPress={async () => {
-            if (password) {
-              await mutatePassword(password)
-
-              console.log(green('>> Created password'))
-
-              Toast.show({
-                type: 'success',
-                text1: 'Senha criada com sucesso',
-                onPress() {
-                  Toast.hide()
-                }
-              })
-            } else {
-              Toast.show({
-                type: 'error',
-                text1: 'Senha não preenchida',
-                onPress() {
-                  Toast.hide()
-                }
-              })
-            }
-          }}
-      >
+        <ButtonSubmit onPress={async () => await handleSubmit(password, mutatePassword)}>
           <TextButtonSubmit>Criar</TextButtonSubmit>
-      </ButtonSubmit>
+        </ButtonSubmit>
       </ContainerPd>
     </TouchableWithoutFeedback>
   )

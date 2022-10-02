@@ -31,7 +31,7 @@ function CreateSecret() {
 
     useEffect(() => {
         secure && setHideIcon(true)
-    }, [secure, hideIcon])
+    }, [secure])
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -84,7 +84,7 @@ function CreateSecret() {
                             <TextSwitch>Esconder ícone</TextSwitch>
                             <Switch
                                 value={hideIcon}
-                                onChange={() => setHideIcon(!hideIcon)}
+                                onChange={() => !secure && setHideIcon(!hideIcon)}
                                 thumbColor={hideIcon ? theme.primary : theme.primary}
                                 trackColor={{false: theme.secondary, true: theme.primary}}
                             />

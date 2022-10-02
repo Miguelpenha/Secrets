@@ -1,7 +1,6 @@
 import { SharedValue, withSequence, withTiming } from 'react-native-reanimated'
-import Toast from 'react-native-toast-message'
 
-function onPress(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, onPress: () => Promise<void>) {
+function onPress(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, onPress: () => void) {
     pressed.value = withSequence(
         withTiming(0.8, {
             duration: 100
@@ -20,17 +19,7 @@ function onPress(pressed: SharedValue<number>, pressedIcon: SharedValue<number>,
         })
     )
     
-    setTimeout(async () => {
-        await onPress()
-
-        Toast.show({
-            type: 'error',
-            text1: 'Segredo excluído com sucesso',
-            onPress() {
-                Toast.hide()
-            }
-        })
-    }, 200)
+    onPress()
 }
 
 export default onPress

@@ -12,7 +12,7 @@ function useAnimations() {
         animationIconButtonDelete: useAnimatedStyle(() => ({
             transform: [{ scale: pressedIcon.value }]
         })),
-        events: (onPress: () => Promise<void>) => events(pressed, pressedIcon, onPress)
+        events: (onPress: () => void) => events(pressed, pressedIcon, onPress)
     }
 }
 
