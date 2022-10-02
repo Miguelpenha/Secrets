@@ -13,10 +13,12 @@ import { MaterialIcons } from '@expo/vector-icons'
 import icons from './icons'
 import { Switch } from 'react-native'
 import onSubmit from './onSubmit'
+import usePassword from '../../contexts/passwordContext'
 
 function CreateSecret() {
     const navigation = useNavigation()
     const theme = useTheme()
+    const { password: passwordDefault } = usePassword()
     const [icon, setIcon] = useState<keyof typeof MaterialIcons.glyphMap>('vpn-key')
     const [name, setName] = useState('')
     const [type, setType] = useState('')
@@ -24,7 +26,6 @@ function CreateSecret() {
     const [hideIcon, setHideIcon] = useState(false)
     const [secure, setSecure] = useState(false)
     const { createSecret } = useSecrets()
-    const [showValue, setShowValue] = useState(false)
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const modalizeSelectIcon = useRef<Modalize>(null)
@@ -62,23 +63,14 @@ function CreateSecret() {
                         </Field>
                         <Field>
                             <Label>Valor do segredo</Label>
-                            <ContainerInput>
-                                <ContainerIconShow onPress={() => setShowValue(!showValue)}>
-                                    <IconShow name={`visibility${showValue ? '' : '-off'}`} size={25}/>
-                                </ContainerIconShow>
-                                <Input
-                                    notFullWidth
-                                    value={value}
-                                    autoCapitalize="none"
-                                    placeholder="Valor..."
-                                    onChangeText={setValue}
-                                    autoCompleteType="password"
-                                    secureTextEntry={!showValue}
-                                    selectionColor={theme.primary}
-                                    placeholderTextColor={theme.primary}
-                                    keyboardType={showValue ? 'visible-password' : 'default'}
-                                />
-                            </ContainerInput>
+                            <Input
+                                multiline
+                                value={value}
+                                placeholder="Valor..."
+                                onChangeText={setValue}
+                                selectionColor={theme.primary}
+                                placeholderTextColor={theme.primary}
+                            />
                         </Field>
                         <ContainerSwitch>
                             <TextSwitch>Esconder ícone</TextSwitch>
@@ -104,7 +96,7 @@ function CreateSecret() {
                         </ContainerSwitch>
                         {secure && (
                             <Field>
-                                <Label>Senha para o segredo</Label>
+                                <Label>Senha para o segredo (opcional)</Label>
                                 <ContainerInput>
                                     <ContainerIconShow onPress={() => setShowPassword(!showPassword)}>
                                         <IconShow name={`visibility${showPassword ? '' : '-off'}`} size={25}/>
@@ -125,7 +117,7 @@ function CreateSecret() {
                             </Field>
                         )}
                         <ButtonSubmit onPress={async () => (
-                            await onSubmit(icon, name, type, value, hideIcon, secure, password, createSecret, navigation as any)
+                            await onSubmit(icon, name, type, value, hideIcon, secure, password, passwordDefault, createSecret, navigation as any)
                         )}>
                             <TextButtonSubmit>Criar</TextButtonSubmit>
                         </ButtonSubmit>

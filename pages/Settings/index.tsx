@@ -5,22 +5,19 @@ import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
 import { ScrollView } from 'react-native'
 import { ContainerSwitch, TextSwitch, EmojiTextSwitch, Switch, Button, IconButton, IconUpdateButton, TextButton, Version, ContainerPoweredBy, TextPoweredBy, TextPoweredByName } from './style'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 import checkUpdate from './checkUpdate'
 import Constants from 'expo-constants'
-import { blue, red, magenta, yellow } from '../../utils/colorsLogs'
-import Toast from 'react-native-toast-message'
+import { blue, magenta } from '../../utils/colorsLogs'
 import useShowEmoji from '../../contexts/emojiContext'
-import useSecrets from '../../contexts/secretsContext'
-import usePassword from '../../contexts/passwordContext'
+import Modal from 'react-native-modal'
+import ModalDelete from './ModalDelete'
 
 function Settings() {
     const navigation = useNavigation()
-    const { password, loadPassword } = usePassword()
-    const { theme, themeName, mutateTheme, loadTheme } = useTheme()
+    const { theme, themeName, mutateTheme } = useTheme()
     const [checkUpdating, setCheckUpdating] = useState(false)
-    const { showEmoji, setShowEmoji, loadShowEmoji } = useShowEmoji()
-    const { loadSecrets } = useSecrets()
+    const { showEmoji, setShowEmoji } = useShowEmoji()
+    const [openModalDelete, setOpenModalDelete] = useState(false)
     
     return (
         <ContainerPd>
@@ -54,32 +51,7 @@ function Settings() {
                         }}
                     />
                 </ContainerSwitch>
-                <Button onPress={async () => {
-                    AsyncStorage.removeItem('@secrets:password').then(() => {
-                        AsyncStorage.removeItem('@secrets:theme').then(() => {
-                            AsyncStorage.removeItem('@secrets:secrets').then(() => {
-                                AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
-                                    console.log(yellow('>> All data has been deleted'))
-                                    console.log(red('   >> @secrets:password'))
-                                    console.log(red('   >> @secrets:theme'))
-                                    console.log(red('   >> @secrets:secrets'))
-                                    console.log(red('   >> @secrets:showEmoji'))
-        
-                                    Toast.show({
-                                        type: 'error',
-                                        text1: 'Dados Apagados'
-                                    })
-        
-                                    await loadPassword()
-                                    await loadTheme()
-                                    await loadShowEmoji()
-                                    
-                                    !password && navigation.goBack()
-                                })
-                            })
-                        })
-                    })
-                }}>
+                <Button onPress={() => setOpenModalDelete(true)}>
                     <IconButton name="delete" size={30}/>
                     <TextButton>Apagar dados</TextButton>
                 </Button>
@@ -93,6 +65,13 @@ function Settings() {
                 <TextPoweredBy>Powered by</TextPoweredBy>
                 <TextPoweredByName>Miguel da Penha</TextPoweredByName>
             </ContainerPoweredBy>
+            <Modal
+                isVisible={openModalDelete}
+                onBackdropPress={() => setOpenModalDelete(false)}
+                onBackButtonPress={() => setOpenModalDelete(false)}
+            >
+                <ModalDelete setOpenModal={setOpenModalDelete}/>
+            </Modal>
         </ContainerPd>
     )
 }

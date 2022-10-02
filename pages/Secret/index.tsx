@@ -38,8 +38,8 @@ function Secret() {
             </Modal>
             <Modal
                 isVisible={openModalVerify ? true : false}
-                onBackdropPress={() => setOpenModalDelete(false)}
-                onBackButtonPress={() => setOpenModalDelete(false)}
+                onBackdropPress={() => setOpenModalVerify(null)}
+                onBackButtonPress={() => setOpenModalVerify(null)}
             >
                 <ModalVerifyPassword hideToastFinal id={id} onSubmit={() => setOpenModalDelete(true)} setOpenModal={setOpenModalVerify}/>
             </Modal>
