@@ -1,10 +1,11 @@
-import { Dispatch, SetStateAction, FC, useState } from 'react'
+import { Dispatch, SetStateAction, FC, useState, useRef, useEffect } from 'react'
 import { useTheme } from 'styled-components'
 import { useSecret } from '../../contexts/secretsContext'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { Container, Title, ContainerInput, ContainerIconShow, IconShow, Input, ButtonSubmit, TextButtonSubmit } from './style'
 import { compare } from '../../utils/hash'
 import Toast from 'react-native-toast-message'
+import { TextInput, InteractionManager } from 'react-native'
 
 interface Iprops {
     id: string
@@ -18,6 +19,11 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToast
     const [showPassword, setShowPassword] = useState(false)
     const [password, setPassword] = useState('')
     const theme = useTheme()
+    const passwordRef = useRef<TextInput>(null)
+
+    useEffect(() => {
+        InteractionManager.runAfterInteractions(() => passwordRef.current.focus())
+    }, [])
 
     async function handleSubmit() {
         if (await compare(password, secret.password)) {
@@ -55,8 +61,8 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToast
                             <IconShow name={`visibility${showPassword ? '' : '-off'}`} size={25}/>
                         </ContainerIconShow>
                         <Input
-                            autoFocus
                             value={password}
+                            ref={passwordRef}
                             autoCapitalize="none"
                             placeholder="Senha..."
                             onChangeText={setPassword}
