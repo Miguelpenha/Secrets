@@ -21,7 +21,7 @@ function Secret() {
     
     return (
         <ContainerPd>
-            <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(secret.name, 32)}/>
+            <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} (${secret.type})`, 32)}/>
             {secret ? <>
                 <ButtonDeleteAnimated onPress={() => {
                     secret.secure ? setOpenModalVerify(id) : setOpenModalDelete(true)
