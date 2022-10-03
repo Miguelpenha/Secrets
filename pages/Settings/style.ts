@@ -43,13 +43,13 @@ export const Button = styled.TouchableOpacity<IButton>`
 `
 
 interface IIconButton {
-    left?: boolean
+    right?: boolean
 }
 
 export const IconButton = styled(MaterialIcons)<IIconButton>`
     color: ${props => props.theme.primary};
 
-    ${props => props.left ? css`
+    ${props => props.right ? css`
         margin-left: 1%;
     ` : css`
         margin-right: 1%;

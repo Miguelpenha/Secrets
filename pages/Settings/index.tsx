@@ -56,27 +56,26 @@ function Settings() {
                     }}
                 />
             </ContainerSwitch>
-            {password && (
-                <Button onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
-                    initial: false
-                })}>
-                    <IconButton name="vpn-key" size={30}/>
-                    <TextButton>Mudar senha</TextButton>
-                </Button>
-            )}
             <Button onPress={() => setOpenModalDelete(true)}>
                 <IconButton name="delete" size={30}/>
                 <TextButton>Apagar dados</TextButton>
             </Button>
-            {password && (
+            {password && <>
                 <Button onPress={() => {
                     securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
                 }}>
                     <IconButton name="lock" size={30}/>
                     <TextButton>Segurança</TextButton>
-                    <IconButton left name="arrow-forward-ios" size={25}/>
+                    <IconButton right name="arrow-forward-ios" size={25}/>
                 </Button>
-            )}
+                <Button onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
+                    initial: false
+                })}>
+                    <IconButton name="vpn-key" size={30}/>
+                    <TextButton>Mudar senha</TextButton>
+                    <IconButton right name="arrow-forward-ios" size={25}/>
+                </Button>
+            </>}
             <Button disabled={checkUpdating} onPress={async () => checkUpdate(setCheckUpdating)} loading={checkUpdating}>
                 <IconUpdateButton checkUpdating={checkUpdating} name="sync" size={30}/>
                 <TextButton>Verificar atualizações</TextButton>
