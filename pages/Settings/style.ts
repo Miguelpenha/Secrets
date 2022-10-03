@@ -32,7 +32,7 @@ interface IButton {
 
 export const Button = styled.TouchableOpacity<IButton>`
     elevation: 8;
-    padding: 3.5%;
+    padding: 4% 4%;
     margin-top: 5%;
     margin-bottom: 5%;
     align-self: center;
@@ -42,9 +42,18 @@ export const Button = styled.TouchableOpacity<IButton>`
     background-color: ${props => props.loading ? '#c7dffe' : props.theme.backgroundColorSecondary};
 `
 
-export const IconButton = styled(MaterialIcons)`
-    margin-right: 1%;
+interface IIconButton {
+    left?: boolean
+}
+
+export const IconButton = styled(MaterialIcons)<IIconButton>`
     color: ${props => props.theme.primary};
+
+    ${props => props.left ? css`
+        margin-left: 1%;
+    ` : css`
+        margin-right: 1%;
+    `}
 `
 
 interface IIconUpdateButton {
@@ -63,12 +72,12 @@ export const TextButton = styled.Text`
     margin-left: 1%;
     font-weight: bold;
     padding-right: 1%;
-    font-size: ${RFPercentage(2.5)}px;
+    font-size: ${RFPercentage(2.8)}px;
     color: ${props => props.theme.primary};
 `
 
 export const Version = styled.Text`
-    margin-top: auto;
+    margin-top: 15%;
     margin-bottom: 2%;
     align-self: center;
     font-size: ${RFPercentage(3.2)}px;

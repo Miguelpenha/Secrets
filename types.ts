@@ -29,6 +29,7 @@ export type Inavigation = {
   Password: {
     initial: boolean
   }
+  Security: undefined
 }
 
 export interface ISecret {
@@ -40,4 +41,10 @@ export interface ISecret {
   password?: string
   hideIcon?: boolean
   icon: keyof typeof MaterialIcons.glyphMap
+}
+
+export interface ISecurity {
+  verifyPasswordWhenDeleteSecret: boolean
+  verifyPasswordWhenChangePassword: boolean
+  verifyPasswordWhenConfigureSecurity: boolean
 }
