@@ -3,6 +3,7 @@ import { Inavigation } from '../types'
 import Home from '../pages/Home'
 import Settings from '../pages/Settings'
 import Secret from '../pages/Secret'
+import Password from '../pages/Password'
 import CreateSecret from '../pages/CreateSecret'
 
 function AppStack() {
@@ -18,6 +19,7 @@ function AppStack() {
             <Screen name="Home" component={Home}/>
             <Screen name="Secret" component={Secret}/>
             <Screen name="Settings" component={Settings}/>
+            <Screen name="Password" component={Password} initialParams={{ initial: false }}/>
             <Screen name="CreateSecret" component={CreateSecret}/>
         </Navigator>
     )

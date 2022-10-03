@@ -6,9 +6,10 @@ import { Container, Title, ContainerInput, ContainerIconShow, IconShow, Input, B
 import { compare } from '../../utils/hash'
 import Toast from 'react-native-toast-message'
 import { TextInput, InteractionManager } from 'react-native'
+import usePassword from '../../contexts/passwordContext'
 
 interface Iprops {
-    id: string
+    id?: string
     hideToastFinal?: boolean
     onSubmit: (id: string) => void
     setOpenModal: Dispatch<SetStateAction<string | null>>
@@ -20,13 +21,14 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToast
     const [password, setPassword] = useState('')
     const theme = useTheme()
     const passwordRef = useRef<TextInput>(null)
+    const { password: passwordDefault } = usePassword()
 
     useEffect(() => {
         InteractionManager.runAfterInteractions(() => passwordRef.current.focus())
     }, [])
 
     async function handleSubmit() {
-        if (await compare(password, secret.password)) {
+        if (secret ? await compare(password, secret.password) : await compare(password, passwordDefault)) {
             setOpenModal(null)
 
             onSubmit(id)
@@ -68,9 +70,9 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToast
                             onChangeText={setPassword}
                             autoCompleteType="password"
                             selectionColor={theme.primary}
+                            onSubmitEditing={handleSubmit}
                             secureTextEntry={!showPassword}
                             placeholderTextColor={theme.primary}
-                            onSubmitEditing={handleSubmit}
                             keyboardType={showPassword ? 'visible-password' : 'default'}
                         />
                     </ContainerInput>

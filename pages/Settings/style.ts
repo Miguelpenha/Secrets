@@ -43,6 +43,7 @@ export const Button = styled.TouchableOpacity<IButton>`
 `
 
 export const IconButton = styled(MaterialIcons)`
+    margin-right: 1%;
     color: ${props => props.theme.primary};
 `
 

@@ -11,13 +11,17 @@ import { blue, magenta } from '../../utils/colorsLogs'
 import useShowEmoji from '../../contexts/emojiContext'
 import Modal from 'react-native-modal'
 import ModalDelete from './ModalDelete'
+import ModalVerifyPassword from '../../components/ModalVerifyPassword'
+import usePassword from '../../contexts/passwordContext'
 
 function Settings() {
     const navigation = useNavigation()
     const { theme, themeName, mutateTheme } = useTheme()
     const [checkUpdating, setCheckUpdating] = useState(false)
     const { showEmoji, setShowEmoji } = useShowEmoji()
+    const { password } = usePassword()
     const [openModalDelete, setOpenModalDelete] = useState(false)
+    const [openModalVerifyPassword, setOpenModalVerifyPassword] = useState<string | null>()
     
     return (
         <ContainerPd>
@@ -51,6 +55,12 @@ function Settings() {
                         }}
                     />
                 </ContainerSwitch>
+                {password && (
+                    <Button onPress={() => setOpenModalVerifyPassword('true')}>
+                        <IconButton name="vpn-key" size={30}/>
+                        <TextButton>Mudar senha</TextButton>
+                    </Button>
+                )}
                 <Button onPress={() => setOpenModalDelete(true)}>
                     <IconButton name="delete" size={30}/>
                     <TextButton>Apagar dados</TextButton>
@@ -71,6 +81,19 @@ function Settings() {
                 onBackButtonPress={() => setOpenModalDelete(false)}
             >
                 <ModalDelete setOpenModal={setOpenModalDelete}/>
+            </Modal>
+            <Modal
+                isVisible={openModalVerifyPassword ? true : false }
+                onBackdropPress={() => setOpenModalVerifyPassword(null)}
+                onBackButtonPress={() => setOpenModalVerifyPassword(null)}
+            >
+                <ModalVerifyPassword
+                    hideToastFinal
+                    setOpenModal={setOpenModalVerifyPassword}
+                    onSubmit={() => navigation.navigate('Password', {
+                        initial: false
+                    })}
+                />
             </Modal>
         </ContainerPd>
     )

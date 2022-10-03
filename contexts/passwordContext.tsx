@@ -1,6 +1,8 @@
 import { createContext, FC, useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { hash } from '../utils/hash'
+import { ISecret } from '../types'
+import { decrypt, encrypt } from '../utils/encrypt'
 
 interface IPasswordContext {
     password: string
@@ -26,12 +28,25 @@ export const PasswordProvider: FC = ({ children }) => {
         }
     }
 
-    async function mutatePassword(password: string) {
-        const hashPassword = await hash(password)
+    async function mutatePassword(passwordNew: string) {
+        if (!password) {
+            const hashPassword = await hash(passwordNew)
         
-        AsyncStorage.setItem('@secrets:password', hashPassword)
+            AsyncStorage.setItem('@secrets:password', hashPassword)
+    
+            setPassword(hashPassword)
+        } else {
+            const secretsRow = await AsyncStorage.getItem('@secrets:secrets')
+            const secrets: ISecret[] = secretsRow ? JSON.parse(decrypt(secretsRow, password)) : []
 
-        setPassword(hashPassword)
+            const hashPassword = await hash(passwordNew)
+
+            AsyncStorage.setItem('@secrets:secrets', encrypt(JSON.stringify(secrets), hashPassword))
+        
+            AsyncStorage.setItem('@secrets:password', hashPassword)
+
+            setPassword(hashPassword)
+        }
     }
 
     async function deletePassword() {
