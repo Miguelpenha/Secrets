@@ -1,7 +1,7 @@
 import { ISecurity } from '../../types'
 import { createContext, FC, useState, useEffect, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import defaultSecurityConfiguration from './DefaultSecurityConfiguration'
+import defaultSecurityConfiguration from './defaultSecurityConfiguration'
 
 interface ISecurityConfigurationContext {
     securityConfiguration: ISecurity
