@@ -15,7 +15,7 @@ export const SecurityConfigurationProvider: FC = ({ children }) => {
     const [securityConfiguration, setSecurityConfiguration] = useState<ISecurity>(defaultSecurityConfiguration)
 
     async function setSecurityConfigurationOnStorage(securityConfiguration: ISecurity) {
-        AsyncStorage.setItem('@secrets:securityConfiguration', JSON.stringify(securityConfiguration))
+        await AsyncStorage.setItem('@secrets:securityConfiguration', JSON.stringify(securityConfiguration))
 
         setSecurityConfiguration(securityConfiguration)
     }
