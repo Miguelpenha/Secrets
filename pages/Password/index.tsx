@@ -30,7 +30,7 @@ export default function Password() {
         <Title>Crie uma senha {showEmoji && <EmojiTitle>&#x1F92B;</EmojiTitle>}</Title>
         <Field>
           <ButtonIconShow onPress={() => setShowPassword(!showPassword)}>
-              <IconShow name={`visibility${showPassword ? '-off' : ''}`} size={28}/>
+            <IconShow name={`visibility${showPassword ? '-off' : ''}`} size={28}/>
           </ButtonIconShow>
           <Input
             value={password}
