@@ -7,7 +7,7 @@ async function checkUpdate(setCheckUpdating: Dispatch<SetStateAction<boolean>>) 
 
     await updateApp()
 
-    console.log(blue('>> Updates Checked'))
+    console.log(blue('>> Updates checked'))
     
     setCheckUpdating(false)
 }
