@@ -1,14 +1,19 @@
+import { ISecurity } from '../../../types'
 import { Dispatch, SetStateAction, FC, memo } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import useSecurityConfiguration from '../../../contexts/securityConfigurationContext'
 import { Container, Title, Buttons, ButtonCancel, TextButtonCancel, ButtonSave, TextButtonSave } from './style'
 import Toast from 'react-native-toast-message'
+import { blue, magenta } from '../../../utils/colorsLogs'
 
 interface Iprops {
+    securityConfiguration: ISecurity
     setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const ModalSave: FC<Iprops> = ({ setOpenModal }) => {
+const ModalSave: FC<Iprops> = ({ securityConfiguration, setOpenModal }) => {
     const navigation = useNavigation()
+    const { setSecurityConfiguration } = useSecurityConfiguration()
 
     return (
         <Container>
@@ -20,7 +25,14 @@ const ModalSave: FC<Iprops> = ({ setOpenModal }) => {
                 <ButtonSave activeOpacity={0.5} onPress={async () => {
                     setOpenModal(false)
 
-                    navigation.navigate('Home')
+                    setSecurityConfiguration(securityConfiguration)
+
+                    console.log(blue(`>> Security configuration changed`))
+                    console.log(magenta(`   >> verifyPasswordWhenDeleteSecret ${blue(String(securityConfiguration.verifyPasswordWhenDeleteSecret))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenChangePassword ${blue(String(securityConfiguration.verifyPasswordWhenChangePassword))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenSecurityConfiguration ${blue(String(securityConfiguration.verifyPasswordWhenSecurityConfiguration))}`))
+
+                    navigation.goBack()
 
                     Toast.show({
                         text1: 'Alterações salvas com sucesso!',

@@ -12,6 +12,7 @@ import Modal from 'react-native-modal'
 import ModalDelete from './ModalDelete'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
+import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
 
 function Settings() {
     const navigation = useNavigation()
@@ -19,6 +20,7 @@ function Settings() {
     const [checkUpdating, setCheckUpdating] = useState(false)
     const { showEmoji, setShowEmoji } = useShowEmoji()
     const { password } = usePassword()
+    const { securityConfiguration } = useSecurityConfiguration()
     const [openModalDelete, setOpenModalDelete] = useState(false)
     const [openModalVerifyPasswordOnChangePassword, setOpenModalVerifyPasswordOnChangePassword] = useState<string | null>()
     const [openModalVerifyPasswordOnSecurity, setOpenModalVerifyPasswordOnSecurity] = useState<string | null>()
@@ -55,7 +57,9 @@ function Settings() {
                 />
             </ContainerSwitch>
             {password && (
-                <Button onPress={() => setOpenModalVerifyPasswordOnChangePassword('true')}>
+                <Button onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
+                    initial: false
+                })}>
                     <IconButton name="vpn-key" size={30}/>
                     <TextButton>Mudar senha</TextButton>
                 </Button>
@@ -65,7 +69,9 @@ function Settings() {
                 <TextButton>Apagar dados</TextButton>
             </Button>
             {password && (
-                <Button onPress={() => setOpenModalVerifyPasswordOnSecurity('true')}>
+                <Button onPress={() => {
+                    securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
+                }}>
                     <IconButton name="lock" size={30}/>
                     <TextButton>Segurança</TextButton>
                     <IconButton left name="arrow-forward-ios" size={25}/>

@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
+import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
 import { useState } from 'react'
 import { useTheme } from 'styled-components'
 import ContainerPd from '../../components/ContainerPd'
@@ -12,9 +13,10 @@ import { ISecurity } from '../../types'
 
 function Security() {
     const navigation = useNavigation()
-    const [verifyPasswordWhenDeleteSecret, setVerifyPasswordWhenDeleteSecret] = useState(true)
-    const [verifyPasswordWhenChangePassword, setVerifyPasswordWhenChangePassword] = useState(true)
-    const [verifyPasswordWhenConfigureSecurity, setVerifyPasswordWhenConfigureSecurity] = useState(true)
+    const { securityConfiguration } = useSecurityConfiguration()
+    const [verifyPasswordWhenDeleteSecret, setVerifyPasswordWhenDeleteSecret] = useState(securityConfiguration.verifyPasswordWhenDeleteSecret)
+    const [verifyPasswordWhenChangePassword, setVerifyPasswordWhenChangePassword] = useState(securityConfiguration.verifyPasswordWhenChangePassword)
+    const [verifyPasswordWhenSecurityConfiguration, setVerifyPasswordWhenSecurityConfiguration] = useState(securityConfiguration.verifyPasswordWhenSecurityConfiguration)
     const theme = useTheme()
     const [openModalSave, setOpenModalSave] = useState(false)
 
@@ -30,9 +32,6 @@ function Security() {
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => {
                         setVerifyPasswordWhenDeleteSecret(!verifyPasswordWhenDeleteSecret)
-                        
-                        console.log(blue(`>> Value of security changed`))
-                        console.log(magenta(`   >> verifyPasswordWhenDeleteSecret ${blue(String(!verifyPasswordWhenDeleteSecret))}`))
                     }}
                 />
             </ContainerSwitch>
@@ -44,9 +43,6 @@ function Security() {
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => {
                         setVerifyPasswordWhenChangePassword(!verifyPasswordWhenChangePassword)
-                        
-                        console.log(blue(`>> Value of security changed`))
-                        console.log(magenta(`   >> verifyPasswordWhenChangePassword ${blue(String(!verifyPasswordWhenChangePassword))}`))
                     }}
                 />
             </ContainerSwitch>
@@ -54,13 +50,10 @@ function Security() {
                 <TextSwitch>Configurar segurança</TextSwitch>
                 <Switch
                     thumbColor={theme.primary}
-                    value={verifyPasswordWhenConfigureSecurity}
+                    value={verifyPasswordWhenSecurityConfiguration}
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => {
-                        setVerifyPasswordWhenConfigureSecurity(!verifyPasswordWhenConfigureSecurity)
-                        
-                        console.log(blue(`>> Value of security changed`))
-                        console.log(magenta(`   >> verifyPasswordWhenConfigureSecurity ${blue(String(!verifyPasswordWhenConfigureSecurity))}`))
+                        setVerifyPasswordWhenSecurityConfiguration(!verifyPasswordWhenSecurityConfiguration)
                     }}
                 />
             </ContainerSwitch>
@@ -72,7 +65,14 @@ function Security() {
                 onBackdropPress={() => setOpenModalSave(false)}
                 onBackButtonPress={() => setOpenModalSave(false)}
             >
-                <ModalSave setOpenModal={setOpenModalSave}/>
+                <ModalSave
+                    setOpenModal={setOpenModalSave}
+                    securityConfiguration={{
+                        verifyPasswordWhenDeleteSecret,
+                        verifyPasswordWhenChangePassword,
+                        verifyPasswordWhenSecurityConfiguration
+                    }}
+                />
             </Modal>
         </ContainerPd>
     )

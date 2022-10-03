@@ -46,5 +46,5 @@ export interface ISecret {
 export interface ISecurity {
   verifyPasswordWhenDeleteSecret: boolean
   verifyPasswordWhenChangePassword: boolean
-  verifyPasswordWhenConfigureSecurity: boolean
+  verifyPasswordWhenSecurityConfiguration: boolean
 }

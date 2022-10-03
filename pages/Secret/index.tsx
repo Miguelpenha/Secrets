@@ -13,11 +13,13 @@ import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
 import ModalDelete from './ModalDelete'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
+import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
 
 function Secret() {
     const { id } = useRoute().params as IParams
     const secret = useSecret(id)
     const navigation = useNavigation()
+    const { securityConfiguration } = useSecurityConfiguration()
     const [visibility, setVisibility] = useState(true)
     const [openModalVerify, setOpenModalVerify] = useState<string | null>()
     const [openModalDelete, setOpenModalDelete] = useState(false)
@@ -29,7 +31,7 @@ function Secret() {
                 <Header>
                     <ButtonHeaderAnimated
                         icon="delete"
-                        onPress={() => secret.secure ? setOpenModalVerify(id) : setOpenModalDelete(true)}
+                        onPress={() => (secret.secure && securityConfiguration.verifyPasswordWhenDeleteSecret) ? setOpenModalVerify(id) : setOpenModalDelete(true)}
                     />
                     <ButtonHeaderAnimated
                         icon={`visibility${visibility ? '' : '-off'}`}

@@ -24,6 +24,7 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
             <TitleModalDeleteAll>Apagar todos os dados?</TitleModalDeleteAll>
             <View>
                 <DataModalDeleteAll>@secrets:password</DataModalDeleteAll>
+                <DataModalDeleteAll>@secrets:securityConfiguration</DataModalDeleteAll>
                 <DataModalDeleteAll>@secrets:theme</DataModalDeleteAll>
                 <DataModalDeleteAll>@secrets:secrets</DataModalDeleteAll>
                 <DataModalDeleteAll>@secrets:showEmoji</DataModalDeleteAll>
@@ -36,25 +37,28 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
                 setOpenModal(false)
 
                 AsyncStorage.removeItem('@secrets:password').then(() => {
-                    AsyncStorage.removeItem('@secrets:theme').then(() => {
-                        AsyncStorage.removeItem('@secrets:secrets').then(() => {
-                            AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
-                                console.log(yellow('>> All data has been deleted'))
-                                console.log(red('   >> @secrets:password'))
-                                console.log(red('   >> @secrets:theme'))
-                                console.log(red('   >> @secrets:secrets'))
-                                console.log(red('   >> @secrets:showEmoji'))
-    
-                                Toast.show({
-                                    type: 'error',
-                                    text1: 'Dados Apagados'
+                    AsyncStorage.removeItem('@secrets:securityConfiguration').then(() => {
+                        AsyncStorage.removeItem('@secrets:theme').then(() => {
+                            AsyncStorage.removeItem('@secrets:secrets').then(() => {
+                                AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
+                                    console.log(yellow('>> All data has been deleted'))
+                                    console.log(red('   >> @secrets:password'))
+                                    console.log(red('   >> @secrets:securityConfiguration'))
+                                    console.log(red('   >> @secrets:theme'))
+                                    console.log(red('   >> @secrets:secrets'))
+                                    console.log(red('   >> @secrets:showEmoji'))
+        
+                                    Toast.show({
+                                        type: 'error',
+                                        text1: 'Dados Apagados'
+                                    })
+        
+                                    await loadPassword()
+                                    await loadTheme()
+                                    await loadShowEmoji()
+                                    
+                                    !password && navigation.goBack()
                                 })
-    
-                                await loadPassword()
-                                await loadTheme()
-                                await loadShowEmoji()
-                                
-                                !password && navigation.goBack()
                             })
                         })
                     })
