@@ -1,24 +1,26 @@
+import { MaterialIcons } from '@expo/vector-icons'
 import { FC } from 'react'
 import useAnimations from './useAnimations'
-import { Container, ButtonDelete, IconButtonDelete } from './style'
+import { Container, Button, IconButton } from './style'
 import Animated from 'react-native-reanimated'
 
 interface Iprops {
+    icon: keyof typeof MaterialIcons.glyphMap
     onPress: () => void
 }
 
-const ButtonDeleteAnimated: FC<Iprops> = ({ onPress }) => {
+const ButtonHeaderAnimated: FC<Iprops> = ({ onPress, icon }) => {
     const { animationButtonDelete, animationIconButtonDelete, events } = useAnimations()
 
     return (
         <Container style={animationButtonDelete}>
-            <ButtonDelete {...events(onPress)}>
+            <Button {...events(onPress)}>
                 <Animated.View style={animationIconButtonDelete}>
-                    <IconButtonDelete name="delete" size={28}/>
+                    <IconButton name={icon} size={28}/>
                 </Animated.View>
-            </ButtonDelete>
+            </Button>
         </Container>
     )
 }
 
-export default ButtonDeleteAnimated
+export default ButtonHeaderAnimated
