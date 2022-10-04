@@ -22,7 +22,7 @@ export const EmojiProvider: FC = ({ children }) => {
         const showEmoji = await AsyncStorage.getItem('@secrets:showEmoji')
         
         if (typeof showEmoji === 'string') {
-            setShowEmojiOnStorage(Boolean(showEmoji))
+            setShowEmojiOnStorage(showEmoji === 'true' ? true : false)
         } else {
             setShowEmojiOnStorage(true)
         }

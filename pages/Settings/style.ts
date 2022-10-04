@@ -76,11 +76,15 @@ export const TextButton = styled.Text`
     color: ${props => props.theme.primary};
 `
 
-export const Version = styled.Text`
-    margin-top: 15%;
+interface IVersion {
+    top: number
+}
+
+export const Version = styled.Text<IVersion>`
     margin-bottom: 2%;
     align-self: center;
     font-size: ${RFPercentage(3.2)}px;
+    margin-top: ${props => props.top}%;
     color: ${props => props.theme.secondaryColor};
 `
 

@@ -8,6 +8,7 @@ import checkUpdate from './checkUpdate'
 import Constants from 'expo-constants'
 import { blue, magenta } from '../../utils/colorsLogs'
 import useShowEmoji from '../../contexts/emojiContext'
+import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
 import Modal from 'react-native-modal'
 import ModalDelete from './ModalDelete'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
@@ -19,6 +20,7 @@ function Settings() {
     const { theme, themeName, mutateTheme } = useTheme()
     const [checkUpdating, setCheckUpdating] = useState(false)
     const { showEmoji, setShowEmoji } = useShowEmoji()
+    const { hideSecretOnShow, setHideSecretOnShow } = useHideSecretOnShow()
     const { password } = usePassword()
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalDelete, setOpenModalDelete] = useState(false)
@@ -26,7 +28,7 @@ function Settings() {
     const [openModalVerifyPasswordOnSecurity, setOpenModalVerifyPasswordOnSecurity] = useState<string | null>()
     
     return (
-        <ContainerPd>
+        <ContainerPd scroll>
             <HeaderBack onClick={() => navigation.goBack()} title="Configurações"/>
             <ContainerSwitch>
                 <TextSwitch>Tema escuro</TextSwitch>
@@ -49,10 +51,24 @@ function Settings() {
                     thumbColor={showEmoji ? theme.primary : theme.primary}
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => {
-                        showEmoji ? setShowEmoji(false) : setShowEmoji(true)
+                        setShowEmoji(!showEmoji)
                         
                         console.log(blue(`>> ShowEmoji changed`))
                         console.log(magenta(`   >> ${showEmoji ? 'Not Show emoji' : 'Show emoji'}`))
+                    }}
+                />
+            </ContainerSwitch>
+            <ContainerSwitch>
+                <TextSwitch>Esconder segredo</TextSwitch>
+                <Switch
+                    value={hideSecretOnShow}
+                    thumbColor={hideSecretOnShow ? theme.primary : theme.primary}
+                    trackColor={{false: theme.secondary, true: theme.primary}}
+                    onChange={() => {
+                        setHideSecretOnShow(!hideSecretOnShow)
+                        
+                        console.log(blue(`>> HideSecretOnShow changed`))
+                        console.log(magenta(`   >> ${hideSecretOnShow ? 'Not hide secret on show' : 'Hide secret on show'}`))
                     }}
                 />
             </ContainerSwitch>
@@ -80,7 +96,7 @@ function Settings() {
                 <IconUpdateButton checkUpdating={checkUpdating} name="sync" size={30}/>
                 <TextButton>Verificar atualizações</TextButton>
             </Button>
-            <Version>Versão {Constants.manifest.version}</Version>
+            <Version top={password ? 12 : 45}>Versão {Constants.manifest.version}</Version>
             <ContainerPoweredBy>
                 <TextPoweredBy>Powered by</TextPoweredBy>
                 <TextPoweredByName>Miguel da Penha</TextPoweredByName>

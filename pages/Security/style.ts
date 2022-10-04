@@ -11,7 +11,7 @@ export const Section = styled.Text`
     border-bottom-width: 2px;
     font-size: ${RFPercentage(3.5)}px;
     color: ${props => props.theme.primary};
-    border-bottom-color: ${props => props.theme.secondaryColor};
+    border-bottom-color: ${props => props.theme.backgroundColorSecondary};
 `
 
 export const ContainerSwitch = styled.View`

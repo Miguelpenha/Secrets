@@ -8,6 +8,9 @@ import { useNavigation } from '@react-navigation/native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { yellow, red } from '../../../utils/colorsLogs'
 import Toast from 'react-native-toast-message'
+import useHideSecretOnShow from '../../../contexts/hideSecretOnShowContext'
+import useSecurityConfiguration from '../../../contexts/securityConfigurationContext'
+import useSecrets from '../../../contexts/secretsContext'
 
 interface Iprops {
     setOpenModal: Dispatch<SetStateAction<boolean>>
@@ -17,6 +20,9 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
     const { loadPassword, password } = usePassword()
     const { loadTheme } = useTheme()
     const { loadShowEmoji } = useShowEmoji()
+    const { loadSecurityConfiguration } = useSecurityConfiguration()
+    const { loadHideSecretOnShow } = useHideSecretOnShow()
+    const { loadSecrets } = useSecrets()
     const navigation = useNavigation()
 
     return (
@@ -28,6 +34,7 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
                 <DataModalDeleteAll>@secrets:theme</DataModalDeleteAll>
                 <DataModalDeleteAll>@secrets:secrets</DataModalDeleteAll>
                 <DataModalDeleteAll>@secrets:showEmoji</DataModalDeleteAll>
+                <DataModalDeleteAll>@secrets:hideSecretOnShow</DataModalDeleteAll>
             </View>
             <FooterModalDeleteAll>
             <ButtonCancelModalDeleteAll onPress={() => setOpenModal(false)}>
@@ -40,24 +47,30 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
                     AsyncStorage.removeItem('@secrets:securityConfiguration').then(() => {
                         AsyncStorage.removeItem('@secrets:theme').then(() => {
                             AsyncStorage.removeItem('@secrets:secrets').then(() => {
-                                AsyncStorage.removeItem('@secrets:showEmoji').then(async () => {
-                                    console.log(yellow('>> All data has been deleted'))
-                                    console.log(red('   >> @secrets:password'))
-                                    console.log(red('   >> @secrets:securityConfiguration'))
-                                    console.log(red('   >> @secrets:theme'))
-                                    console.log(red('   >> @secrets:secrets'))
-                                    console.log(red('   >> @secrets:showEmoji'))
-        
-                                    Toast.show({
-                                        type: 'error',
-                                        text1: 'Dados Apagados'
+                                AsyncStorage.removeItem('@secrets:showEmoji').then(() => {
+                                    AsyncStorage.removeItem('@secrets:hideSecretOnShow').then(async () => {
+                                        console.log(yellow('>> All data has been deleted'))
+                                        console.log(red('   >> @secrets:password'))
+                                        console.log(red('   >> @secrets:securityConfiguration'))
+                                        console.log(red('   >> @secrets:theme'))
+                                        console.log(red('   >> @secrets:secrets'))
+                                        console.log(red('   >> @secrets:showEmoji'))
+                                        console.log(red('   >> @secrets:hideSecretOnShow'))
+            
+                                        Toast.show({
+                                            type: 'error',
+                                            text1: 'Dados Apagados'
+                                        })
+            
+                                        await loadPassword()
+                                        await loadTheme()
+                                        await loadHideSecretOnShow()
+                                        await loadShowEmoji()
+                                        await loadSecurityConfiguration()
+                                        await loadSecrets()
+                                        
+                                        !password && navigation.goBack()
                                     })
-        
-                                    await loadPassword()
-                                    await loadTheme()
-                                    await loadShowEmoji()
-                                    
-                                    !password && navigation.goBack()
                                 })
                             })
                         })
