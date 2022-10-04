@@ -4,8 +4,8 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
 export const Container = styled(Animated.View)`
-    margin-right: 8%;
-    align-self: flex-end;
+    right: 10%;
+    position: absolute;
 `
 
 export const ButtonCreate = styled.TouchableOpacity`

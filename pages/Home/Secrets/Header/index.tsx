@@ -1,12 +1,21 @@
+import { Dispatch, SetStateAction, FC, memo } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import useShowEmoji from '../../../../contexts/emojiContext'
-import { Container, ContainerSettings, Settings, Title, EmojiTitle } from './style'
+import { useTheme } from 'styled-components'
+import { Container, ContainerSettings, Settings, Title, EmojiTitle, Actions, InputFind } from './style'
 import ButtonCreateAnimated from './ButtonCreateAnimated'
-import { memo } from 'react'
+import useSecrets from '../../../../contexts/secretsContext'
 
-function Header() {
+interface Iprops {
+    find: string
+    setFind: Dispatch<SetStateAction<string>>
+}
+
+const Header: FC<Iprops> = ({ find, setFind }) => {
     const navigation = useNavigation()
     const { showEmoji } = useShowEmoji()
+    const { secrets } = useSecrets()
+    const theme = useTheme()
 
     return (
         <Container>
@@ -14,7 +23,18 @@ function Header() {
                 <Settings name="settings" size={40}/>
             </ContainerSettings>
             <Title>Segredos {showEmoji && <EmojiTitle>&#x1F92B;</EmojiTitle>}</Title>
-            <ButtonCreateAnimated/>
+            <Actions>
+                {secrets.length ? (
+                    <InputFind
+                        value={find}
+                        placeholder="Pesquisar..."
+                        onChangeText={setFind}
+                        selectionColor={theme.primary}
+                        placeholderTextColor={theme.primary}
+                    />
+                ) : null}
+                <ButtonCreateAnimated/>
+            </Actions>
         </Container>
     )
 }

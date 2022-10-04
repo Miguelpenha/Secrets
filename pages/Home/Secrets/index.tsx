@@ -2,7 +2,7 @@ import { FC, useState, memo } from 'react'
 import { useSecrets } from '../../../contexts/secretsContext'
 import useShowEmoji from '../../../contexts/emojiContext'
 import { FlatList } from 'react-native'
-import Header from './Header'
+import HeaderRaw from './Header'
 import Secret from './Secret'
 import RefreshControl from '../../../components/RefreshControl'
 import { Message } from './style'
@@ -15,6 +15,7 @@ const Secrets: FC<Iprops> = ({ onVerify }) => {
   const [refreshing, setRefreshing] = useState(false)
   const { secrets, loadSecrets } = useSecrets()
   const { showEmoji } = useShowEmoji()
+  const [find, setFind] = useState('')
 
   async function onRefreshAction() {
     setRefreshing(true)
@@ -27,9 +28,15 @@ const Secrets: FC<Iprops> = ({ onVerify }) => {
   return (
     <FlatList
       data={secrets}
-      ListHeaderComponent={Header}
       keyExtractor={item => item.id}
-      renderItem={({ item }) => <Secret secret={item} onVerify={onVerify}/>}
+      ListHeaderComponent={<HeaderRaw find={find} setFind={setFind}/>}
+      renderItem={({ item }) => {
+        if ((find.length >= 1 && !item.secure) || !find) {
+          if (!find || item.name.toUpperCase().includes(find.toUpperCase())) {
+            return <Secret secret={item} onVerify={onVerify}/>
+          }
+        }
+      }}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefreshAction}/>}
       ListEmptyComponent={
         <Message>Você não possui segredos cadastrados ainda{showEmoji && <> &#x1F615;</>}</Message>
