@@ -6,15 +6,14 @@ import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
 import { Section, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
-import { blue, magenta } from '../../utils/colorsLogs'
 import Modal from 'react-native-modal'
 import ModalSave from './ModalSave'
-import { ISecurity } from '../../types'
 
 function Security() {
     const navigation = useNavigation()
     const { securityConfiguration } = useSecurityConfiguration()
     const [verifyPasswordWhenDeleteSecret, setVerifyPasswordWhenDeleteSecret] = useState(securityConfiguration.verifyPasswordWhenDeleteSecret)
+    const [verifyPasswordWhenEditSecret, setVerifyPasswordWhenEditSecret] = useState(securityConfiguration.verifyPasswordWhenEditSecret)
     const [verifyPasswordWhenChangePassword, setVerifyPasswordWhenChangePassword] = useState(securityConfiguration.verifyPasswordWhenChangePassword)
     const [verifyPasswordWhenSecurityConfiguration, setVerifyPasswordWhenSecurityConfiguration] = useState(securityConfiguration.verifyPasswordWhenSecurityConfiguration)
     const theme = useTheme()
@@ -25,14 +24,25 @@ function Security() {
             <HeaderBack title="Segurança" onClick={() => navigation.goBack()}/>
             <Section>Verificar senha quando</Section>
             <ContainerSwitch>
+                <TextSwitch>Editar segredo</TextSwitch>
+                <Switch
+                    value={verifyPasswordWhenEditSecret}
+                    thumbColor={theme.primary}
+                    trackColor={{false: theme.secondary, true: theme.primary}}
+                    onChange={() => 
+                        setVerifyPasswordWhenEditSecret(!verifyPasswordWhenEditSecret)
+                    }
+                />
+            </ContainerSwitch>
+            <ContainerSwitch>
                 <TextSwitch>Deletar segredo</TextSwitch>
                 <Switch
                     value={verifyPasswordWhenDeleteSecret}
                     thumbColor={theme.primary}
                     trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => {
+                    onChange={() => 
                         setVerifyPasswordWhenDeleteSecret(!verifyPasswordWhenDeleteSecret)
-                    }}
+                    }
                 />
             </ContainerSwitch>
             <ContainerSwitch>
@@ -41,9 +51,9 @@ function Security() {
                     thumbColor={theme.primary}
                     value={verifyPasswordWhenChangePassword}
                     trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => {
+                    onChange={() => 
                         setVerifyPasswordWhenChangePassword(!verifyPasswordWhenChangePassword)
-                    }}
+                    }
                 />
             </ContainerSwitch>
             <ContainerSwitch>
@@ -52,9 +62,9 @@ function Security() {
                     thumbColor={theme.primary}
                     value={verifyPasswordWhenSecurityConfiguration}
                     trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => {
+                    onChange={() => 
                         setVerifyPasswordWhenSecurityConfiguration(!verifyPasswordWhenSecurityConfiguration)
-                    }}
+                    }
                 />
             </ContainerSwitch>
             <ButtonSubmit onPress={() => setOpenModalSave(true)}>
@@ -68,6 +78,7 @@ function Security() {
                 <ModalSave
                     setOpenModal={setOpenModalSave}
                     securityConfiguration={{
+                        verifyPasswordWhenEditSecret,
                         verifyPasswordWhenDeleteSecret,
                         verifyPasswordWhenChangePassword,
                         verifyPasswordWhenSecurityConfiguration

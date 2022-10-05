@@ -7,6 +7,7 @@ import usePassword from './passwordContext'
 interface ISecretsContext {
     secrets: ISecret[]
     loadSecrets: () => Promise<void>
+    editSecret: (secretEdit: ISecret) => Promise<void>
     deleteSecret: (id: string) => Promise<void>
     createSecret: (secret: ISecret) => Promise<void>
     setSecrets: (secrets: ISecret[]) => Promise<void>
@@ -69,13 +70,29 @@ export const SecretsProvider: FC = ({ children }) => {
         setSecrets(secretsNew)
     }
 
+    async function editSecret(secretEdit: ISecret) {
+        let secretsRaw: ISecret[] = JSON.parse(decrypt(await AsyncStorage.getItem('@secrets:secrets'), password))
+
+        const secrets = secretsRaw.map(secret => {
+            if (secret.id === secretEdit.id) {
+                return { ...secret, ...secretEdit } 
+            } else {
+                return secret
+            }
+        })
+
+        AsyncStorage.setItem('@secrets:secrets', encrypt(JSON.stringify(secrets), password))
+
+        setSecrets(secrets)
+    }
+
     useEffect(() => {
         password && loadSecrets().then()
     }, [])
 
     if (password) {
         return (
-            <SecretsContext.Provider value={{secrets, setSecrets: setSecretsOnStorage, loadSecrets, createSecret, deleteSecret}}>
+            <SecretsContext.Provider value={{secrets, setSecrets: setSecretsOnStorage, loadSecrets, createSecret, deleteSecret, editSecret}}>
                {children}
             </SecretsContext.Provider>
         )

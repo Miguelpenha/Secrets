@@ -24,6 +24,7 @@ function CreateSecret() {
     const [type, setType] = useState('')
     const [value, setValue] = useState('')
     const [hideIcon, setHideIcon] = useState(false)
+    const [hideName, setHideName] = useState(false)
     const [secure, setSecure] = useState(false)
     const { createSecret } = useSecrets()
     const [password, setPassword] = useState('')
@@ -31,7 +32,10 @@ function CreateSecret() {
     const modalizeSelectIcon = useRef<Modalize>(null)
 
     useEffect(() => {
-        secure && setHideIcon(true)
+        if (secure) {
+            setHideIcon(true)
+            setHideName(true)
+        }
     }, [secure])
     
     return (
@@ -82,6 +86,15 @@ function CreateSecret() {
                             />
                         </ContainerSwitch>
                         <ContainerSwitch>
+                            <TextSwitch>Esconder nome</TextSwitch>
+                            <Switch
+                                value={hideName}
+                                onChange={() => !secure && setHideName(!hideName)}
+                                thumbColor={hideName ? theme.primary : theme.primary}
+                                trackColor={{false: theme.secondary, true: theme.primary}}
+                            />
+                        </ContainerSwitch>
+                        <ContainerSwitch>
                             <TextSwitch>Seguro</TextSwitch>
                             <Switch
                                 value={secure}
@@ -117,7 +130,7 @@ function CreateSecret() {
                             </Field>
                         )}
                         <ButtonSubmit onPress={async () => (
-                            await onSubmit(icon, name, type, value, hideIcon, secure, password, passwordDefault, createSecret, navigation as any)
+                            await onSubmit(icon, name, type, value, hideIcon, hideName, secure, password, passwordDefault, createSecret, navigation as any)
                         )}>
                             <TextButtonSubmit>Criar</TextButtonSubmit>
                         </ButtonSubmit>

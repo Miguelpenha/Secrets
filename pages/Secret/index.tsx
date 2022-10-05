@@ -39,6 +39,10 @@ function Secret() {
                         onPress={() => setVisibility(!visibility)}
                         icon={`visibility${visibility ? '' : '-off'}`}
                     />
+                    <ButtonHeaderAnimated
+                        icon="edit"
+                        onPress={() => navigation.navigate('EditSecret', { id: secret.id })}
+                    />
                 </Header>
                 <Icon name={secret.icon} size={35}/>
                 <ContainerValue activeOpacity={0.4} onPress={() => {

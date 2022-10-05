@@ -22,14 +22,17 @@ export type IthemeType = keyof typeof ThemeNameType
 export type Inavigation = {
   Home: undefined
   Settings: undefined
+  Security: undefined
+  CreateSecret: undefined
   Secret: {
     id: string
   }
-  CreateSecret: undefined
+  EditSecret: {
+    id: string
+  }
   Password: {
     initial: boolean
   }
-  Security: undefined
 }
 
 export interface ISecret {
@@ -40,10 +43,12 @@ export interface ISecret {
   secure?: boolean
   password?: string
   hideIcon?: boolean
+  hideName?: boolean
   icon: keyof typeof MaterialIcons.glyphMap
 }
 
 export interface ISecurity {
+  verifyPasswordWhenEditSecret: boolean
   verifyPasswordWhenDeleteSecret: boolean
   verifyPasswordWhenChangePassword: boolean
   verifyPasswordWhenSecurityConfiguration: boolean

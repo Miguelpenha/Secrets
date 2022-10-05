@@ -20,7 +20,7 @@ export const Icon = styled(MaterialIcons)`
 
 export const ContainerValue = styled.TouchableOpacity`
     padding: 5%;
-    max-width: 80%;
+    max-width: 90%;
     margin-top: 10%;
     align-self: center;
     border-radius: ${RFPercentage(2)}px;
@@ -29,6 +29,6 @@ export const ContainerValue = styled.TouchableOpacity`
 
 export const Value = styled.TextInput`
     text-align: center;
-    font-size: ${RFPercentage(3.5)}px;
+    font-size: ${RFPercentage(3)}px;
     color: ${props => props.theme.color};
 `
