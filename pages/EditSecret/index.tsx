@@ -1,5 +1,4 @@
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { IParams } from './types'
 import { useSecret } from '../../contexts/secretsContext'
 import { useEffect, useState } from 'react'
 import { useTheme } from 'styled-components'
@@ -7,11 +6,16 @@ import useSecurityConfiguration from '../../contexts/securityConfigurationContex
 import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { Value, ButtonSubmit, TextButtonSubmit } from './style'
+import { Value, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
+import { Switch } from 'react-native'
 import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
 import ModalSave from './ModalSave'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
+
+interface IParams {
+    id: string
+}
 
 function Secret() {
     const { id } = useRoute().params as IParams
@@ -19,15 +23,34 @@ function Secret() {
     const navigation = useNavigation()
     const [value, setValue] = useState('')
     const theme = useTheme()
+    const [hideIcon, setHideIcon] = useState(false)
+    const [hideName, setHideName] = useState(false)
+    const [disabledSubmit, setDisabledSubmit] = useState(true)
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalSave, setOpenModalSave] = useState(false)
     const [openModalVerify, setOpenModalVerify] = useState<string | null>()
 
-    useEffect(() => secret && setValue(secret.value), [secret])
+    useEffect(() => {
+        if (secret) {
+            setValue(secret.value)
+            setHideIcon(secret.hideIcon)
+            setHideName(secret.hideName)
+        }
+    }, [secret])
 
     function handleSubmit() {
         securityConfiguration.verifyPasswordWhenEditSecret ? setOpenModalVerify(secret.id) : setOpenModalSave(true)
     }
+
+    useEffect(() => {
+        if (secret) {
+            if (secret.value === value && secret.hideIcon === hideIcon && secret.hideName === hideName) {
+                setDisabledSubmit(true)
+            } else {
+                setDisabledSubmit(false)
+            }
+        }
+    }, [value, hideIcon, hideName, secret])
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -43,8 +66,26 @@ function Secret() {
                         selectionColor={theme.primary}
                         placeholderTextColor={theme.primary}
                     />
-                    <ButtonSubmit disabled={secret.value === value} onPress={handleSubmit}>
-                        <TextButtonSubmit disabled={secret.value === value}>Salvar</TextButtonSubmit>
+                    <ContainerSwitch>
+                        <TextSwitch>Esconder ícone</TextSwitch>
+                        <Switch
+                            value={hideIcon}
+                            onChange={() => setHideIcon(!hideIcon)}
+                            thumbColor={hideIcon ? theme.primary : theme.primary}
+                            trackColor={{false: theme.secondary, true: theme.primary}}
+                        />
+                    </ContainerSwitch>
+                    <ContainerSwitch>
+                        <TextSwitch>Esconder nome</TextSwitch>
+                        <Switch
+                            value={hideName}
+                            onChange={() => setHideName(!hideName)}
+                            thumbColor={hideName ? theme.primary : theme.primary}
+                            trackColor={{false: theme.secondary, true: theme.primary}}
+                        />
+                    </ContainerSwitch>
+                    <ButtonSubmit disabled={disabledSubmit} onPress={handleSubmit}>
+                        <TextButtonSubmit disabled={disabledSubmit}>Salvar</TextButtonSubmit>
                     </ButtonSubmit>
                 </> : <Loading/>}
                 <Modal
@@ -52,7 +93,7 @@ function Secret() {
                     onBackdropPress={() => setOpenModalSave(false)}
                     onBackButtonPress={() => setOpenModalSave(false)}
                 >
-                    <ModalSave secret={{ ...secret, value }} setOpenModal={setOpenModalSave}/>
+                    <ModalSave secret={{ ...secret, value, hideIcon, hideName }} setOpenModal={setOpenModalSave}/>
                 </Modal>
                 <Modal
                     isVisible={openModalVerify ? true : false}
