@@ -21,7 +21,7 @@ export default function Home() {
     setLoading(false)
   }, [])
 
-  if (secrets.length && !loading) {
+  if (secrets && !loading) {
     return (
       <ContainerPd>
         <Secrets onVerify={id => setOpenModalVerify(id)}/>
