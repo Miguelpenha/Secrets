@@ -12,7 +12,10 @@ import ModalSave from './ModalSave'
 function Security() {
     const navigation = useNavigation()
     const { securityConfiguration } = useSecurityConfiguration()
+    const [verifyPasswordWhenDeleteData, setVerifyPasswordWhenDeleteData] = useState(securityConfiguration.verifyPasswordWhenDeleteData)
     const [verifyPasswordWhenDeleteSecret, setVerifyPasswordWhenDeleteSecret] = useState(securityConfiguration.verifyPasswordWhenDeleteSecret)
+    const [verifyPasswordWhenExportSecrets, setVerifyPasswordWhenExportSecrets] = useState(securityConfiguration.verifyPasswordWhenExportSecrets)
+    const [verifyPasswordWhenImportSecrets, setVerifyPasswordWhenImportSecrets] = useState(securityConfiguration.verifyPasswordWhenImportSecrets)
     const [verifyPasswordWhenEditSecret, setVerifyPasswordWhenEditSecret] = useState(securityConfiguration.verifyPasswordWhenEditSecret)
     const [verifyPasswordWhenChangePassword, setVerifyPasswordWhenChangePassword] = useState(securityConfiguration.verifyPasswordWhenChangePassword)
     const [verifyPasswordWhenSecurityConfiguration, setVerifyPasswordWhenSecurityConfiguration] = useState(securityConfiguration.verifyPasswordWhenSecurityConfiguration)
@@ -24,10 +27,21 @@ function Security() {
             <HeaderBack title="Segurança" onClick={() => navigation.goBack()}/>
             <Section>Verificar senha quando</Section>
             <ContainerSwitch>
+                <TextSwitch>Apagar dados</TextSwitch>
+                <Switch
+                    thumbColor={theme.primary}
+                    value={verifyPasswordWhenDeleteData}
+                    trackColor={{false: theme.secondary, true: theme.primary}}
+                    onChange={() => 
+                        setVerifyPasswordWhenDeleteData(!verifyPasswordWhenDeleteData)
+                    }
+                />
+            </ContainerSwitch>
+            <ContainerSwitch>
                 <TextSwitch>Editar segredo</TextSwitch>
                 <Switch
-                    value={verifyPasswordWhenEditSecret}
                     thumbColor={theme.primary}
+                    value={verifyPasswordWhenEditSecret}
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => 
                         setVerifyPasswordWhenEditSecret(!verifyPasswordWhenEditSecret)
@@ -37,11 +51,33 @@ function Security() {
             <ContainerSwitch>
                 <TextSwitch>Deletar segredo</TextSwitch>
                 <Switch
-                    value={verifyPasswordWhenDeleteSecret}
                     thumbColor={theme.primary}
+                    value={verifyPasswordWhenDeleteSecret}
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => 
                         setVerifyPasswordWhenDeleteSecret(!verifyPasswordWhenDeleteSecret)
+                    }
+                />
+            </ContainerSwitch>
+            <ContainerSwitch>
+                <TextSwitch>Exportar segredos</TextSwitch>
+                <Switch
+                    thumbColor={theme.primary}
+                    value={verifyPasswordWhenExportSecrets}
+                    trackColor={{false: theme.secondary, true: theme.primary}}
+                    onChange={() => 
+                        setVerifyPasswordWhenExportSecrets(!verifyPasswordWhenExportSecrets)
+                    }
+                />
+            </ContainerSwitch>
+            <ContainerSwitch>
+                <TextSwitch>Importar segredos</TextSwitch>
+                <Switch
+                    thumbColor={theme.primary}
+                    value={verifyPasswordWhenImportSecrets}
+                    trackColor={{false: theme.secondary, true: theme.primary}}
+                    onChange={() => 
+                        setVerifyPasswordWhenImportSecrets(!verifyPasswordWhenImportSecrets)
                     }
                 />
             </ContainerSwitch>
@@ -78,8 +114,11 @@ function Security() {
                 <ModalSave
                     setOpenModal={setOpenModalSave}
                     securityConfiguration={{
+                        verifyPasswordWhenDeleteData,
                         verifyPasswordWhenEditSecret,
                         verifyPasswordWhenDeleteSecret,
+                        verifyPasswordWhenExportSecrets,
+                        verifyPasswordWhenImportSecrets,
                         verifyPasswordWhenChangePassword,
                         verifyPasswordWhenSecurityConfiguration
                     }}

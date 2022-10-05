@@ -28,8 +28,11 @@ const ModalSave: FC<Iprops> = ({ securityConfiguration, setOpenModal }) => {
                     setSecurityConfiguration(securityConfiguration)
 
                     console.log(blue(`>> Security configuration changed`))
+                    console.log(magenta(`   >> verifyPasswordWhenDeleteData ${blue(String(securityConfiguration.verifyPasswordWhenDeleteData))}`))
                     console.log(magenta(`   >> verifyPasswordWhenEditSecret ${blue(String(securityConfiguration.verifyPasswordWhenEditSecret))}`))
                     console.log(magenta(`   >> verifyPasswordWhenDeleteSecret ${blue(String(securityConfiguration.verifyPasswordWhenDeleteSecret))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenExportSecrets ${blue(String(securityConfiguration.verifyPasswordWhenExportSecrets))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenImportSecrets ${blue(String(securityConfiguration.verifyPasswordWhenImportSecrets))}`))
                     console.log(magenta(`   >> verifyPasswordWhenChangePassword ${blue(String(securityConfiguration.verifyPasswordWhenChangePassword))}`))
                     console.log(magenta(`   >> verifyPasswordWhenSecurityConfiguration ${blue(String(securityConfiguration.verifyPasswordWhenSecurityConfiguration))}`))
 

@@ -48,8 +48,11 @@ export interface ISecret {
 }
 
 export interface ISecurity {
+  verifyPasswordWhenDeleteData: boolean
   verifyPasswordWhenEditSecret: boolean
   verifyPasswordWhenDeleteSecret: boolean
+  verifyPasswordWhenExportSecrets: boolean
+  verifyPasswordWhenImportSecrets: boolean
   verifyPasswordWhenChangePassword: boolean
   verifyPasswordWhenSecurityConfiguration: boolean
 }

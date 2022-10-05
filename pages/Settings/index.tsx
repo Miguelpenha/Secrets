@@ -14,6 +14,10 @@ import ModalDelete from './ModalDelete'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
+import * as Clipboard from 'expo-clipboard'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Toast from 'react-native-toast-message'
+import ModalImportSecrets from './ModalImportSecrets'
 
 function Settings() {
     const navigation = useNavigation()
@@ -25,8 +29,20 @@ function Settings() {
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalDelete, setOpenModalDelete] = useState(false)
     const [openModalVerifyPasswordOnChangePassword, setOpenModalVerifyPasswordOnChangePassword] = useState<string | null>()
+    const [openModalVerifyPasswordOnDeleteData, setOpenModalVerifyPasswordOnDeleteData] = useState<string | null>()
     const [openModalVerifyPasswordOnSecurity, setOpenModalVerifyPasswordOnSecurity] = useState<string | null>()
-    
+    const [openModalVerifyPasswordOnExportSecrets, setOpenModalVerifyPasswordOnExportSecrets] = useState<string | null>()
+    const [openModalVerifyPasswordOnImportSecrets, setOpenModalVerifyPasswordOnImportSecrets] = useState<string | null>()
+    const [openModalImportSecrets, setOpenModalImportSecrets] = useState<boolean>()
+
+    async function handleExportSecrets() {
+        Clipboard.setString(await AsyncStorage.getItem('@secrets:secrets'))
+        
+        Toast.show({
+            text1: 'Exportação copiada para área de transferência'
+        })
+    }
+
     return (
         <ContainerPd scroll>
             <HeaderBack onClick={() => navigation.goBack()} title="Configurações"/>
@@ -72,7 +88,7 @@ function Settings() {
                     }}
                 />
             </ContainerSwitch>
-            <Button onPress={() => setOpenModalDelete(true)}>
+            <Button onPress={() => securityConfiguration.verifyPasswordWhenDeleteData ? setOpenModalVerifyPasswordOnDeleteData('true') : setOpenModalDelete(true)}>
                 <IconButton name="delete" size={30}/>
                 <TextButton>Apagar dados</TextButton>
             </Button>
@@ -92,6 +108,14 @@ function Settings() {
                     <IconButton right name="arrow-forward-ios" size={25}/>
                 </Button>
             </>}
+            <Button onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>
+                <IconButton name="file-upload" size={30}/>
+                <TextButton>Exportar segredos</TextButton>
+            </Button>
+            <Button onPress={() => setOpenModalImportSecrets(true)}>
+                <IconButton name="file-download" size={30}/>
+                <TextButton>Importar segredos</TextButton>
+            </Button>
             <Button disabled={checkUpdating} onPress={async () => checkUpdate(setCheckUpdating)} loading={checkUpdating}>
                 <IconUpdateButton checkUpdating={checkUpdating} name="sync" size={30}/>
                 <TextButton>Verificar atualizações</TextButton>
@@ -109,7 +133,7 @@ function Settings() {
                 <ModalDelete setOpenModal={setOpenModalDelete}/>
             </Modal>
             <Modal
-                isVisible={openModalVerifyPasswordOnChangePassword ? true : false }
+                isVisible={openModalVerifyPasswordOnChangePassword ? true : false}
                 onBackdropPress={() => setOpenModalVerifyPasswordOnChangePassword(null)}
                 onBackButtonPress={() => setOpenModalVerifyPasswordOnChangePassword(null)}
             >
@@ -122,7 +146,18 @@ function Settings() {
                 />
             </Modal>
             <Modal
-                isVisible={openModalVerifyPasswordOnSecurity ? true : false }
+                isVisible={openModalVerifyPasswordOnDeleteData ? true : false}
+                onBackdropPress={() => setOpenModalVerifyPasswordOnDeleteData(null)}
+                onBackButtonPress={() => setOpenModalVerifyPasswordOnDeleteData(null)}
+            >
+                <ModalVerifyPassword
+                    hideToastFinal
+                    setOpenModal={setOpenModalVerifyPasswordOnDeleteData}
+                    onSubmit={() => setOpenModalDelete(true)}
+                />
+            </Modal>
+            <Modal
+                isVisible={openModalVerifyPasswordOnSecurity ? true : false}
                 onBackdropPress={() => setOpenModalVerifyPasswordOnSecurity(null)}
                 onBackButtonPress={() => setOpenModalVerifyPasswordOnSecurity(null)}
             >
@@ -131,6 +166,35 @@ function Settings() {
                     setOpenModal={setOpenModalVerifyPasswordOnSecurity}
                     onSubmit={() => navigation.navigate('Security')}
                 />
+            </Modal>
+            <Modal
+                isVisible={openModalVerifyPasswordOnExportSecrets ? true : false}
+                onBackdropPress={() => setOpenModalVerifyPasswordOnExportSecrets(null)}
+                onBackButtonPress={() => setOpenModalVerifyPasswordOnExportSecrets(null)}
+            >
+                <ModalVerifyPassword
+                    hideToastFinal
+                    onSubmit={handleExportSecrets}
+                    setOpenModal={setOpenModalVerifyPasswordOnExportSecrets}
+                />
+            </Modal>
+            <Modal
+                isVisible={openModalVerifyPasswordOnImportSecrets ? true : false}
+                onBackdropPress={() => setOpenModalVerifyPasswordOnImportSecrets(null)}
+                onBackButtonPress={() => setOpenModalVerifyPasswordOnImportSecrets(null)}
+            >
+                <ModalVerifyPassword
+                    hideToastFinal
+                    onSubmit={() => setOpenModalImportSecrets(true)}
+                    setOpenModal={setOpenModalVerifyPasswordOnImportSecrets}
+                />
+            </Modal>
+            <Modal
+                isVisible={openModalImportSecrets}
+                onBackdropPress={() => setOpenModalImportSecrets(false)}
+                onBackButtonPress={() => setOpenModalImportSecrets(false)}
+            >
+                <ModalImportSecrets setOpenModal={setOpenModalImportSecrets}/>
             </Modal>
         </ContainerPd>
     )
