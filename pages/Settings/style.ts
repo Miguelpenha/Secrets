@@ -33,13 +33,12 @@ interface IButton {
 export const Button = styled.TouchableOpacity<IButton>`
     elevation: 8;
     padding: 4% 4%;
-    margin-top: 5%;
-    margin-bottom: 5%;
+    margin: 4.5% 0%;
     align-self: center;
     align-items: center;
     flex-direction: row;
     border-radius: ${RFPercentage(2)}px;
-    background-color: ${props => props.loading ? '#c7dffe' : props.theme.backgroundColorSecondary};
+    background-color: ${props => props.loading ? props.theme.secondary : props.theme.backgroundColorSecondary};
 `
 
 interface IIconButton {

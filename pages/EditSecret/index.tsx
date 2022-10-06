@@ -12,6 +12,7 @@ import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
 import ModalSave from './ModalSave'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
+import usePassword from '../../contexts/passwordContext'
 
 interface IParams {
     id: string
@@ -23,6 +24,8 @@ function Secret() {
     const navigation = useNavigation()
     const [value, setValue] = useState('')
     const theme = useTheme()
+    const [secure, setSecure] = useState(false)
+    const { password } = usePassword()
     const [hideIcon, setHideIcon] = useState(false)
     const [hideName, setHideName] = useState(false)
     const [disabledSubmit, setDisabledSubmit] = useState(true)
@@ -33,10 +36,18 @@ function Secret() {
     useEffect(() => {
         if (secret) {
             setValue(secret.value)
+            setSecure(secret.secure)
             setHideIcon(secret.hideIcon)
             setHideName(secret.hideName)
         }
     }, [secret])
+
+    useEffect(() => {
+        if (secure) {
+            setHideIcon(true)
+            setHideName(true)
+        }
+    }, [secure])
 
     function handleSubmit() {
         securityConfiguration.verifyPasswordWhenEditSecret ? setOpenModalVerify(secret.id) : setOpenModalSave(true)
@@ -44,13 +55,13 @@ function Secret() {
 
     useEffect(() => {
         if (secret) {
-            if (secret.value === value && secret.hideIcon === hideIcon && secret.hideName === hideName) {
+            if (secret.value === value && secret.hideIcon === hideIcon && secret.hideName === hideName && secret.secure === secure) {
                 setDisabledSubmit(true)
             } else {
                 setDisabledSubmit(false)
             }
         }
-    }, [value, hideIcon, hideName, secret])
+    }, [value, secure, hideIcon, hideName, secret])
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -67,10 +78,19 @@ function Secret() {
                         placeholderTextColor={theme.primary}
                     />
                     <ContainerSwitch>
+                        <TextSwitch>Seguro</TextSwitch>
+                        <Switch
+                            value={secure}
+                            onChange={() => setSecure(!secure)}
+                            thumbColor={secure ? theme.primary : theme.primary}
+                            trackColor={{false: theme.secondary, true: theme.primary}}
+                        />
+                    </ContainerSwitch>
+                    <ContainerSwitch>
                         <TextSwitch>Esconder ícone</TextSwitch>
                         <Switch
                             value={hideIcon}
-                            onChange={() => setHideIcon(!hideIcon)}
+                            onChange={() => !secure && setHideIcon(!hideIcon)}
                             thumbColor={hideIcon ? theme.primary : theme.primary}
                             trackColor={{false: theme.secondary, true: theme.primary}}
                         />
@@ -79,7 +99,7 @@ function Secret() {
                         <TextSwitch>Esconder nome</TextSwitch>
                         <Switch
                             value={hideName}
-                            onChange={() => setHideName(!hideName)}
+                            onChange={() => !secure && setHideName(!hideName)}
                             thumbColor={hideName ? theme.primary : theme.primary}
                             trackColor={{false: theme.secondary, true: theme.primary}}
                         />
@@ -93,7 +113,7 @@ function Secret() {
                     onBackdropPress={() => setOpenModalSave(false)}
                     onBackButtonPress={() => setOpenModalSave(false)}
                 >
-                    <ModalSave secret={{ ...secret, value, hideIcon, hideName }} setOpenModal={setOpenModalSave}/>
+                    <ModalSave secret={{ ...secret, value, secure, hideIcon, hideName, password: secure && password }} setOpenModal={setOpenModalSave}/>
                 </Modal>
                 <Modal
                     isVisible={openModalVerify ? true : false}
