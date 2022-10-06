@@ -5,7 +5,7 @@ const defaultSecurityConfiguration: ISecurity = {
     verifyPasswordWhenEditSecret: false,
     verifyPasswordWhenDeleteSecret: true,
     verifyPasswordWhenExportSecrets: true,
-    verifyPasswordWhenImportSecrets: true,
+    verifyPasswordWhenImportSecrets: false,
     verifyPasswordWhenChangePassword: true,
     verifyPasswordWhenSecurityConfiguration: true
 }

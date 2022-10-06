@@ -112,7 +112,7 @@ function Settings() {
                 <IconButton name="file-upload" size={30}/>
                 <TextButton>Exportar segredos</TextButton>
             </Button>
-            <Button onPress={() => setOpenModalImportSecrets(true)}>
+            <Button onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>
                 <IconButton name="file-download" size={30}/>
                 <TextButton>Importar segredos</TextButton>
             </Button>
