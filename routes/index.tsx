@@ -11,7 +11,7 @@ import toastConfig from '../toastConfig'
 function Routes() {
   const { name } = useTheme()
   const { password } = usePassword()
-
+  
   return (
     <>
       <StatusBar

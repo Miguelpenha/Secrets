@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack'
 import { Inavigation } from '../types'
+import { useVerifiedAccess } from '../contexts/verifiedAccessContext'
 import Home from '../pages/Home'
 import Settings from '../pages/Settings'
 import Secret from '../pages/Secret'
@@ -10,10 +11,11 @@ import Password from '../pages/Password'
 
 function AppStack() {
     const { Navigator, Screen } = createStackNavigator<Inavigation>()
+    const { verifiedAccess } = useVerifiedAccess()
     
     return (
         <Navigator
-            initialRouteName="Home"
+            initialRouteName={verifiedAccess ? 'Home' : 'Password'}
             screenOptions={{
                 headerShown: false
             }}
@@ -24,7 +26,7 @@ function AppStack() {
             <Screen name="Security" component={Security}/>
             <Screen name="EditSecret" component={EditSecret}/>
             <Screen name="CreateSecret" component={CreateSecret}/>
-            <Screen name="Password" component={Password} initialParams={{ initial: false }}/>
+            <Screen name="Password" component={Password} initialParams={{ objective: 'check' }}/>
         </Navigator>
     )
 }

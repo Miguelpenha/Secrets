@@ -101,21 +101,21 @@ function Settings() {
                     <IconButton right name="arrow-forward-ios" size={25}/>
                 </Button>
                 <Button onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
-                    initial: false
+                    objective: 'change'
                 })}>
                     <IconButton name="vpn-key" size={30}/>
                     <TextButton>Mudar senha</TextButton>
                     <IconButton right name="arrow-forward-ios" size={25}/>
                 </Button>
+                <Button onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>
+                    <IconButton name="file-upload" size={30}/>
+                    <TextButton>Exportar segredos</TextButton>
+                </Button>
+                <Button onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>
+                    <IconButton name="file-download" size={30}/>
+                    <TextButton>Importar segredos</TextButton>
+                </Button>
             </>}
-            <Button onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>
-                <IconButton name="file-upload" size={30}/>
-                <TextButton>Exportar segredos</TextButton>
-            </Button>
-            <Button onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>
-                <IconButton name="file-download" size={30}/>
-                <TextButton>Importar segredos</TextButton>
-            </Button>
             <Button disabled={checkUpdating} onPress={async () => checkUpdate(setCheckUpdating)} loading={checkUpdating}>
                 <IconUpdateButton checkUpdating={checkUpdating} name="sync" size={30}/>
                 <TextButton>Verificar atualizações</TextButton>
@@ -141,7 +141,7 @@ function Settings() {
                     hideToastFinal
                     setOpenModal={setOpenModalVerifyPasswordOnChangePassword}
                     onSubmit={() => navigation.navigate('Password', {
-                        initial: false
+                        objective: 'change'
                     })}
                 />
             </Modal>
