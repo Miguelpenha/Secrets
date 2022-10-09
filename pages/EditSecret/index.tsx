@@ -42,13 +42,6 @@ function Secret() {
         }
     }, [secret])
 
-    useEffect(() => {
-        if (secure) {
-            setHideIcon(true)
-            setHideName(true)
-        }
-    }, [secure])
-
     function handleSubmit() {
         securityConfiguration.verifyPasswordWhenEditSecret ? setOpenModalVerify(secret.id) : setOpenModalSave(true)
     }
@@ -81,7 +74,11 @@ function Secret() {
                         <TextSwitch>Seguro</TextSwitch>
                         <Switch
                             value={secure}
-                            onChange={() => setSecure(!secure)}
+                            onChange={() => {
+                                setSecure(!secure)
+                                !secure && setHideIcon(true)
+                                !secure && setHideName(true)
+                            }}
                             thumbColor={secure ? theme.primary : theme.primary}
                             trackColor={{false: theme.secondary, true: theme.primary}}
                         />
@@ -90,7 +87,7 @@ function Secret() {
                         <TextSwitch>Esconder ícone</TextSwitch>
                         <Switch
                             value={hideIcon}
-                            onChange={() => !secure && setHideIcon(!hideIcon)}
+                            onChange={() => setHideIcon(!hideIcon)}
                             thumbColor={hideIcon ? theme.primary : theme.primary}
                             trackColor={{false: theme.secondary, true: theme.primary}}
                         />
@@ -99,7 +96,7 @@ function Secret() {
                         <TextSwitch>Esconder nome</TextSwitch>
                         <Switch
                             value={hideName}
-                            onChange={() => !secure && setHideName(!hideName)}
+                            onChange={() => setHideName(!hideName)}
                             thumbColor={hideName ? theme.primary : theme.primary}
                             trackColor={{false: theme.secondary, true: theme.primary}}
                         />

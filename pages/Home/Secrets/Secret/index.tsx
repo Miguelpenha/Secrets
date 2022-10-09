@@ -27,13 +27,10 @@ const Secret: FC<Iprops> = ({ secret, onVerify }) => {
                 }
             })}>
                 <Animated.View style={animationPressedIcon}>
-                    <Icon
-                        size={RFPercentage(4)}
-                        name={(!secret.hideIcon || !secret.secure) ? (!secret.hideIcon ? secret.icon : 'lock') : 'lock'}
-                    />
+                    <Icon size={RFPercentage(4)} name={!secret.hideIcon ? secret.icon : 'lock'}/>
                 </Animated.View>
-                <Name editable={false} numberOfLines={1} secureTextEntry={secret.hideName && secret.secure}>
-                    {(!secret.hideName || !secret.secure) ? limitText(secret.name, Dimensions.get('window').scale*8) : '                   '}
+                <Name editable={false} numberOfLines={1} secureTextEntry={secret.hideName}>
+                    {(!secret.hideName) ? limitText(secret.name, Dimensions.get('window').scale*8) : '                   '}
                 </Name>
                 <Animated.View style={[animationPressedNext, ContainerNext]}>
                     <Next name="arrow-forward-ios" size={RFPercentage(4)}/>

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import { useTheme } from 'styled-components'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ListRenderItemInfo } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
@@ -30,13 +30,6 @@ function CreateSecret() {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const modalizeSelectIcon = useRef<Modalize>(null)
-
-    useEffect(() => {
-        if (secure) {
-            setHideIcon(true)
-            setHideName(true)
-        }
-    }, [secure])
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -80,7 +73,7 @@ function CreateSecret() {
                             <TextSwitch>Esconder ícone</TextSwitch>
                             <Switch
                                 value={hideIcon}
-                                onChange={() => !secure && setHideIcon(!hideIcon)}
+                                onChange={() => setHideIcon(!hideIcon)}
                                 thumbColor={hideIcon ? theme.primary : theme.primary}
                                 trackColor={{false: theme.secondary, true: theme.primary}}
                             />
@@ -89,7 +82,7 @@ function CreateSecret() {
                             <TextSwitch>Esconder nome</TextSwitch>
                             <Switch
                                 value={hideName}
-                                onChange={() => !secure && setHideName(!hideName)}
+                                onChange={() => setHideName(!hideName)}
                                 thumbColor={hideName ? theme.primary : theme.primary}
                                 trackColor={{false: theme.secondary, true: theme.primary}}
                             />
@@ -100,8 +93,10 @@ function CreateSecret() {
                                 value={secure}
                                 onChange={() => {
                                     setPassword('')
-                                    setShowPassword(false)
                                     setSecure(!secure)
+                                    setShowPassword(false)
+                                    !secure && setHideIcon(true)
+                                    !secure && setHideName(true)
                                 }}
                                 thumbColor={secure ? theme.primary : theme.primary}
                                 trackColor={{false: theme.secondary, true: theme.primary}}
