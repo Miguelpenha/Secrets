@@ -27,7 +27,7 @@ function Secret() {
     const [openModalDelete, setOpenModalDelete] = useState(false)
     
     return (
-        <ContainerPd>
+        <ContainerPd scroll>
             <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} (${secret.type})`, 32)}/>
             {secret ? <>
                 <Header>
