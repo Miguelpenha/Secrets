@@ -13,7 +13,7 @@ function InitialStack() {
                 headerShown: false
             }}
         >
-            <Screen name="Password" component={Password} initialParams={{ objective: 'create' }}/>
+            <Screen name="Password" component={Password} initialParams={{ initial: true }}/>
             <Screen name="Settings" component={Settings}/>
         </Navigator>
     )

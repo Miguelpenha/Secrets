@@ -31,7 +31,7 @@ export type Inavigation = {
     id: string
   }
   Password: {
-    objective: 'create' | 'change' | 'check'
+    initial: boolean
   }
 }
 

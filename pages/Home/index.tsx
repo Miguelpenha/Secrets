@@ -30,11 +30,7 @@ export default function Home() {
           onBackdropPress={() => setOpenModalVerify(null)}
           onBackButtonPress={() => setOpenModalVerify(null)}
         >
-          <ModalVerifyPassword
-            id={openModalVerify}
-            setOpenModal={setOpenModalVerify}
-            onSubmit={id => navigation.navigate('Secret', { id })}
-          />
+          <ModalVerifyPassword onSubmit={id => navigation.navigate('Secret', { id })} setOpenModal={setOpenModalVerify} id={openModalVerify}/>
         </Modal>
       </ContainerPd>
     )

@@ -4,7 +4,6 @@ import AppLoading from 'expo-app-loading'
 import { green } from './utils/colorsLogs'
 import { PasswordProvider } from './contexts/passwordContext'
 import { SecurityConfigurationProvider } from './contexts/securityConfigurationContext'
-import { VerifiedAccessProvider } from './contexts/verifiedAccessContext'
 import { ThemeProvider } from './theme'
 import { SecretsProvider } from './contexts/secretsContext'
 import { EmojiProvider } from './contexts/emojiContext'
@@ -28,17 +27,15 @@ function App() {
     return (
       <PasswordProvider>
         <SecurityConfigurationProvider>
-          <VerifiedAccessProvider>
-            <ThemeProvider>
-              <SecretsProvider>
-                <EmojiProvider>
-                  <HideSecretOnShowProvider>
-                    <Routes/>
-                  </HideSecretOnShowProvider>
-                </EmojiProvider>
-              </SecretsProvider>
-            </ThemeProvider>
-          </VerifiedAccessProvider>
+          <ThemeProvider>
+            <SecretsProvider>
+              <EmojiProvider>
+                <HideSecretOnShowProvider>
+                  <Routes/>
+                </HideSecretOnShowProvider>
+              </EmojiProvider>
+            </SecretsProvider>
+          </ThemeProvider>
         </SecurityConfigurationProvider>
       </PasswordProvider>
     )

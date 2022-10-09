@@ -2,16 +2,12 @@ import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
-interface ITitle {
-    top: boolean
-}
-
-export const Title = styled.Text<ITitle>`
+export const Title = styled.Text`
+    margin-top: 12%;
     font-weight: bold;
     align-self: center;
     font-size: ${RFPercentage(4.5)}px;
     color: ${props => props.theme.primary};
-    margin-top: ${props => props.top ? 12 : 25}%;
 `
 
 export const EmojiTitle = styled.Text`
