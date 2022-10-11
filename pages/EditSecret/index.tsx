@@ -58,11 +58,10 @@ function Secret() {
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ContainerPd>
+            <ContainerPd scroll>
                 <HeaderBack onClick={() => navigation.goBack()} title="Editar segredo"/>
                 {secret ? <>
                     <Value
-                        autoFocus
                         multiline
                         value={value}
                         placeholder="Valor..."

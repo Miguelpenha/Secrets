@@ -59,11 +59,11 @@ function CreateSecret() {
                             />
                         </Field>
                         <Field>
-                            <Label>Valor do segredo</Label>
+                            <Label>Segredo</Label>
                             <Input
                                 multiline
                                 value={value}
-                                placeholder="Valor..."
+                                placeholder="Segredo..."
                                 onChangeText={setValue}
                                 selectionColor={theme.primary}
                                 placeholderTextColor={theme.primary}

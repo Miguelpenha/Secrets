@@ -9,16 +9,17 @@ import Toast from 'react-native-toast-message'
 import toastConfig from '../toastConfig'
 
 function Routes() {
-  const { name } = useTheme()
+  const theme = useTheme()
   const { password } = usePassword()
 
   return (
     <>
       <StatusBar
         animated={true}
-        style={name === 'dark' ? 'light' : 'dark'}
+        backgroundColor={theme.backgroundColor}
+        style={theme.name === 'dark' ? 'light' : 'dark'}
       />
-      <NavigationContainer theme={name === 'dark' ? darkThemeRouter : lightThemeRouter}>
+      <NavigationContainer theme={theme.name === 'dark' ? darkThemeRouter : lightThemeRouter}>
         {!password ? <InitialStack/> : <AppStack/>}
       </NavigationContainer>
       <Toast config={toastConfig}/>

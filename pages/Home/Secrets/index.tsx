@@ -31,8 +31,8 @@ const Secrets: FC<Iprops> = ({ onVerify }) => {
       keyExtractor={item => item.id}
       ListHeaderComponent={<HeaderRaw find={find} setFind={setFind}/>}
       renderItem={({ item }) => {
-        if ((find.length >= 1 && !item.secure) || !find) {
-          if (!find || item.name.toUpperCase().includes(find.toUpperCase())) {
+        if (!find || (find.length >= 1 && !item.hideName)) {
+          if (item.name.toUpperCase().includes(find.toUpperCase())) {
             return <Secret secret={item} onVerify={onVerify}/>
           }
         }
