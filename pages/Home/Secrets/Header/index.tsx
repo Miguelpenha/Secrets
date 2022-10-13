@@ -27,8 +27,8 @@ const Header: FC<Iprops> = ({ find, setFind }) => {
                 {secrets.length ? (
                     <InputFind
                         value={find}
-                        placeholder="Pesquisar..."
                         onChangeText={setFind}
+                        placeholder="Pesquisar..."
                         selectionColor={theme.primary}
                         placeholderTextColor={theme.primary}
                     />
