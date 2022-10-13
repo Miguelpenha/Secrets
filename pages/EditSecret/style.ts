@@ -14,6 +14,29 @@ export const Value = styled.TextInput`
     background-color: ${props => props.theme.backgroundColorSecondary};
 `
 
+export const Field = styled.View`
+    width: 80%;
+    margin-top: 2.5%;
+    align-self: center;
+    margin-bottom: 4%;
+`
+
+export const Label = styled.Text`
+    margin-bottom: 2.5%;
+    align-self: flex-start;
+    font-size: ${RFPercentage(2.5)}px;
+    color: ${props => props.theme.secondaryColor};
+`
+
+export const Input = styled.TextInput`
+    width: 93%;
+    padding: 2%;
+    font-size: ${RFPercentage(2.5)}px;
+    border-radius: ${RFPercentage(1)}px;
+    color: ${props => props.theme.color};
+    background-color: ${props => props.theme.backgroundColorSecondary};
+`
+
 export const ContainerSwitch = styled.View`
     width: 75%;
     margin-left: 10%;
