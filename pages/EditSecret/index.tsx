@@ -23,6 +23,7 @@ function Secret() {
     const secret = useSecret(id)
     const navigation = useNavigation()
     const [value, setValue] = useState('')
+    const [name, setName] = useState('')
     const [type, setType] = useState('')
     const theme = useTheme()
     const [secure, setSecure] = useState(false)
@@ -36,6 +37,7 @@ function Secret() {
 
     useEffect(() => {
         if (secret) {
+            setName(secret.name)
             setType(secret.type)
             setValue(secret.value)
             setSecure(secret.secure)
@@ -50,13 +52,13 @@ function Secret() {
 
     useEffect(() => {
         if (secret) {
-            if (secret.value === value && secret.hideIcon === hideIcon && secret.hideName === hideName && secret.secure === secure && secret.type === type) {
+            if (secret.name === name && secret.value === value && secret.hideIcon === hideIcon && secret.hideName === hideName && secret.secure === secure && secret.type === type) {
                 setDisabledSubmit(true)
             } else {
                 setDisabledSubmit(false)
             }
         }
-    }, [value, secure, hideIcon, hideName, type, secret])
+    }, [value, name, secure, hideIcon, hideName, type, secret])
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -71,6 +73,16 @@ function Secret() {
                         selectionColor={theme.primary}
                         placeholderTextColor={theme.primary}
                     />
+                    <Field>
+                        <Label>Nome do segredo</Label>
+                        <Input
+                            value={name}
+                            placeholder="Nome..."
+                            onChangeText={setName}
+                            selectionColor={theme.primary}
+                            placeholderTextColor={theme.primary}
+                        />
+                    </Field>
                     <Field>
                         <Label>Tipo do segredo</Label>
                         <Input
@@ -121,7 +133,7 @@ function Secret() {
                     onBackdropPress={() => setOpenModalSave(false)}
                     onBackButtonPress={() => setOpenModalSave(false)}
                 >
-                    <ModalSave secret={{ ...secret, type, value, secure, hideIcon, hideName, password: secure && password }} setOpenModal={setOpenModalSave}/>
+                    <ModalSave secret={{ ...secret, name, type, value, secure, hideIcon, hideName, password: secure && password }} setOpenModal={setOpenModalSave}/>
                 </Modal>
                 <Modal
                     isVisible={openModalVerify ? true : false}

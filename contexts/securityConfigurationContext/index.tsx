@@ -23,10 +23,10 @@ export const SecurityConfigurationProvider: FC = ({ children }) => {
     async function loadSecurityConfiguration() {
         const securityConfigurationRaw = await AsyncStorage.getItem('@secrets:securityConfiguration')
         
-        if (!securityConfigurationRaw) {
-            setSecurityConfigurationOnStorage(defaultSecurityConfiguration)
+        if (securityConfigurationRaw) {
+            setSecurityConfigurationOnStorage(JSON.parse(securityConfigurationRaw))
         } else {
-            setSecurityConfigurationOnStorage(securityConfiguration)
+            setSecurityConfigurationOnStorage(defaultSecurityConfiguration)
         }
     }
 
