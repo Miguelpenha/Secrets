@@ -28,7 +28,7 @@ function Secret() {
     
     return (
         <ContainerPd scroll>
-            <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} (${secret.type})`, 32)}/>
+            <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} (${secret.type})`, 25)}/>
             {secret ? <>
                 <Header>
                     <ButtonHeaderAnimated
