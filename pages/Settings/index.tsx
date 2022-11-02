@@ -107,11 +107,11 @@ function Settings() {
                     <TextButton>Mudar senha</TextButton>
                     <IconButton right name="arrow-forward-ios" size={25}/>
                 </Button>
+                <Button onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>
+                    <IconButton name="file-upload" size={30}/>
+                    <TextButton>Exportar segredos</TextButton>
+                </Button>
             </>}
-            <Button onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>
-                <IconButton name="file-upload" size={30}/>
-                <TextButton>Exportar segredos</TextButton>
-            </Button>
             <Button onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>
                 <IconButton name="file-download" size={30}/>
                 <TextButton>Importar segredos</TextButton>
