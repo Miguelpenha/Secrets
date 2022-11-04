@@ -44,7 +44,7 @@ function Secret() {
                         onPress={() => navigation.navigate('EditSecret', { id: secret.id })}
                     />
                 </Header>
-                <Icon name={secret.icon} size={35}/>
+                <Icon name={visibility ? secret.icon : 'lock'} size={35}/>
                 <ContainerValue activeOpacity={0.4} onPress={() => {
                     Clipboard.setString(secret.value)
 
