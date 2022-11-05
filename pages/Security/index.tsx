@@ -13,6 +13,7 @@ function Security() {
     const navigation = useNavigation()
     const { securityConfiguration } = useSecurityConfiguration()
     const [verifyPasswordWhenDeleteData, setVerifyPasswordWhenDeleteData] = useState(securityConfiguration.verifyPasswordWhenDeleteData)
+    const [verifyPasswordWhenShareSecret, setVerifyPasswordWhenShareSecret] = useState(securityConfiguration.verifyPasswordWhenShareSecret)
     const [verifyPasswordWhenDeleteSecret, setVerifyPasswordWhenDeleteSecret] = useState(securityConfiguration.verifyPasswordWhenDeleteSecret)
     const [verifyPasswordWhenExportSecrets, setVerifyPasswordWhenExportSecrets] = useState(securityConfiguration.verifyPasswordWhenExportSecrets)
     const [verifyPasswordWhenImportSecrets, setVerifyPasswordWhenImportSecrets] = useState(securityConfiguration.verifyPasswordWhenImportSecrets)
@@ -45,6 +46,17 @@ function Security() {
                     trackColor={{false: theme.secondary, true: theme.primary}}
                     onChange={() => 
                         setVerifyPasswordWhenEditSecret(!verifyPasswordWhenEditSecret)
+                    }
+                />
+            </ContainerSwitch>
+            <ContainerSwitch>
+                <TextSwitch>Compartilhar segredo</TextSwitch>
+                <Switch
+                    thumbColor={theme.primary}
+                    value={verifyPasswordWhenShareSecret}
+                    trackColor={{false: theme.secondary, true: theme.primary}}
+                    onChange={() => 
+                        setVerifyPasswordWhenShareSecret(!verifyPasswordWhenShareSecret)
                     }
                 />
             </ContainerSwitch>
@@ -116,6 +128,7 @@ function Security() {
                     securityConfiguration={{
                         verifyPasswordWhenDeleteData,
                         verifyPasswordWhenEditSecret,
+                        verifyPasswordWhenShareSecret,
                         verifyPasswordWhenDeleteSecret,
                         verifyPasswordWhenExportSecrets,
                         verifyPasswordWhenImportSecrets,

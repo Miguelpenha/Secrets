@@ -50,6 +50,7 @@ export interface ISecret {
 export interface ISecurity {
   verifyPasswordWhenDeleteData: boolean
   verifyPasswordWhenEditSecret: boolean
+  verifyPasswordWhenShareSecret: boolean
   verifyPasswordWhenDeleteSecret: boolean
   verifyPasswordWhenExportSecrets: boolean
   verifyPasswordWhenImportSecrets: boolean
