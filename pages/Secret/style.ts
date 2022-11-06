@@ -22,7 +22,7 @@ export const ContainerValue = styled.TouchableOpacity`
     padding: 5%;
     max-width: 90%;
     margin-top: 10%;
-    margin-bottom: 25%;
+    margin-bottom: 28%;
     align-self: center;
     border-radius: ${RFPercentage(2)}px;
     background-color: ${props => props.theme.backgroundColorSecondary};

@@ -5,17 +5,16 @@ import Animated from 'react-native-reanimated'
 
 interface Iprops {
     onPress: () => void
-    visibility: boolean
 }
 
-const ButtonShareAnimated: FC<Iprops> = ({ visibility, onPress }) => {
+const ButtonShareAnimated: FC<Iprops> = ({ onPress }) => {
     const { animationButtonDelete, animationIconButtonDelete, events } = useAnimations()
 
     return (
-        <Container bottom={visibility} style={animationButtonDelete}>
+        <Container style={animationButtonDelete}>
             <Button {...events(onPress)}>
                 <Animated.View style={animationIconButtonDelete}>
-                    <IconButton name="share" size={30}/>
+                    <IconButton name="share" size={28}/>
                 </Animated.View>
             </Button>
         </Container>

@@ -61,7 +61,7 @@ function Secret() {
                 }}>
                     <Value editable={false} multiline={visibility} secureTextEntry={!visibility}>{secret.value}</Value>
                 </ContainerValue>
-                <ButtonShareAnimated visibility={visibility} onPress={async () => (secret.secure && securityConfiguration.verifyPasswordWhenShareSecret) ? setOpenModalVerifyShare(id) : await Share.share({
+                <ButtonShareAnimated onPress={async () => (secret.secure && securityConfiguration.verifyPasswordWhenShareSecret) ? setOpenModalVerifyShare(id) : await Share.share({
                         title: secret.name,
                         message: secret.value
                     }, {
@@ -94,7 +94,7 @@ function Secret() {
                     }, {
                         dialogTitle: secret.name
                     })
-                }, 100)} setOpenModal={setOpenModalVerifyShare}/>
+                }, 150)} setOpenModal={setOpenModalVerifyShare}/>
             </Modal>
         </ContainerPd>
     )

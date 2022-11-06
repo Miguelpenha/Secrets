@@ -3,18 +3,14 @@ import Animated from 'react-native-reanimated'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
-interface IContainer {
-    bottom: boolean
-}
-
-export const Container = styled(Animated.View)<IContainer>`
+export const Container = styled(Animated.View)`
     right: 0%;
+    bottom: -2%;
     position: absolute;
-    bottom: ${props => props.bottom ? -2 : -10}%;
 `
 
 export const Button = styled.TouchableOpacity`
-    padding: 8%;
+    padding: 9%;
     align-self: center;
     border-radius: ${RFPercentage(4)}px;
     background-color: ${props => props.theme.primary};

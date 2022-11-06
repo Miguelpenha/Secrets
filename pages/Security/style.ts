@@ -15,7 +15,7 @@ export const Section = styled.Text`
 `
 
 export const ContainerSwitch = styled.View`
-    width: 78%;
+    width: 82%;
     margin: 0% 0%;
     align-self: center;
     align-items: center;
