@@ -3,8 +3,8 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const Container = styled.View`
     width: 95%;
-    height: 55%;
-    padding: 6%;
+    height: 63%;
+    padding: 5%;
     align-self: center;
     border-radius: ${RFPercentage(1)}px;
     background-color: ${props => props.theme.backgroundColor};
