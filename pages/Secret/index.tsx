@@ -17,6 +17,7 @@ import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
 import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
 import { Share } from 'react-native'
+import { ScrollView } from 'react-native'
 
 function Secret() {
     const { id } = useRoute().params as IParams
@@ -30,43 +31,45 @@ function Secret() {
     const [openModalVerifyShare, setOpenModalVerifyShare] = useState<string | null>()
     
     return (
-        <ContainerPd scroll>
+        <ContainerPd>
             <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} (${secret.type})`, 25)}/>
             {secret ? <>
-                <Header>
-                    <ButtonHeaderAnimated
-                        icon="delete"
-                        onPress={() => (secret.secure && securityConfiguration.verifyPasswordWhenDeleteSecret) ? setOpenModalVerifyDelete(id) : setOpenModalDelete(true)}
-                    />
-                    <ButtonHeaderAnimated
-                        onPress={() => setVisibility(!visibility)}
-                        icon={`visibility${visibility ? '' : '-off'}`}
-                    />
-                    <ButtonHeaderAnimated
-                        icon="edit"
-                        onPress={() => navigation.navigate('EditSecret', { id: secret.id })}
-                    />
-                </Header>
-                <Icon name={visibility ? secret.icon : 'lock'} size={35}/>
-                <ContainerValue activeOpacity={0.4} onPress={() => {
-                    Clipboard.setString(secret.value)
+                <ScrollView>
+                    <Header>
+                        <ButtonHeaderAnimated
+                            icon="delete"
+                            onPress={() => (secret.secure && securityConfiguration.verifyPasswordWhenDeleteSecret) ? setOpenModalVerifyDelete(id) : setOpenModalDelete(true)}
+                        />
+                        <ButtonHeaderAnimated
+                            onPress={() => setVisibility(!visibility)}
+                            icon={`visibility${visibility ? '' : '-off'}`}
+                        />
+                        <ButtonHeaderAnimated
+                            icon="edit"
+                            onPress={() => navigation.navigate('EditSecret', { id: secret.id })}
+                        />
+                    </Header>
+                    <Icon name={visibility ? secret.icon : 'lock'} size={35}/>
+                    <ContainerValue activeOpacity={0.4} onPress={() => {
+                        Clipboard.setString(secret.value)
 
-                    Toast.show({
-                        text1: 'Segredo copiado!',
-                        type: 'success',
-                        onPress() {
-                            Toast.hide()
-                        }
-                    })
-                }}>
-                    <Value editable={false} multiline={visibility} secureTextEntry={!visibility}>{secret.value}</Value>
-                </ContainerValue>
+                        Toast.show({
+                            text1: 'Segredo copiado!',
+                            type: 'success',
+                            onPress() {
+                                Toast.hide()
+                            }
+                        })
+                    }}>
+                        <Value editable={false} multiline={visibility} secureTextEntry={!visibility}>{secret.value}</Value>
+                    </ContainerValue>
+                </ScrollView>
                 <ButtonShareAnimated onPress={async () => (secret.secure && securityConfiguration.verifyPasswordWhenShareSecret) ? setOpenModalVerifyShare(id) : await Share.share({
                         title: secret.name,
                         message: secret.value
                     }, {
                         dialogTitle: secret.name
-                    })}/>
+                })}/>
             </> : <Loading/>}
             <Modal
                 isVisible={openModalDelete}
