@@ -7,6 +7,7 @@ export const Container = styled(Animated.View)`
     margin: 3% 5%;
     align-self: center;
     align-items: center;
+    margin-top: 30%;
 `
 
 interface IButtonSelectIcon {
