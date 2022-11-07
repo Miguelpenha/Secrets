@@ -1,5 +1,6 @@
-import React, { FC, useEffect, memo } from 'react'
+import React, { FC, useCallback, memo } from 'react'
 import { ViewStyle, TextStyle, Dimensions } from 'react-native'
+import { useFocusEffect } from '@react-navigation/native'
 import { Container, Row1, ButtonBack, ContainerHeader, Title, Row2 } from './style'
 import { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 
@@ -27,9 +28,10 @@ const HeaderBack: FC<Iprops> = ({ style, onClick, buttonBack=true, styleButtonBa
         width: borderWidth.value
     }))
 
-    useEffect(() => {
+    useFocusEffect(useCallback(() => {
+        borderWidth.value = 0
         borderWidth.value = withTiming(Dimensions.get('screen').width, { duration: 600 })
-    })
+    }, []))
 
     return (
         <Container style={style}>
