@@ -4,9 +4,14 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const Container = styled.View`
     z-index: 1;
-    margin-top: 8%;
+    width: 100%;
+    padding-top: 8%;
+    padding-bottom: 2%;
     position: absolute;
     flex-direction: row;
+    border-bottom-width: 1px;
+    border-bottom-color: ${props => props.theme.primary};
+    background-color: ${props => props.theme.backgroundColor};
 `
 
 export const ButtonBack = styled(ButtonBackNotStyled)`
