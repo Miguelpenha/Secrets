@@ -6,7 +6,7 @@ import useSecurityConfiguration from '../../contexts/securityConfigurationContex
 import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
+import { Form, Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
 import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
@@ -62,68 +62,70 @@ function Secret() {
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <ContainerPd scroll>
+            <ContainerPd>
                 <HeaderBack onClick={() => navigation.goBack()} title="Editar segredo"/>
                 {secret ? <>
-                    <Value
-                        multiline
-                        value={value}
-                        placeholder="Valor..."
-                        onChangeText={setValue}
-                        selectionColor={theme.primary}
-                        placeholderTextColor={theme.primary}
-                    />
-                    <Field>
-                        <Label>Nome do segredo</Label>
-                        <Input
-                            value={name}
-                            placeholder="Nome..."
-                            onChangeText={setName}
+                    <Form contentContainerStyle={{paddingBottom: '30%'}}>
+                        <Value
+                            multiline
+                            value={value}
+                            placeholder="Valor..."
+                            onChangeText={setValue}
                             selectionColor={theme.primary}
                             placeholderTextColor={theme.primary}
                         />
-                    </Field>
-                    <Field>
-                        <Label>Tipo do segredo</Label>
-                        <Input
-                            value={type}
-                            placeholder="Tipo..."
-                            onChangeText={setType}
-                            selectionColor={theme.primary}
-                            placeholderTextColor={theme.primary}
-                        />
-                    </Field>
-                    <ContainerSwitch>
-                        <TextSwitch>Seguro</TextSwitch>
-                        <Switch
-                            value={secure}
-                            onChange={() => {
-                                setSecure(!secure)
-                                !secure && setHideIcon(true)
-                                !secure && setHideName(true)
-                            }}
-                            thumbColor={secure ? theme.primary : theme.primary}
-                            trackColor={{false: theme.secondary, true: theme.primary}}
-                        />
-                    </ContainerSwitch>
-                    <ContainerSwitch>
-                        <TextSwitch>Esconder ícone</TextSwitch>
-                        <Switch
-                            value={hideIcon}
-                            onChange={() => setHideIcon(!hideIcon)}
-                            thumbColor={hideIcon ? theme.primary : theme.primary}
-                            trackColor={{false: theme.secondary, true: theme.primary}}
-                        />
-                    </ContainerSwitch>
-                    <ContainerSwitch>
-                        <TextSwitch>Esconder nome</TextSwitch>
-                        <Switch
-                            value={hideName}
-                            onChange={() => setHideName(!hideName)}
-                            thumbColor={hideName ? theme.primary : theme.primary}
-                            trackColor={{false: theme.secondary, true: theme.primary}}
-                        />
-                    </ContainerSwitch>
+                        <Field>
+                            <Label>Nome do segredo</Label>
+                            <Input
+                                value={name}
+                                placeholder="Nome..."
+                                onChangeText={setName}
+                                selectionColor={theme.primary}
+                                placeholderTextColor={theme.primary}
+                            />
+                        </Field>
+                        <Field>
+                            <Label>Tipo do segredo</Label>
+                            <Input
+                                value={type}
+                                placeholder="Tipo..."
+                                onChangeText={setType}
+                                selectionColor={theme.primary}
+                                placeholderTextColor={theme.primary}
+                            />
+                        </Field>
+                        <ContainerSwitch>
+                            <TextSwitch>Seguro</TextSwitch>
+                            <Switch
+                                value={secure}
+                                onChange={() => {
+                                    setSecure(!secure)
+                                    !secure && setHideIcon(true)
+                                    !secure && setHideName(true)
+                                }}
+                                thumbColor={secure ? theme.primary : theme.primary}
+                                trackColor={{false: theme.secondary, true: theme.primary}}
+                            />
+                        </ContainerSwitch>
+                        <ContainerSwitch>
+                            <TextSwitch>Esconder ícone</TextSwitch>
+                            <Switch
+                                value={hideIcon}
+                                onChange={() => setHideIcon(!hideIcon)}
+                                thumbColor={hideIcon ? theme.primary : theme.primary}
+                                trackColor={{false: theme.secondary, true: theme.primary}}
+                            />
+                        </ContainerSwitch>
+                        <ContainerSwitch>
+                            <TextSwitch>Esconder nome</TextSwitch>
+                            <Switch
+                                value={hideName}
+                                onChange={() => setHideName(!hideName)}
+                                thumbColor={hideName ? theme.primary : theme.primary}
+                                trackColor={{false: theme.secondary, true: theme.primary}}
+                            />
+                        </ContainerSwitch>
+                    </Form>
                     <ButtonSubmit disabled={disabledSubmit} onPress={handleSubmit}>
                         <TextButtonSubmit disabled={disabledSubmit}>Salvar</TextButtonSubmit>
                     </ButtonSubmit>

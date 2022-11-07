@@ -1,10 +1,14 @@
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
+export const Form = styled.ScrollView`
+    
+`
+
 export const Value = styled.TextInput`
     padding: 5%;
     max-width: 90%;
-    margin-top: 10%;
+    margin-top: 25%;
     margin-bottom: 5%;
     align-self: center;
     text-align: center;
@@ -17,8 +21,8 @@ export const Value = styled.TextInput`
 export const Field = styled.View`
     width: 80%;
     margin-top: 2.5%;
-    align-self: center;
     margin-bottom: 4%;
+    align-self: center;
 `
 
 export const Label = styled.Text`
@@ -52,11 +56,12 @@ export const TextSwitch = styled.Text`
 `
 
 export const ButtonSubmit = styled.TouchableOpacity`
-    width: 50%;
-    padding: 4% 0%;
-    margin-top: 15%;
-    margin-bottom: 10%;
+    width: 60%;
+    bottom: 4%;
+    padding: 5%;
+    elevation: 8;
     align-self: center;
+    position: absolute;
     border-radius: ${RFPercentage(2)}px;
     border: 2px solid ${props => props.theme.backgroundColorSecondary};
     background-color: ${props => props.disabled ? props.theme.backgroundColor : props.theme.backgroundColorSecondary};
@@ -69,6 +74,6 @@ interface ITextButtonSubmit {
 export const TextButtonSubmit = styled.Text<ITextButtonSubmit>`
     font-weight: bold;
     align-self: center;
-    font-size: ${RFPercentage(4)}px;
+    font-size: ${RFPercentage(3.5)}px;
     color: ${props => props.disabled ? props.theme.secondary : props.theme.primary};
 `

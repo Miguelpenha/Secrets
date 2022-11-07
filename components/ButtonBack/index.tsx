@@ -13,7 +13,7 @@ interface Iprops {
     iconProps?: TextProps
 }
 
-const ButtonBack: FC<Iprops> = ({ onClick, iconName='arrow-back-ios', iconSize=22, style, styleIcon, containerProps, iconProps, ...rest }) => {
+const ButtonBack: FC<Iprops> = ({ onClick, iconName='arrow-back-ios', iconSize=25, style, styleIcon, containerProps, iconProps, ...rest }) => {
     return (
         <TouchableOpacity style={style} onPress={onClick} {...containerProps} {...rest}>
             <Icon name={iconName} size={iconSize} style={styleIcon} {...iconProps}/>
