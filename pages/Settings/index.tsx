@@ -3,7 +3,8 @@ import { useTheme } from '../../theme'
 import { useState } from 'react'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { ContainerSwitch, TextSwitch, EmojiTextSwitch, Switch, Button, IconButton, IconUpdateButton, TextButton, Version, ContainerPoweredBy, TextPoweredBy, TextPoweredByName } from './style'
+import { ContainerSwitch, TextSwitch, EmojiTextSwitch, Switch, Version, ContainerPoweredBy, TextPoweredBy, TextPoweredByName } from './style'
+import ButtonAnimated from './ButtonAnimated'
 import checkUpdate from './checkUpdate'
 import Constants from 'expo-constants'
 import { blue, magenta } from '../../utils/colorsLogs'
@@ -88,38 +89,24 @@ function Settings() {
                     }}
                 />
             </ContainerSwitch>
-            <Button onPress={() => securityConfiguration.verifyPasswordWhenDeleteData ? setOpenModalVerifyPasswordOnDeleteData('true') : setOpenModalDelete(true)}>
-                <IconButton name="delete" size={30}/>
-                <TextButton>Apagar dados</TextButton>
-            </Button>
+            <ButtonAnimated icon="delete" onPress={() => securityConfiguration.verifyPasswordWhenDeleteData ? setOpenModalVerifyPasswordOnDeleteData('true') : setOpenModalDelete(true)}>Apagar dados</ButtonAnimated>
             {password && <>
-                <Button onPress={() => {
+                <ButtonAnimated icon="lock" iconForward onPress={() => {
                     securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
-                }}>
-                    <IconButton name="lock" size={30}/>
-                    <TextButton>Segurança</TextButton>
-                    <IconButton right name="arrow-forward-ios" size={25}/>
-                </Button>
-                <Button onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
+                }}>Segurança</ButtonAnimated>
+                <ButtonAnimated icon="vpn-key" iconForward onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
                     initial: false
-                })}>
-                    <IconButton name="vpn-key" size={30}/>
-                    <TextButton>Mudar senha</TextButton>
-                    <IconButton right name="arrow-forward-ios" size={25}/>
-                </Button>
-                <Button onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>
-                    <IconButton name="file-upload" size={30}/>
-                    <TextButton>Exportar segredos</TextButton>
-                </Button>
+                })}>Mudar senha</ButtonAnimated>
+                <ButtonAnimated icon="file-upload" onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>Exportar segredos</ButtonAnimated>
             </>}
-            <Button onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>
-                <IconButton name="file-download" size={30}/>
-                <TextButton>Importar segredos</TextButton>
-            </Button>
-            <Button disabled={checkUpdating} onPress={async () => checkUpdate(setCheckUpdating)} loading={checkUpdating}>
-                <IconUpdateButton checkUpdating={checkUpdating} name="sync" size={30}/>
-                <TextButton>Verificar atualizações</TextButton>
-            </Button>
+            <ButtonAnimated icon="file-download" onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>Importar segredos</ButtonAnimated>
+            <ButtonAnimated
+                icon="sync"
+                loading={checkUpdating}
+                onPress={async () => checkUpdate(setCheckUpdating)}
+            >
+                Verificar atualizações
+            </ButtonAnimated>
             <Version top={password ? 12 : 45}>Versão {Constants.manifest.version}</Version>
             <ContainerPoweredBy>
                 <TextPoweredBy>Powered by</TextPoweredBy>
