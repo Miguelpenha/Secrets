@@ -14,7 +14,7 @@ const ButtonSelectIconAnimated: FC<Iprops> = ({ big, icon, onPress }) => {
     const { animationButtonSelectIcon, animationIconSelect, events } = useAnimations()
 
     return (
-        <Container style={animationButtonSelectIcon}>
+        <Container big={big} style={animationButtonSelectIcon}>
             <ButtonSelectIcon big={big} {...events(() => onPress(icon))}>
                 <Animated.View style={animationIconSelect}>
                     <IconSelected name={icon} size={35}/>

@@ -1,13 +1,20 @@
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import Animated from 'react-native-reanimated'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export const Container = styled(Animated.View)`
+interface IContainer {
+    big: boolean
+}
+
+export const Container = styled(Animated.View)<IContainer>`
     margin: 3% 5%;
     align-self: center;
     align-items: center;
-    margin-top: 30%;
+
+    ${props => !props.big && css`
+        margin-top: 30%;
+    `}
 `
 
 interface IButtonSelectIcon {
