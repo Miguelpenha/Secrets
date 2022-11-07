@@ -1,6 +1,10 @@
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
+export const Sections = styled.ScrollView`
+    margin-top: 17%;
+`
+
 export const Section = styled.Text`
     width: 80%;
     margin-top: 5%;
@@ -30,17 +34,20 @@ export const TextSwitch = styled.Text`
 `
 
 export const ButtonSubmit = styled.TouchableOpacity`
-    width: 50%;
-    padding: 4% 0%;
-    margin-top: 15%;
+    width: 60%;
+    bottom: 4%;
+    padding: 5%;
+    elevation: 8;
     align-self: center;
+    position: absolute;
     border-radius: ${RFPercentage(2)}px;
+    border: 2px solid ${props => props.theme.backgroundColorSecondary};
     background-color: ${props => props.theme.backgroundColorSecondary};
 `
 
 export const TextButtonSubmit = styled.Text`
     font-weight: bold;
     align-self: center;
-    font-size: ${RFPercentage(4)}px;
+    font-size: ${RFPercentage(3.5)}px;
     color: ${props => props.theme.primary};
 `

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useTheme } from 'styled-components'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { Section, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
+import { Sections, Section, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
 import Modal from 'react-native-modal'
 import ModalSave from './ModalSave'
@@ -26,95 +26,97 @@ function Security() {
     return (
         <ContainerPd>
             <HeaderBack title="Segurança" onClick={() => navigation.goBack()}/>
-            <Section>Verificar senha quando</Section>
-            <ContainerSwitch>
-                <TextSwitch>Apagar dados</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenDeleteData}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenDeleteData(!verifyPasswordWhenDeleteData)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Editar segredo</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenEditSecret}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenEditSecret(!verifyPasswordWhenEditSecret)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Compartilhar segredo</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenShareSecret}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenShareSecret(!verifyPasswordWhenShareSecret)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Deletar segredo</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenDeleteSecret}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenDeleteSecret(!verifyPasswordWhenDeleteSecret)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Exportar segredos</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenExportSecrets}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenExportSecrets(!verifyPasswordWhenExportSecrets)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Importar segredos</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenImportSecrets}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenImportSecrets(!verifyPasswordWhenImportSecrets)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Mudar senha</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenChangePassword}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenChangePassword(!verifyPasswordWhenChangePassword)
-                    }
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Configurar segurança</TextSwitch>
-                <Switch
-                    thumbColor={theme.primary}
-                    value={verifyPasswordWhenSecurityConfiguration}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => 
-                        setVerifyPasswordWhenSecurityConfiguration(!verifyPasswordWhenSecurityConfiguration)
-                    }
-                />
-            </ContainerSwitch>
+            <Sections contentContainerStyle={{paddingBottom: '30%'}}>
+                <Section>Verificar senha quando</Section>
+                <ContainerSwitch>
+                    <TextSwitch>Apagar dados</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenDeleteData}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenDeleteData(!verifyPasswordWhenDeleteData)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Editar segredo</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenEditSecret}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenEditSecret(!verifyPasswordWhenEditSecret)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Compartilhar segredo</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenShareSecret}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenShareSecret(!verifyPasswordWhenShareSecret)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Deletar segredo</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenDeleteSecret}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenDeleteSecret(!verifyPasswordWhenDeleteSecret)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Exportar segredos</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenExportSecrets}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenExportSecrets(!verifyPasswordWhenExportSecrets)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Importar segredos</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenImportSecrets}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenImportSecrets(!verifyPasswordWhenImportSecrets)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Mudar senha</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenChangePassword}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenChangePassword(!verifyPasswordWhenChangePassword)
+                        }
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Configurar segurança</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenSecurityConfiguration}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenSecurityConfiguration(!verifyPasswordWhenSecurityConfiguration)
+                        }
+                    />
+                </ContainerSwitch>
+            </Sections>
             <ButtonSubmit onPress={() => setOpenModalSave(true)}>
                 <TextButtonSubmit>Salvar</TextButtonSubmit>
             </ButtonSubmit>
