@@ -8,6 +8,7 @@ import { ThemeProvider } from './theme'
 import { SecretsProvider } from './contexts/secretsContext'
 import { EmojiProvider } from './contexts/emojiContext'
 import { HideSecretOnShowProvider } from './contexts/hideSecretOnShowContext'
+import { ShowPageTitleProvider } from './contexts/showPageTitleContext'
 import Routes from './routes'
 import 'react-native-gesture-handler'
 
@@ -31,7 +32,9 @@ function App() {
             <SecretsProvider>
               <EmojiProvider>
                 <HideSecretOnShowProvider>
-                  <Routes/>
+                  <ShowPageTitleProvider>
+                    <Routes/>
+                  </ShowPageTitleProvider>
                 </HideSecretOnShowProvider>
               </EmojiProvider>
             </SecretsProvider>

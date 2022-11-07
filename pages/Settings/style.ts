@@ -6,16 +6,18 @@ export const ContainerOptions = styled.ScrollView`
 `
 
 export const ContainerSwitch = styled.View`
-    margin-top: 2%;
-    margin-bottom: 2%;
+    width: 85%;
+    margin: 2% 0%;
+    align-self: center;
     align-items: center;
     flex-direction: row;
-    justify-content: center;
 `
 
 export const TextSwitch = styled.Text`
+    width: 85%;
+    text-align: center;
     font-size: ${RFPercentage(4)}px;
-    line-height: ${RFPercentage(4)}px;
+    line-height: ${RFPercentage(5)}px;
     color: ${props => props.theme.primary};
 `
 
@@ -26,7 +28,8 @@ export const EmojiTextSwitch = styled.Text`
 `
 
 export const Switch = styled.Switch`
-    margin-left: 1%;
+    margin-right: 1%;
+    margin-left: auto;
 `
 
 interface IVersion {

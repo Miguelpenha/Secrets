@@ -10,6 +10,7 @@ import Constants from 'expo-constants'
 import { blue, magenta } from '../../utils/colorsLogs'
 import useShowEmoji from '../../contexts/emojiContext'
 import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
+import useShowPageTitle from '../../contexts/showPageTitleContext'
 import Modal from 'react-native-modal'
 import ModalDelete from './ModalDelete'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
@@ -26,6 +27,7 @@ function Settings() {
     const [checkUpdating, setCheckUpdating] = useState(false)
     const { showEmoji, setShowEmoji } = useShowEmoji()
     const { hideSecretOnShow, setHideSecretOnShow } = useHideSecretOnShow()
+    const { showPageTitle, setShowPageTitle } = useShowPageTitle()
     const { password } = usePassword()
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalDelete, setOpenModalDelete] = useState(false)
@@ -87,6 +89,20 @@ function Settings() {
                             
                             console.log(blue(`>> HideSecretOnShow changed`))
                             console.log(magenta(`   >> ${hideSecretOnShow ? 'Not hide secret on show' : 'Hide secret on show'}`))
+                        }}
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Mostrar título da página</TextSwitch>
+                    <Switch
+                        value={showPageTitle}
+                        thumbColor={showPageTitle ? theme.primary : theme.primary}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => {
+                            setShowPageTitle(!showPageTitle)
+                            
+                            console.log(blue(`>> ShowPageTitle changed`))
+                            console.log(magenta(`   >> ${showPageTitle ? 'Hide page title' : 'Show page title'}`))
                         }}
                     />
                 </ContainerSwitch>

@@ -3,6 +3,7 @@ import { ViewStyle, TextStyle, Dimensions } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { Container, Row1, ButtonBack, ContainerHeader, Title, Row2 } from './style'
 import { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
+import { useShowPageTitle } from '../../contexts/showPageTitleContext'
 
 interface Iprops {
     title?: string
@@ -17,6 +18,8 @@ interface Iprops {
 }
 
 const HeaderBack: FC<Iprops> = ({ style, onClick, buttonBack=true, styleButtonBack, iconSizeButtonBack, styleButtonBackIcon, styleContainerHeader, title, styleTitle }) => {
+    const { showPageTitle } = useShowPageTitle()
+
     if (!styleButtonBack) {
         styleButtonBack = {
             alignSelf: 'center'
@@ -45,10 +48,10 @@ const HeaderBack: FC<Iprops> = ({ style, onClick, buttonBack=true, styleButtonBa
                     />
                 )}
                 <ContainerHeader style={styleContainerHeader}>
-                    {title && <Title style={styleTitle}>{title}</Title>}
+                    <Title style={styleTitle}>{showPageTitle && title && title}</Title>
                 </ContainerHeader>
             </Row1>
-            <Row2 style={animationBorder}/>
+            {showPageTitle && <Row2 style={animationBorder}/>}
         </Container>
     )
 }
