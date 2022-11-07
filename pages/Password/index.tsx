@@ -7,7 +7,7 @@ import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import Header from './Header'
 import HeaderBack from '../../components/HeaderBack'
-import { Title, EmojiTitle, Field, ButtonIconShow, IconShow, Input, ButtonSubmit, TextButtonSubmit } from './style'
+import { Form, Title, EmojiTitle, Field, ButtonIconShow, IconShow, Input, ButtonSubmit, TextButtonSubmit } from './style'
 import handleSubmit from './handleSubmit'
 
 interface IParams {
@@ -26,29 +26,31 @@ export default function Password() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ContainerPd>
-        {initial ? <Header/> : <HeaderBack onClick={() => navigation.goBack()}/>}
-        <Title>Crie uma senha {showEmoji && <EmojiTitle>&#x1F92B;</EmojiTitle>}</Title>
-        <Field>
-          <ButtonIconShow onPress={() => setShowPassword(!showPassword)}>
-            <IconShow name={`visibility${showPassword ? '-off' : ''}`} size={28}/>
-          </ButtonIconShow>
-          <Input
-            value={password}
-            autoCapitalize="none"
-            placeholder="Senha..."
-            onChangeText={setPassword}
-            autoCompleteType="password"
-            secureTextEntry={showPassword}
-            selectionColor={theme.primary}
-            placeholderTextColor={theme.primary}
-            keyboardType={!showPassword ? 'visible-password' : 'default'}
-            onSubmitEditing={async () => {
-              await handleSubmit(password, mutatePassword)
+        {initial ? <Header/> : <HeaderBack onClick={() => navigation.goBack()} title="Mudar senha"/>}
+        <Form initial={initial} contentContainerStyle={{paddingBottom: '30%'}}>
+          <Title>Crie uma senha {showEmoji && <EmojiTitle>&#x1F92B;</EmojiTitle>}</Title>
+          <Field>
+            <ButtonIconShow onPress={() => setShowPassword(!showPassword)}>
+              <IconShow name={`visibility${showPassword ? '-off' : ''}`} size={28}/>
+            </ButtonIconShow>
+            <Input
+              value={password}
+              autoCapitalize="none"
+              placeholder="Senha..."
+              onChangeText={setPassword}
+              autoCompleteType="password"
+              secureTextEntry={showPassword}
+              selectionColor={theme.primary}
+              placeholderTextColor={theme.primary}
+              keyboardType={!showPassword ? 'visible-password' : 'default'}
+              onSubmitEditing={async () => {
+                await handleSubmit(password, mutatePassword)
 
-              !initial && navigation.navigate('Home')
-            }}
-          />
-        </Field>
+                !initial && navigation.navigate('Home')
+              }}
+            />
+          </Field>
+        </Form>
         <ButtonSubmit onPress={async () => {
           await handleSubmit(password, mutatePassword)
 
