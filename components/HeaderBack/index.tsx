@@ -1,6 +1,7 @@
-import React, { FC, memo } from 'react'
-import { ViewStyle, TextStyle } from 'react-native'
-import { Container, ButtonBack, ContainerHeader, Title } from './style'
+import React, { FC, useEffect, memo } from 'react'
+import { ViewStyle, TextStyle, Dimensions } from 'react-native'
+import { Container, Row1, ButtonBack, ContainerHeader, Title, Row2 } from './style'
+import { useSharedValue, useAnimatedStyle, withTiming } from 'react-native-reanimated'
 
 interface Iprops {
     title?: string
@@ -20,20 +21,32 @@ const HeaderBack: FC<Iprops> = ({ style, onClick, buttonBack=true, styleButtonBa
             alignSelf: 'center'
         }
     }
+    const borderWidth = useSharedValue(0)
+
+    const animationBorder = useAnimatedStyle(() => ({
+        width: borderWidth.value
+    }))
+
+    useEffect(() => {
+        borderWidth.value = withTiming(Dimensions.get('screen').width, { duration: 600 })
+    })
 
     return (
         <Container style={style}>
-            {buttonBack && (
-                <ButtonBack
-                    onClick={onClick}
-                    style={styleButtonBack}
-                    iconSize={iconSizeButtonBack}
-                    styleIcon={styleButtonBackIcon}
-                />
-            )}
-            <ContainerHeader style={styleContainerHeader}>
-                {title && <Title style={styleTitle}>{title}</Title>}
-            </ContainerHeader>
+            <Row1>
+                {buttonBack && (
+                    <ButtonBack
+                        onClick={onClick}
+                        style={styleButtonBack}
+                        iconSize={iconSizeButtonBack}
+                        styleIcon={styleButtonBackIcon}
+                    />
+                )}
+                <ContainerHeader style={styleContainerHeader}>
+                    {title && <Title style={styleTitle}>{title}</Title>}
+                </ContainerHeader>
+            </Row1>
+            <Row2 style={animationBorder}/>
         </Container>
     )
 }
