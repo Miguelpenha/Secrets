@@ -2,7 +2,7 @@ import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const ContainerOptions = styled.ScrollView`
-    margin-top: 19%;
+    margin-top: 22%;
 `
 
 export const ContainerSwitch = styled.View`
