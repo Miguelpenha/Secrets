@@ -1,14 +1,10 @@
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
-export const Form = styled.ScrollView`
-    
-`
-
 export const Value = styled.TextInput`
     padding: 5%;
     max-width: 90%;
-    margin-top: 25%;
+    margin-top: 30%;
     margin-bottom: 5%;
     align-self: center;
     text-align: center;

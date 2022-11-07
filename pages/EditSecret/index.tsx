@@ -6,13 +6,14 @@ import useSecurityConfiguration from '../../contexts/securityConfigurationContex
 import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { Form, Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
+import { Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
 import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
 import ModalSave from './ModalSave'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
+import { ScrollView } from 'react-native'
 
 interface IParams {
     id: string
@@ -65,7 +66,7 @@ function Secret() {
             <ContainerPd>
                 <HeaderBack onClick={() => navigation.goBack()} title="Editar segredo"/>
                 {secret ? <>
-                    <Form contentContainerStyle={{paddingBottom: '30%'}}>
+                    <ScrollView contentContainerStyle={{paddingBottom: '30%'}}>
                         <Value
                             multiline
                             value={value}
@@ -125,7 +126,7 @@ function Secret() {
                                 trackColor={{false: theme.secondary, true: theme.primary}}
                             />
                         </ContainerSwitch>
-                    </Form>
+                    </ScrollView>
                     <ButtonSubmit disabled={disabledSubmit} onPress={handleSubmit}>
                         <TextButtonSubmit disabled={disabledSubmit}>Salvar</TextButtonSubmit>
                     </ButtonSubmit>
