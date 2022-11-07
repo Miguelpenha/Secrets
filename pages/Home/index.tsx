@@ -3,9 +3,9 @@ import useSecrets from '../../contexts/secretsContext'
 import { useNavigation } from '@react-navigation/native'
 import ContainerPd from '../../components/ContainerPd'
 import Secrets from './Secrets'
-import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
+import Loading from '../../components/Loading'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
