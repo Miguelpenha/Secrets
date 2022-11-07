@@ -3,7 +3,7 @@ import { useTheme } from '../../theme'
 import { useState } from 'react'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { ContainerSwitch, TextSwitch, EmojiTextSwitch, Switch, Version, ContainerPoweredBy, TextPoweredBy, TextPoweredByName } from './style'
+import { ContainerOptions, ContainerSwitch, TextSwitch, EmojiTextSwitch, Switch, Version, ContainerPoweredBy, TextPoweredBy, TextPoweredByName } from './style'
 import ButtonAnimated from './ButtonAnimated'
 import checkUpdate from './checkUpdate'
 import Constants from 'expo-constants'
@@ -45,73 +45,75 @@ function Settings() {
     }
 
     return (
-        <ContainerPd scroll>
+        <ContainerPd>
             <HeaderBack onClick={() => navigation.goBack()} title="Configurações"/>
-            <ContainerSwitch>
-                <TextSwitch>Tema escuro</TextSwitch>
-                <Switch
-                    value={themeName==='light' ? false : true}
-                    thumbColor={themeName==='light' ? theme.primary : theme.primary}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => {
-                        themeName==='light' ? mutateTheme('dark') : mutateTheme('light')
-                        
-                        console.log(blue(`>> Theme changed`))
-                        console.log(magenta(`   >> ${themeName==='light' ? 'dark' : 'light'}`))
-                    }}
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Mostrar emojis {showEmoji && <EmojiTextSwitch>&#x1F914;</EmojiTextSwitch>}</TextSwitch>
-                <Switch
-                    value={showEmoji}
-                    thumbColor={showEmoji ? theme.primary : theme.primary}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => {
-                        setShowEmoji(!showEmoji)
-                        
-                        console.log(blue(`>> ShowEmoji changed`))
-                        console.log(magenta(`   >> ${showEmoji ? 'Not Show emoji' : 'Show emoji'}`))
-                    }}
-                />
-            </ContainerSwitch>
-            <ContainerSwitch>
-                <TextSwitch>Esconder segredo</TextSwitch>
-                <Switch
-                    value={hideSecretOnShow}
-                    thumbColor={hideSecretOnShow ? theme.primary : theme.primary}
-                    trackColor={{false: theme.secondary, true: theme.primary}}
-                    onChange={() => {
-                        setHideSecretOnShow(!hideSecretOnShow)
-                        
-                        console.log(blue(`>> HideSecretOnShow changed`))
-                        console.log(magenta(`   >> ${hideSecretOnShow ? 'Not hide secret on show' : 'Hide secret on show'}`))
-                    }}
-                />
-            </ContainerSwitch>
-            <ButtonAnimated icon="delete" onPress={() => securityConfiguration.verifyPasswordWhenDeleteData ? setOpenModalVerifyPasswordOnDeleteData('true') : setOpenModalDelete(true)}>Apagar dados</ButtonAnimated>
-            {password && <>
-                <ButtonAnimated icon="lock" iconForward onPress={() => {
-                    securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
-                }}>Segurança</ButtonAnimated>
-                <ButtonAnimated icon="vpn-key" iconForward onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
-                    initial: false
-                })}>Mudar senha</ButtonAnimated>
-                <ButtonAnimated icon="file-upload" onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>Exportar segredos</ButtonAnimated>
-            </>}
-            <ButtonAnimated icon="file-download" onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>Importar segredos</ButtonAnimated>
-            <ButtonAnimated
-                icon="sync"
-                loading={checkUpdating}
-                onPress={async () => checkUpdate(setCheckUpdating)}
-            >
-                Verificar atualizações
-            </ButtonAnimated>
-            <Version top={password ? 12 : 45}>Versão {Constants.manifest.version}</Version>
-            <ContainerPoweredBy>
-                <TextPoweredBy>Powered by</TextPoweredBy>
-                <TextPoweredByName>Miguel da Penha</TextPoweredByName>
-            </ContainerPoweredBy>
+            <ContainerOptions>
+                <ContainerSwitch>
+                    <TextSwitch>Tema escuro</TextSwitch>
+                    <Switch
+                        value={themeName==='light' ? false : true}
+                        thumbColor={themeName==='light' ? theme.primary : theme.primary}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => {
+                            themeName==='light' ? mutateTheme('dark') : mutateTheme('light')
+                            
+                            console.log(blue(`>> Theme changed`))
+                            console.log(magenta(`   >> ${themeName==='light' ? 'dark' : 'light'}`))
+                        }}
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Mostrar emojis {showEmoji && <EmojiTextSwitch>&#x1F914;</EmojiTextSwitch>}</TextSwitch>
+                    <Switch
+                        value={showEmoji}
+                        thumbColor={showEmoji ? theme.primary : theme.primary}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => {
+                            setShowEmoji(!showEmoji)
+                            
+                            console.log(blue(`>> ShowEmoji changed`))
+                            console.log(magenta(`   >> ${showEmoji ? 'Not Show emoji' : 'Show emoji'}`))
+                        }}
+                    />
+                </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Esconder segredo</TextSwitch>
+                    <Switch
+                        value={hideSecretOnShow}
+                        thumbColor={hideSecretOnShow ? theme.primary : theme.primary}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => {
+                            setHideSecretOnShow(!hideSecretOnShow)
+                            
+                            console.log(blue(`>> HideSecretOnShow changed`))
+                            console.log(magenta(`   >> ${hideSecretOnShow ? 'Not hide secret on show' : 'Hide secret on show'}`))
+                        }}
+                    />
+                </ContainerSwitch>
+                <ButtonAnimated icon="delete" onPress={() => securityConfiguration.verifyPasswordWhenDeleteData ? setOpenModalVerifyPasswordOnDeleteData('true') : setOpenModalDelete(true)}>Apagar dados</ButtonAnimated>
+                {password && <>
+                    <ButtonAnimated icon="lock" iconForward onPress={() => {
+                        securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
+                    }}>Segurança</ButtonAnimated>
+                    <ButtonAnimated icon="vpn-key" iconForward onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
+                        initial: false
+                    })}>Mudar senha</ButtonAnimated>
+                    <ButtonAnimated icon="file-upload" onPress={async () => securityConfiguration.verifyPasswordWhenExportSecrets ? setOpenModalVerifyPasswordOnExportSecrets('true') : await handleExportSecrets()}>Exportar segredos</ButtonAnimated>
+                </>}
+                <ButtonAnimated icon="file-download" onPress={() => securityConfiguration.verifyPasswordWhenImportSecrets ? setOpenModalVerifyPasswordOnImportSecrets('true') : setOpenModalImportSecrets(true)}>Importar segredos</ButtonAnimated>
+                <ButtonAnimated
+                    icon="sync"
+                    loading={checkUpdating}
+                    onPress={async () => checkUpdate(setCheckUpdating)}
+                >
+                    Verificar atualizações
+                </ButtonAnimated>
+                <Version top={password ? 12 : 45}>Versão {Constants.manifest.version}</Version>
+                <ContainerPoweredBy>
+                    <TextPoweredBy>Powered by</TextPoweredBy>
+                    <TextPoweredByName>Miguel da Penha</TextPoweredByName>
+                </ContainerPoweredBy>
+            </ContainerOptions>
             <Modal
                 isVisible={openModalDelete}
                 onBackdropPress={() => setOpenModalDelete(false)}
