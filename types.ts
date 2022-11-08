@@ -38,7 +38,7 @@ export type Inavigation = {
 export interface ISecret {
   id: string
   name: string
-  type: string
+  type?: string
   value: string
   secure?: boolean
   password?: string

@@ -7,7 +7,7 @@ import Toast from 'react-native-toast-message'
 
 
 async function onSubmit(icon: keyof typeof MaterialIcons.glyphMap, name: string, type: string, value: string, hideIcon: boolean, hideName: boolean, secure: boolean, password: string, passwordDefault: string, createSecret: (secret: ISecret) => Promise<void>, navigation: StackNavigationProp<ReactNavigation.RootParamList>) {
-    if (icon && name && type && value) {
+    if (icon && name && value) {
         await createSecret({
             name,
             type,

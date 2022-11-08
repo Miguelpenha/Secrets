@@ -39,9 +39,9 @@ function Secret() {
     useEffect(() => {
         if (secret) {
             setName(secret.name)
-            setType(secret.type)
             setValue(secret.value)
             setSecure(secret.secure)
+            setType(secret.type || '')
             setHideIcon(secret.hideIcon)
             setHideName(secret.hideName)
         }
