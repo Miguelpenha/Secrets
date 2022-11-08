@@ -38,7 +38,7 @@ function Secret() {
                     <Header>
                         <ButtonHeaderAnimated
                             icon="delete"
-                            onPress={() => (secret.secure && securityConfiguration.verifyPasswordWhenDeleteSecret) ? setOpenModalVerifyDelete(id) : setOpenModalDelete(true)}
+                            onPress={() => (secret.secure || securityConfiguration.verifyPasswordWhenDeleteSecret) ? setOpenModalVerifyDelete(id) : setOpenModalDelete(true)}
                         />
                         <ButtonHeaderAnimated
                             onPress={() => setVisibility(!visibility)}
