@@ -15,7 +15,7 @@ export const Container = styled(Animated.createAnimatedComponent(TouchableOpacit
 `
 
 export const Text = styled(Animated.Text)`
-    font-size: ${RFPercentage(2.5)}px;
+    font-size: ${RFPercentage(2.4)}px;
     color: ${props => props.theme.primary};
 `
 
