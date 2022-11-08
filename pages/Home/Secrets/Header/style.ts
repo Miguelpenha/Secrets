@@ -4,7 +4,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const Container = styled.View`
     margin-top: 12%;
-    margin-bottom: 10%;
+    margin-bottom: 4%;
 `
 
 export const ContainerSettings = styled.TouchableOpacity`
@@ -32,6 +32,9 @@ export const EmojiTitle = styled.Text`
 
 export const Actions = styled.View`
     margin-top: 12%;
+`
+
+export const ActionsRow1 = styled.View`
     flex-direction: row;
     align-items: center;
 `
@@ -45,4 +48,9 @@ export const InputFind = styled.TextInput`
     border-radius: ${RFPercentage(1)}px;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColorSecondary};
+`
+
+export const ActionsRow2 = styled.View`
+    margin-top: 12%;
+    flex-direction: row;
 `

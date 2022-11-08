@@ -1,19 +1,14 @@
 import useAnimations from './useAnimations'
 import { useNavigation } from '@react-navigation/native'
-import { Container, ButtonCreate, IconButtonCreate } from './style'
-import Animated from 'react-native-reanimated'
+import { Container, Icon } from './style'
 
 function ButtonCreateAnimated() {
-    const { animationButtonCreate, animationIconButtonCreate, events } = useAnimations()
+    const { animationContainer, animationIcon, events } = useAnimations()
     const navigation = useNavigation()
 
     return (
-        <Container style={animationButtonCreate}>
-            <ButtonCreate {...events(() => navigation.navigate('CreateSecret'))}>
-                <Animated.View style={animationIconButtonCreate}>
-                    <IconButtonCreate name="add" size={40}/>
-                </Animated.View>
-            </ButtonCreate>
+        <Container style={animationContainer} {...events(() => navigation.navigate('CreateSecret'))}>
+            <Icon name="add" size={40} style={animationIcon}/>
         </Container>
     )
 }

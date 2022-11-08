@@ -6,10 +6,10 @@ function useAnimations() {
     const pressedIcon = useSharedValue(1)
 
     return {
-        animationButtonCreate: useAnimatedStyle(() => ({
+        animationContainer: useAnimatedStyle(() => ({
             transform: [{ scale: pressed.value }]
         })),
-        animationIconButtonCreate: useAnimatedStyle(() => ({
+        animationIcon: useAnimatedStyle(() => ({
             transform: [{ scale: pressedIcon.value }]
         })),
         events: (onPress: () => void) => events(pressed, pressedIcon, onPress)
