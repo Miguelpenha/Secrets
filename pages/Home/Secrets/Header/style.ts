@@ -4,7 +4,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const Container = styled.View`
     margin-top: 12%;
-    margin-bottom: 4%;
+    margin-bottom: 2%;
 `
 
 export const ContainerSettings = styled.TouchableOpacity`
