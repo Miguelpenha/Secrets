@@ -34,7 +34,7 @@ const HeaderBack: FC<Iprops> = ({ style, onClick, buttonBack=true, styleButtonBa
     useFocusEffect(useCallback(() => {
         borderWidth.value = 0
         borderWidth.value = withTiming(Dimensions.get('screen').width, { duration: 600 })
-    }, []))
+    }, [showPageTitle]))
 
     return (
         <Container style={style}>
