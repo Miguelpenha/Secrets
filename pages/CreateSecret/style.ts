@@ -23,7 +23,6 @@ export const ContainerInput = styled.View`
 export const ContainerIconShow = styled.TouchableOpacity`
     margin-right: 5%;
     align-self: center;
-    margin-top: 30%;
 `
 
 export const IconShow = styled(MaterialIcons)`
