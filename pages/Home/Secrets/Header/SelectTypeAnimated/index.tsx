@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FC } from 'react'
+import { FC } from 'react'
 import useAnimations from './useAnimations'
 import { Container, Text, Icon } from './style'
 
@@ -6,10 +6,9 @@ interface Iprops {
     type: string
     onPress: () => void
     openModalizeSelectType: boolean
-    setType: Dispatch<SetStateAction<string>>
 }
 
-const SelectTypeAnimated: FC<Iprops> = ({ type, setType, onPress, openModalizeSelectType }) => {
+const SelectTypeAnimated: FC<Iprops> = ({ type, onPress, openModalizeSelectType }) => {
     const { animationContainer, animationText, animationOnChangeText, animationIcon, animationRotateIcon, events } = useAnimations()
 
     return (

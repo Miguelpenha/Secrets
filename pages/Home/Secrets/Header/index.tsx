@@ -8,17 +8,15 @@ import { Container, ContainerSettings, Settings, Title, EmojiTitle, Actions, Act
 import ButtonCreateAnimated from './ButtonCreateAnimated'
 import SelectTypeAnimated from './SelectTypeAnimated'
 
-
 interface Iprops {
     find: string
     type: string
     openModalizeSelectType: boolean
     setFind: Dispatch<SetStateAction<string>>
-    setType: Dispatch<SetStateAction<string>>
     modalizeSelectType: MutableRefObject<IHandles>
 }
 
-const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, setFind, type, setType }) => {
+const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, setFind, type }) => {
     const navigation = useNavigation()
     const { showEmoji } = useShowEmoji()
     const { secrets } = useSecrets()
@@ -47,7 +45,6 @@ const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, 
                     {secrets.length ? (
                         <SelectTypeAnimated
                             type={type}
-                            setType={setType}
                             openModalizeSelectType={openModalizeSelectType}
                             onPress={() => modalizeSelectType.current.open()}
                         />

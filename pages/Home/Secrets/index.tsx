@@ -12,11 +12,10 @@ interface Iprops {
   type: string
   onVerify: (id: string) => void
   openModalizeSelectType: boolean
-  setType: Dispatch<SetStateAction<string>>
   modalizeSelectType: MutableRefObject<IHandles>
 }
 
-const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, type, setType, onVerify }) => {
+const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, type, onVerify }) => {
   const [refreshing, setRefreshing] = useState(false)
   const { secrets, loadSecrets } = useSecrets()
   const { showEmoji } = useShowEmoji()
@@ -34,7 +33,7 @@ const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, type,
     <FlatList
       data={secrets}
       keyExtractor={item => item.id}
-      ListHeaderComponent={<HeaderRaw modalizeSelectType={modalizeSelectType} openModalizeSelectType={openModalizeSelectType} find={find} type={type} setFind={setFind} setType={setType}/>}
+      ListHeaderComponent={<HeaderRaw modalizeSelectType={modalizeSelectType} openModalizeSelectType={openModalizeSelectType} find={find} type={type} setFind={setFind}/>}
       renderItem={({ item }) => {
         if (!find || (find.length >= 1 && !item.hideName)) {
           if (item.name.toUpperCase().includes(find.toUpperCase())) {
