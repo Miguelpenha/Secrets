@@ -28,7 +28,7 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToast
     }, [])
 
     async function handleSubmit() {
-        if (secret ? await compare(password, secret.password) : await compare(password, passwordDefault)) {
+        if ((secret && secret.password) ? await compare(password, secret.password) : await compare(password, passwordDefault)) {
             setOpenModal(null)
 
             onSubmit(id)
