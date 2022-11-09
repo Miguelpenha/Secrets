@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import useSecrets from '../../contexts/secretsContext'
 import { useNavigation } from '@react-navigation/native'
-import { useTheme } from 'styled-components'
 import ContainerPd from '../../components/ContainerPd'
 import Secrets from './Secrets'
 import Modal from 'react-native-modal'
@@ -20,7 +19,6 @@ export default function Home() {
   const navigation = useNavigation()
   const modalizeSelectType = useRef<Modalize>(null)
   const [openModalizeSelectType, setOpenModalizeSelectType] = useState(false)
-  const theme = useTheme()
 
   useEffect(() => {
     setLoading(true)
