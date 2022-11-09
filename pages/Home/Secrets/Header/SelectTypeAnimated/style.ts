@@ -5,9 +5,10 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
 export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
-    left: 7.5%;
-    width: 68%;
-    padding: 1.5% 2%;
+    width: 85%;
+    padding: 2.5%;
+    margin-top: 12%;
+    align-self: center;
     flex-direction: row;
     align-items: center;
     border-radius: ${RFPercentage(2)}px;
@@ -15,7 +16,8 @@ export const Container = styled(Animated.createAnimatedComponent(TouchableOpacit
 `
 
 export const Text = styled(Animated.Text)`
-    font-size: ${RFPercentage(2.4)}px;
+    margin-left: auto;
+    font-size: ${RFPercentage(2.8)}px;
     color: ${props => props.theme.primary};
 `
 

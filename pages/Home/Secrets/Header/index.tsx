@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import useShowEmoji from '../../../../contexts/emojiContext'
 import useSecrets from '../../../../contexts/secretsContext'
 import { useTheme } from 'styled-components'
-import { Container, ContainerSettings, Settings, Title, EmojiTitle, Actions, ActionsRow1, InputFind, ActionsRow2 } from './style'
+import { Container, ContainerSettings, Settings, Title, EmojiTitle, Actions, ActionsRow, InputFind } from './style'
 import ButtonCreateAnimated from './ButtonCreateAnimated'
 import SelectTypeAnimated from './SelectTypeAnimated'
 
@@ -29,7 +29,7 @@ const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, 
             </ContainerSettings>
             <Title>Segredos {showEmoji && <EmojiTitle>&#x1F92B;</EmojiTitle>}</Title>
             <Actions>
-                <ActionsRow1>
+                <ActionsRow>
                     {secrets.length ? (
                         <InputFind
                             value={find}
@@ -40,16 +40,14 @@ const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, 
                         />
                     ) : null}
                     <ButtonCreateAnimated/>
-                </ActionsRow1>
-                <ActionsRow2>
-                    {secrets.length ? (
-                        <SelectTypeAnimated
-                            type={type}
-                            openModalizeSelectType={openModalizeSelectType}
-                            onPress={() => modalizeSelectType.current.open()}
-                        />
-                    ) : null}
-                </ActionsRow2>
+                </ActionsRow>
+                {secrets.length ? (
+                    <SelectTypeAnimated
+                        type={type}
+                        openModalizeSelectType={openModalizeSelectType}
+                        onPress={() => modalizeSelectType.current.open()}
+                    />
+                ) : null}
             </Actions>
         </Container>
     )

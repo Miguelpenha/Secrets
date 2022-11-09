@@ -34,7 +34,7 @@ export const Actions = styled.View`
     margin-top: 12%;
 `
 
-export const ActionsRow1 = styled.View`
+export const ActionsRow = styled.View`
     flex-direction: row;
     align-items: center;
 `
@@ -48,9 +48,4 @@ export const InputFind = styled.TextInput`
     border-radius: ${RFPercentage(1)}px;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColorSecondary};
-`
-
-export const ActionsRow2 = styled.View`
-    margin-top: 12%;
-    flex-direction: row;
 `
