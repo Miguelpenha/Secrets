@@ -14,18 +14,8 @@ function useAnimations() {
         animationText: useAnimatedStyle(() => ({
             transform: [{ scale: pressedText.value }]
         })),
-        animationOnChangeText: (type: string) => useAnimatedStyle(() => type ? ({
-            transform: [{ scale: withSequence(
-                withTiming(0.85, {
-                    duration: 200
-                }),
-                withTiming(1, {
-                    duration: 200
-                })
-            )}]
-        }) : ({}), [type]),
         animationIcon: useAnimatedStyle(() => ({
-            transform: [{ scale: pressedIcon.value }, { rotate: `${rotateIcon.value}deg` }]
+            transform: [{ scale: pressedIcon.value }]
         })),
         animationRotateIcon: (openModalizeSelectType: boolean) => useAnimatedStyle(() => {
             rotateIcon.value = withTiming(openModalizeSelectType ? -180 : 0, { duration: 200 })
