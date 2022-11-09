@@ -15,7 +15,7 @@ export const Container = styled(Animated.createAnimatedComponent(TouchableOpacit
     background-color: ${props => props.theme.backgroundColorSecondary};
 `
 
-export const Text = styled(Animated.Text)`
+export const Text = styled.Text`
     margin-left: auto;
     font-size: ${RFPercentage(2.8)}px;
     color: ${props => props.theme.primary};

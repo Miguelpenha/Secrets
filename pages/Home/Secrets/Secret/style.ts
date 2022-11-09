@@ -1,9 +1,10 @@
 import styled from 'styled-components/native'
+import Animated from 'react-native-reanimated'
+import { TouchableOpacity, TextInput } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
-import { ViewStyle } from 'react-native'
 
-export const Container = styled.TouchableOpacity`
+export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
     width: 85%;
     padding: 4%;
     margin-top: 4%;
@@ -15,20 +16,17 @@ export const Container = styled.TouchableOpacity`
     background-color: ${props => props.theme.secondaryColor};
 `
 
-export const Icon = styled(MaterialIcons)`
-    margin-left: 5.5%;
+export const Icon = styled(Animated.createAnimatedComponent(MaterialIcons))`
+    margin-right: 5.5%;
     color: ${props => props.theme.primary};
 `
 
-export const Name = styled.TextInput`
+export const Name = styled(Animated.createAnimatedComponent(TextInput))`
     font-size: ${RFPercentage(3.2)}px;
     color: ${props => props.theme.color};
 `
 
-export const ContainerNext: ViewStyle = {
-    marginLeft: 'auto'
-}
-
-export const Next = styled(MaterialIcons)`
+export const Next = styled(Animated.createAnimatedComponent(MaterialIcons))`
+    margin-left: auto;
     color: ${props => props.theme.primary};
 `

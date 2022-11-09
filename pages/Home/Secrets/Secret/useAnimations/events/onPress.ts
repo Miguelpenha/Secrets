@@ -1,6 +1,6 @@
 import { SharedValue, withSequence, withTiming } from 'react-native-reanimated'
 
-function onPress(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, pressedNext: SharedValue<number>, onPress: () => void) {
+function onPress(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, pressedName: SharedValue<number>, pressedNext: SharedValue<number>, onPress: () => void) {
     pressed.value = withSequence(
         withTiming(0.9, {
             duration: 150
@@ -14,6 +14,14 @@ function onPress(pressed: SharedValue<number>, pressedIcon: SharedValue<number>,
             duration: 200
         }), withTiming(1, {
             duration: 200
+        })
+    )
+
+    pressedName.value = withSequence(
+        withTiming(0.85, {
+            duration: 180
+        }), withTiming(1, {
+            duration: 180
         })
     )
 

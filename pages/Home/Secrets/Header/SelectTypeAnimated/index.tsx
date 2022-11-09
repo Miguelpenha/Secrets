@@ -9,12 +9,12 @@ interface Iprops {
 }
 
 const SelectTypeAnimated: FC<Iprops> = ({ type, onPress, openModalizeSelectType }) => {
-    const { animationContainer, animationText, animationIcon, animationRotateIcon, events } = useAnimations()
+    const { animationContainer, animationRotateIcon, events } = useAnimations()
 
     return (
         <Container style={animationContainer} {...events(onPress)}>
-            <Text style={animationText}>{type || 'Nenhum tipo selecionado'}</Text>
-            <Icon name="expand-more" size={35} style={[animationIcon, animationRotateIcon(openModalizeSelectType)]}/>
+            <Text>{type || 'Nenhum tipo selecionado'}</Text>
+            <Icon name="expand-more" size={35} style={animationRotateIcon(openModalizeSelectType)}/>
         </Container>
     )
 }
