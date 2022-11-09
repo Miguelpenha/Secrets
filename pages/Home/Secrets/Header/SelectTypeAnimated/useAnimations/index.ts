@@ -18,7 +18,7 @@ function useAnimations() {
             transform: [{ scale: pressedIcon.value }]
         })),
         animationRotateIcon: (openModalizeSelectType: boolean) => useAnimatedStyle(() => {
-            rotateIcon.value = withTiming(openModalizeSelectType ? -180 : 0, { duration: 200 })
+            rotateIcon.value = withTiming(openModalizeSelectType ? -180 : 0, { duration: 300 })
 
             return ({
                 transform: [{ rotate: `${rotateIcon.value}deg` }]
