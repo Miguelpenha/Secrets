@@ -1,8 +1,7 @@
 import { FC, memo } from 'react'
 import { MaterialIcons } from '@expo/vector-icons'
 import useAnimations from './useAnimations'
-import { Container, ButtonSelectIcon, IconSelected } from './style'
-import Animated from 'react-native-reanimated'
+import { Container, Icon } from './style'
 
 interface Iprops {
     big?: boolean
@@ -14,12 +13,8 @@ const ButtonSelectIconAnimated: FC<Iprops> = ({ big, icon, onPress }) => {
     const { animationButtonSelectIcon, animationIconSelect, events } = useAnimations()
 
     return (
-        <Container big={big} style={animationButtonSelectIcon}>
-            <ButtonSelectIcon big={big} {...events(() => onPress(icon))}>
-                <Animated.View style={animationIconSelect}>
-                    <IconSelected name={icon} size={35}/>
-                </Animated.View>
-            </ButtonSelectIcon>
+        <Container big={big} style={animationButtonSelectIcon} {...events(() => onPress(icon))}>
+            <Icon name={icon} size={35} style={animationIconSelect}/>
         </Container>
     )
 }

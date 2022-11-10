@@ -137,7 +137,7 @@ function CreateSecret() {
                 <Modalize
                     ref={modalizeSelectIcon}
                     {...optionsModalize(theme, 90, 64)}
-                    childrenStyle={{ width: '110%', alignItems: 'center' }}
+                    childrenStyle={{ width: '112%', alignItems: 'center' }}
                     flatListProps={{
                         data: icons,
                         keyExtractor: item => item,
