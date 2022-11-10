@@ -1,19 +1,16 @@
 import styled from 'styled-components/native'
 import Animated from 'react-native-reanimated'
+import { TouchableOpacity } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
-export const Container = styled(Animated.View)`
-    
-`
-
-export const Button = styled.TouchableOpacity`
-    padding: 10%;
-    align-self: center;
+export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
+    padding: 3%;
+    elevation: 12;
     border-radius: ${RFPercentage(4)}px;
     background-color: ${props => props.theme.primary};
 `
 
-export const IconButton = styled(MaterialIcons)`
+export const Icon = styled(Animated.createAnimatedComponent(MaterialIcons))`
     color: ${props => props.theme.color};
 `

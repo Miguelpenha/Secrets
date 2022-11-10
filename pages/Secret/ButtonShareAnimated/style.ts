@@ -8,6 +8,7 @@ export const Container = styled(Animated.createAnimatedComponent(TouchableOpacit
     right: 6%;
     bottom: 4%;
     padding: 3%;
+    elevation: 8;
     position: absolute;
     align-self: center;
     align-items: center;

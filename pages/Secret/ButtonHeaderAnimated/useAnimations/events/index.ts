@@ -8,7 +8,7 @@ function events(pressed: SharedValue<number>, pressedIcon: SharedValue<number>, 
         activeOpacity: 0.5,
         onPressOut: () => onPressInOrOut(pressed, pressedIcon, 1),
         onPressIn: () => onPressInOrOut(pressed, pressedIcon, 0.8),
-        onPress: () => onPress(pressed, pressedIcon, onPressFunction)
+        onPress: () => onPress([pressed, pressedIcon], onPressFunction)
     } as TouchableOpacityProps
 }
 
