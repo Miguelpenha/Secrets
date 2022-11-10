@@ -9,10 +9,11 @@ interface IContainer {
 }
 
 export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))<IContainer>`
+    elevation: 8;
     margin: 3% 10%;
     align-self: center;
     border-radius: ${RFPercentage(2)}px;
-    padding: ${props => props.big ? 6 : 4}%;
+    padding: ${props => props.big ? 5 : 4}%;
     background-color: ${props => props.theme.backgroundColorSecondary};
 
     ${props => !props.big && css`
