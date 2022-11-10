@@ -6,7 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
     right: 9%;
-    elevation: 8;
+    elevation: 10;
     position: absolute;
     border-radius: ${RFPercentage(4)}px;
     background-color: ${props => props.theme.primary};

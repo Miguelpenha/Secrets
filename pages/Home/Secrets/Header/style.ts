@@ -46,7 +46,7 @@ export const InputFind = styled.TextInput`
     padding: 3.5%;
     position: absolute;
     font-size: ${RFPercentage(3)}px;
-    border-radius: ${RFPercentage(1)}px;
+    border-radius: ${RFPercentage(2)}px;
     color: ${props => props.theme.color};
     background-color: ${props => props.theme.backgroundColorSecondary};
 `
