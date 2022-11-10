@@ -42,6 +42,7 @@ export const ActionsRow = styled.View`
 export const InputFind = styled.TextInput`
     left: 7.5%;
     width: 68%;
+    elevation: 8;
     padding: 3.5%;
     position: absolute;
     font-size: ${RFPercentage(3)}px;
