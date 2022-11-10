@@ -35,6 +35,7 @@ interface IInput {
 
 export const Input = styled.TextInput<IInput>`
     padding: 2%;
+    elevation: 8;
     font-size: ${RFPercentage(2.5)}px;
     border-radius: ${RFPercentage(1)}px;
     color: ${props => props.theme.color};
