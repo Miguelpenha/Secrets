@@ -1,6 +1,5 @@
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import { MaterialIcons } from '@expo/vector-icons'
 
 export const Container = styled.View`
     padding-bottom: 12%;
@@ -19,6 +18,7 @@ export const Title = styled.Text`
 export const Input = styled.TextInput`
     width: 80%;
     padding: 2%;
+    elevation: 10;
     margin-top: 8%;
     align-self: center;
     font-size: ${RFPercentage(2.5)}px;
@@ -29,6 +29,7 @@ export const Input = styled.TextInput`
 
 export const ButtonSubmit = styled.TouchableOpacity`
     width: 60%;
+    elevation: 12;
     padding: 4% 0%;
     margin-top: 10%;
     align-self: center;
