@@ -2,11 +2,12 @@ import { Dispatch, SetStateAction, FC, useState, useRef, useEffect } from 'react
 import { useTheme } from 'styled-components'
 import { useSecret } from '../../contexts/secretsContext'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
-import { Container, Title, ContainerInput, ContainerIconShow, IconShow, Input, ButtonSubmit, TextButtonSubmit } from './style'
+import { Container, Title, ContainerInput, ContainerIconShow, IconShow, Input } from './style'
 import { compare } from '../../utils/hash'
 import Toast from 'react-native-toast-message'
 import { TextInput, InteractionManager } from 'react-native'
 import usePassword from '../../contexts/passwordContext'
+import ButtonSubmit from './ButtonSubmit'
 
 interface Iprops {
     id?: string
@@ -76,9 +77,7 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, setOpenModal, onSubmit, hideToast
                             keyboardType={showPassword ? 'visible-password' : 'default'}
                         />
                     </ContainerInput>
-                    <ButtonSubmit activeOpacity={0.5} onPress={handleSubmit}>
-                        <TextButtonSubmit>Verificar</TextButtonSubmit>
-                    </ButtonSubmit>
+                    <ButtonSubmit onPress={handleSubmit}/>
                 </KeyboardAvoidingView>
             </Container>
         </TouchableWithoutFeedback>
