@@ -33,6 +33,7 @@ export const FooterModalDeleteAll = styled.View`
 const ButtonModalDeleteAll = css`
     width: 35%;
     padding: 4%;
+    elevation: 8;
     border-radius: ${RFPercentage(1)}px;
 `
 
