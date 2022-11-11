@@ -3,6 +3,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const Value = styled.TextInput`
     padding: 5%;
+    elevation: 12;
     max-width: 90%;
     margin-top: 30%;
     margin-bottom: 5%;
@@ -31,6 +32,7 @@ export const Label = styled.Text`
 export const Input = styled.TextInput`
     width: 93%;
     padding: 2%;
+    elevation: 8;
     font-size: ${RFPercentage(2.5)}px;
     border-radius: ${RFPercentage(1)}px;
     color: ${props => props.theme.color};
