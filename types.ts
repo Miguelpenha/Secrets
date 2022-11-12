@@ -23,6 +23,7 @@ export type Inavigation = {
   Home: undefined
   Settings: undefined
   Security: undefined
+  Statistics: undefined
   CreateSecret: undefined
   Secret: {
     id: string
@@ -48,6 +49,7 @@ export interface ISecret {
 }
 
 export interface ISecurity {
+  verifyPasswordWhenStatistics: boolean
   verifyPasswordWhenDeleteData: boolean
   verifyPasswordWhenEditSecret: boolean
   verifyPasswordWhenShareSecret: boolean

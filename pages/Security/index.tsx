@@ -20,6 +20,7 @@ function Security() {
     const [verifyPasswordWhenEditSecret, setVerifyPasswordWhenEditSecret] = useState(securityConfiguration.verifyPasswordWhenEditSecret)
     const [verifyPasswordWhenChangePassword, setVerifyPasswordWhenChangePassword] = useState(securityConfiguration.verifyPasswordWhenChangePassword)
     const [verifyPasswordWhenSecurityConfiguration, setVerifyPasswordWhenSecurityConfiguration] = useState(securityConfiguration.verifyPasswordWhenSecurityConfiguration)
+    const [verifyPasswordWhenStatistics, setVerifyPasswordWhenStatistics] = useState(securityConfiguration.verifyPasswordWhenStatistics)
     const theme = useTheme()
     const [openModalSave, setOpenModalSave] = useState(false)
 
@@ -116,6 +117,17 @@ function Security() {
                         }
                     />
                 </ContainerSwitch>
+                <ContainerSwitch>
+                    <TextSwitch>Estatísticas</TextSwitch>
+                    <Switch
+                        thumbColor={theme.primary}
+                        value={verifyPasswordWhenStatistics}
+                        trackColor={{false: theme.secondary, true: theme.primary}}
+                        onChange={() => 
+                            setVerifyPasswordWhenStatistics(!verifyPasswordWhenStatistics)
+                        }
+                    />
+                </ContainerSwitch>
             </Sections>
             <ButtonSubmit onPress={() => setOpenModalSave(true)}>
                 <TextButtonSubmit>Salvar</TextButtonSubmit>
@@ -128,6 +140,7 @@ function Security() {
                 <ModalSave
                     setOpenModal={setOpenModalSave}
                     securityConfiguration={{
+                        verifyPasswordWhenStatistics,
                         verifyPasswordWhenDeleteData,
                         verifyPasswordWhenEditSecret,
                         verifyPasswordWhenShareSecret,

@@ -34,6 +34,7 @@ function Settings() {
     const [openModalVerifyPasswordOnChangePassword, setOpenModalVerifyPasswordOnChangePassword] = useState<string | null>()
     const [openModalVerifyPasswordOnDeleteData, setOpenModalVerifyPasswordOnDeleteData] = useState<string | null>()
     const [openModalVerifyPasswordOnSecurity, setOpenModalVerifyPasswordOnSecurity] = useState<string | null>()
+    const [openModalVerifyPasswordOnStatistics, setOpenModalVerifyPasswordOnStatistics] = useState<string | null>()
     const [openModalVerifyPasswordOnExportSecrets, setOpenModalVerifyPasswordOnExportSecrets] = useState<string | null>()
     const [openModalVerifyPasswordOnImportSecrets, setOpenModalVerifyPasswordOnImportSecrets] = useState<string | null>()
     const [openModalImportSecrets, setOpenModalImportSecrets] = useState<boolean>()
@@ -111,6 +112,7 @@ function Settings() {
                     <ButtonAnimated icon="lock" iconForward onPress={() => {
                         securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
                     }}>Segurança</ButtonAnimated>
+                    <ButtonAnimated icon="insights" iconForward onPress={() => securityConfiguration.verifyPasswordWhenStatistics ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Statistics')}>Estatísticas</ButtonAnimated>
                     <ButtonAnimated icon="vpn-key" iconForward onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
                         initial: false
                     })}>Mudar senha</ButtonAnimated>
@@ -170,6 +172,17 @@ function Settings() {
                     hideToastFinal
                     setOpenModal={setOpenModalVerifyPasswordOnSecurity}
                     onSubmit={() => navigation.navigate('Security')}
+                />
+            </Modal>
+            <Modal
+                isVisible={openModalVerifyPasswordOnStatistics ? true : false}
+                onBackdropPress={() => setOpenModalVerifyPasswordOnStatistics(null)}
+                onBackButtonPress={() => setOpenModalVerifyPasswordOnStatistics(null)}
+            >
+                <ModalVerifyPassword
+                    hideToastFinal
+                    setOpenModal={setOpenModalVerifyPasswordOnStatistics}
+                    onSubmit={() => navigation.navigate('Statistics')}
                 />
             </Modal>
             <Modal

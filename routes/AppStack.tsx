@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Settings from '../pages/Settings'
 import Secret from '../pages/Secret'
 import Security from '../pages/Security'
+import Statistics from '../pages/Statistics'
 import EditSecret from '../pages/EditSecret'
 import CreateSecret from '../pages/CreateSecret'
 import Password from '../pages/Password'
@@ -22,6 +23,7 @@ function AppStack() {
             <Screen name="Secret" component={Secret}/>
             <Screen name="Settings" component={Settings}/>
             <Screen name="Security" component={Security}/>
+            <Screen name="Statistics" component={Statistics}/>
             <Screen name="EditSecret" component={EditSecret}/>
             <Screen name="CreateSecret" component={CreateSecret}/>
             <Screen name="Password" component={Password} initialParams={{ initial: false }}/>
