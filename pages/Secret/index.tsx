@@ -1,6 +1,6 @@
 import { useRoute, useNavigation } from '@react-navigation/native'
 import { IParams } from './types'
-import { useSecret } from '../../contexts/secretsContext'
+import { useSecret, useSecrets } from '../../contexts/secretsContext'
 import { useState } from 'react'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
@@ -12,7 +12,7 @@ import Toast from 'react-native-toast-message'
 import ButtonShareAnimated from './ButtonShareAnimated'
 import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
-import ModalDelete from './ModalDelete'
+import ModalConfirm from '../../components/ModalConfirm'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
 import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
@@ -22,6 +22,7 @@ import { ScrollView } from 'react-native'
 function Secret() {
     const { id } = useRoute().params as IParams
     const secret = useSecret(id)
+    const { deleteSecret } = useSecrets()
     const navigation = useNavigation()
     const { securityConfiguration } = useSecurityConfiguration()
     const { hideSecretOnShow } = useHideSecretOnShow()
@@ -71,13 +72,17 @@ function Secret() {
                         dialogTitle: secret.name
                 })}/>
             </> : <Loading/>}
-            <Modal
-                isVisible={openModalDelete}
-                onBackdropPress={() => setOpenModalDelete(false)}
-                onBackButtonPress={() => setOpenModalDelete(false)}
-            >
-                <ModalDelete id={id} setOpenModal={setOpenModalDelete}/>
-            </Modal>
+            <ModalConfirm
+                openModal={openModalDelete}
+                setOpenModal={setOpenModalDelete}
+                title="Deseja deletar esse segredo?"
+                toastMessage="Segredo deletado com sucesso!"
+                onConfirm={async () => {
+                    await deleteSecret(id)
+                    
+                    navigation.navigate('Home')
+                }}
+            />
             <Modal
                 isVisible={openModalVerifyDelete ? true : false}
                 onBackdropPress={() => setOpenModalVerifyDelete(null)}
