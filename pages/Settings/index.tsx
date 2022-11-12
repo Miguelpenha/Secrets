@@ -112,7 +112,7 @@ function Settings() {
                     <ButtonAnimated icon="lock" iconForward onPress={() => {
                         securityConfiguration.verifyPasswordWhenSecurityConfiguration ? setOpenModalVerifyPasswordOnSecurity('true') : navigation.navigate('Security')
                     }}>Segurança</ButtonAnimated>
-                    <ButtonAnimated icon="insights" iconForward onPress={() => securityConfiguration.verifyPasswordWhenStatistics ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Statistics')}>Estatísticas</ButtonAnimated>
+                    <ButtonAnimated icon="insights" iconForward onPress={() => securityConfiguration.verifyPasswordWhenStatistics ? setOpenModalVerifyPasswordOnStatistics('true') : navigation.navigate('Statistics')}>Estatísticas</ButtonAnimated>
                     <ButtonAnimated icon="vpn-key" iconForward onPress={() => securityConfiguration.verifyPasswordWhenChangePassword ? setOpenModalVerifyPasswordOnChangePassword('true') : navigation.navigate('Password', {
                         initial: false
                     })}>Mudar senha</ButtonAnimated>

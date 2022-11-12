@@ -24,6 +24,7 @@ export const Buttons = styled.View`
 
 export const ButtonCancel = styled.TouchableOpacity`
     width: 35%;
+    elevation: 10;
     padding: 4% 0%;
     margin-top: 10%;
     margin-left: 10%;
@@ -41,6 +42,7 @@ export const TextButtonCancel = styled.Text`
 
 export const ButtonSave= styled.TouchableOpacity`
     width: 35%;
+    elevation: 10;
     padding: 4% 0%;
     margin-top: 10%;
     margin-right: 10%;
