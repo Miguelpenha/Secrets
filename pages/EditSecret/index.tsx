@@ -1,5 +1,5 @@
 import { useRoute, useNavigation } from '@react-navigation/native'
-import { useSecret } from '../../contexts/secretsContext'
+import { useSecret, useSecrets } from '../../contexts/secretsContext'
 import { useEffect, useState } from 'react'
 import { useTheme } from 'styled-components'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
@@ -10,10 +10,10 @@ import { Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, 
 import { Switch } from 'react-native'
 import Loading from '../../components/Loading'
 import Modal from 'react-native-modal'
-import ModalSave from './ModalSave'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
 import { ScrollView } from 'react-native'
+import ModalConfirm from '../../components/ModalConfirm'
 
 interface IParams {
     id: string
@@ -22,6 +22,7 @@ interface IParams {
 function Secret() {
     const { id } = useRoute().params as IParams
     const secret = useSecret(id)
+    const { editSecret } = useSecrets()
     const navigation = useNavigation()
     const [value, setValue] = useState('')
     const [name, setName] = useState('')
@@ -131,13 +132,19 @@ function Secret() {
                         <TextButtonSubmit disabled={disabledSubmit}>Salvar</TextButtonSubmit>
                     </ButtonSubmit>
                 </> : <Loading/>}
-                <Modal
-                    isVisible={openModalSave}
-                    onBackdropPress={() => setOpenModalSave(false)}
-                    onBackButtonPress={() => setOpenModalSave(false)}
-                >
-                    <ModalSave secret={{ ...secret, name, type, value, secure, hideIcon, hideName, password: secure && password }} setOpenModal={setOpenModalSave}/>
-                </Modal>
+                <ModalConfirm
+                    toastType="info"
+                    confirmText="Salvar"
+                    openModal={openModalSave}
+                    setOpenModal={setOpenModalSave}
+                    title="Deseja salvar essas alterações?"
+                    toastMessage="Alterações salvas com sucesso!"
+                    onConfirm={async () => {
+                        await editSecret({ ...secret, name, type, value, secure, hideIcon, hideName, password: secure && password })
+
+                        navigation.goBack()
+                    }}
+                />
                 <Modal
                     isVisible={openModalVerify ? true : false}
                     onBackdropPress={() => setOpenModalVerify(null)}

@@ -6,8 +6,8 @@ import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
 import { Sections, Section, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
-import Modal from 'react-native-modal'
-import ModalSave from './ModalSave'
+import ModalConfirm from '../../components/ModalConfirm'
+import { blue, magenta } from '../../utils/colorsLogs'
 
 function Security() {
     const navigation = useNavigation()
@@ -23,6 +23,7 @@ function Security() {
     const [verifyPasswordWhenStatistics, setVerifyPasswordWhenStatistics] = useState(securityConfiguration.verifyPasswordWhenStatistics)
     const theme = useTheme()
     const [openModalSave, setOpenModalSave] = useState(false)
+    const { setSecurityConfiguration } = useSecurityConfiguration()
 
     return (
         <ContainerPd>
@@ -132,14 +133,15 @@ function Security() {
             <ButtonSubmit onPress={() => setOpenModalSave(true)}>
                 <TextButtonSubmit>Salvar</TextButtonSubmit>
             </ButtonSubmit>
-            <Modal
-                isVisible={openModalSave}
-                onBackdropPress={() => setOpenModalSave(false)}
-                onBackButtonPress={() => setOpenModalSave(false)}
-            >
-                <ModalSave
-                    setOpenModal={setOpenModalSave}
-                    securityConfiguration={{
+            <ModalConfirm
+                toastType="success"
+                confirmText="Salvar"
+                openModal={openModalSave}
+                setOpenModal={setOpenModalSave}
+                title="Deseja salvar essas alterações?"
+                toastMessage="Alterações salvas com sucesso!"
+                onConfirm={() => {
+                    setSecurityConfiguration({
                         verifyPasswordWhenStatistics,
                         verifyPasswordWhenDeleteData,
                         verifyPasswordWhenEditSecret,
@@ -149,9 +151,22 @@ function Security() {
                         verifyPasswordWhenImportSecrets,
                         verifyPasswordWhenChangePassword,
                         verifyPasswordWhenSecurityConfiguration
-                    }}
-                />
-            </Modal>
+                    })
+
+                    console.log(blue(`>> Security configuration changed`))
+                    console.log(magenta(`   >> verifyPasswordWhenStatistics ${blue(String(verifyPasswordWhenStatistics))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenDeleteData ${blue(String(verifyPasswordWhenDeleteData))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenEditSecret ${blue(String(verifyPasswordWhenEditSecret))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenShareSecret ${blue(String(verifyPasswordWhenShareSecret))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenDeleteSecret ${blue(String(verifyPasswordWhenDeleteSecret))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenExportSecrets ${blue(String(verifyPasswordWhenExportSecrets))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenImportSecrets ${blue(String(verifyPasswordWhenImportSecrets))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenChangePassword ${blue(String(verifyPasswordWhenChangePassword))}`))
+                    console.log(magenta(`   >> verifyPasswordWhenSecurityConfiguration ${blue(String(verifyPasswordWhenSecurityConfiguration))}`))
+
+                    navigation.goBack()
+                }}
+            />
         </ContainerPd>
     )
 }
