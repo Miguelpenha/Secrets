@@ -4,7 +4,7 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 export const Message = styled.Text`
     width: 80%;
     padding: 4%;
-    margin-top: 5%;
+    margin-top: 10%;
     text-align: center;
     align-self: center;
     font-size: ${RFPercentage(3.5)}px;
