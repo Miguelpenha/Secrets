@@ -12,7 +12,6 @@ import useShowEmoji from '../../contexts/emojiContext'
 import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
 import useShowPageTitle from '../../contexts/showPageTitleContext'
 import Modal from 'react-native-modal'
-import ModalDelete from './ModalDelete'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
@@ -20,6 +19,7 @@ import * as Clipboard from 'expo-clipboard'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import ModalImportSecrets from './ModalImportSecrets'
+import ModalDelete from './ModalDelete'
 
 function Settings() {
     const navigation = useNavigation()
@@ -132,13 +132,10 @@ function Settings() {
                     <TextPoweredByName>Miguel da Penha</TextPoweredByName>
                 </ContainerPoweredBy>
             </ContainerOptions>
-            <Modal
-                isVisible={openModalDelete}
-                onBackdropPress={() => setOpenModalDelete(false)}
-                onBackButtonPress={() => setOpenModalDelete(false)}
-            >
-                <ModalDelete setOpenModal={setOpenModalDelete}/>
-            </Modal>
+            <ModalDelete
+                openModal={openModalDelete}
+                setOpenModal={setOpenModalDelete}
+            />
             <Modal
                 isVisible={openModalVerifyPasswordOnChangePassword ? true : false}
                 onBackdropPress={() => setOpenModalVerifyPasswordOnChangePassword(null)}

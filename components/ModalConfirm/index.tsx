@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction, FC } from 'react'
 import Modal from 'react-native-modal'
-import { Container, Title, ContainerButtons } from './style'
+import { Container, Title, ContainerData, Data, ContainerButtons } from './style'
 import Toast from 'react-native-toast-message'
 import ButtonAnimated from './ButtonAnimated'
 
 interface Iprops {
     title?: string
+    data?: string[]
     openModal: boolean
     cancelText?: string
     confirmText?: string
@@ -15,7 +16,7 @@ interface Iprops {
     setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const ModalConfirm: FC<Iprops> = ({ openModal, setOpenModal, title, cancelText='Cancelar', onConfirm, toastType='error', toastMessage, confirmText='Deletar' }) => {
+const ModalConfirm: FC<Iprops> = ({ openModal, setOpenModal, title, data, cancelText='Cancelar', onConfirm, toastType='error', toastMessage, confirmText='Deletar' }) => {
     return (
         <Modal
             isVisible={openModal}
@@ -24,6 +25,11 @@ const ModalConfirm: FC<Iprops> = ({ openModal, setOpenModal, title, cancelText='
         >
             <Container>
                 {title && <Title>{title}</Title>}
+                {data && (
+                    <ContainerData>
+                        {data.map((data, index) => <Data key={index}>{data}</Data>)}
+                    </ContainerData>
+                )}
                 <ContainerButtons>
                     <ButtonAnimated onPress={() => setOpenModal(false)}>{cancelText}</ButtonAnimated>
                     <ButtonAnimated confirm onPress={async () => {

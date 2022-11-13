@@ -1,23 +1,24 @@
-import { Dispatch, SetStateAction, FC } from 'react'
-import { Container, TitleModalDeleteAll, DataModalDeleteAll, FooterModalDeleteAll, ButtonCancelModalDeleteAll, TextButtonCancelModalDeleteAll, ButtonSubmitModalDeleteAll, TextButtonSubmitModalDeleteAll } from './style'
-import { View } from 'react-native'
-import usePassword from '../../../contexts/passwordContext'
-import useTheme from '../../../theme'
+import { FC, Dispatch, SetStateAction } from 'react'
+import { useTheme } from '../../../theme/index'
+import ModalConfirm from '../../../components/ModalConfirm'
 import useShowEmoji from '../../../contexts/emojiContext'
-import { useNavigation } from '@react-navigation/native'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { yellow, red } from '../../../utils/colorsLogs'
-import Toast from 'react-native-toast-message'
 import useHideSecretOnShow from '../../../contexts/hideSecretOnShowContext'
-import useShowPageTitle from '../../../contexts/showPageTitleContext'
-import useSecurityConfiguration from '../../../contexts/securityConfigurationContext'
+import usePassword from '../../../contexts/passwordContext'
 import useSecrets from '../../../contexts/secretsContext'
+import useSecurityConfiguration from '../../../contexts/securityConfigurationContext'
+import useShowPageTitle from '../../../contexts/showPageTitleContext'
+import { useNavigation } from '@react-navigation/native'
+import data from './data'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { red, yellow } from '../../../utils/colorsLogs'
+import Toast from 'react-native-toast-message'
 
 interface Iprops {
+    openModal: boolean
     setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
+const ModalDelete: FC<Iprops> = ({ openModal, setOpenModal }) => {
     const { loadPassword, password } = usePassword()
     const { loadTheme } = useTheme()
     const { loadShowEmoji } = useShowEmoji()
@@ -28,24 +29,14 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
     const navigation = useNavigation()
 
     return (
-        <Container>
-            <TitleModalDeleteAll>Apagar todos os dados?</TitleModalDeleteAll>
-            <View>
-                <DataModalDeleteAll>@secrets:password</DataModalDeleteAll>
-                <DataModalDeleteAll>@secrets:securityConfiguration</DataModalDeleteAll>
-                <DataModalDeleteAll>@secrets:theme</DataModalDeleteAll>
-                <DataModalDeleteAll>@secrets:secrets</DataModalDeleteAll>
-                <DataModalDeleteAll>@secrets:showEmoji</DataModalDeleteAll>
-                <DataModalDeleteAll>@secrets:hideSecretOnShow</DataModalDeleteAll>
-                <DataModalDeleteAll>@secrets:showPageTitle</DataModalDeleteAll>
-            </View>
-            <FooterModalDeleteAll>
-            <ButtonCancelModalDeleteAll onPress={() => setOpenModal(false)}>
-                <TextButtonCancelModalDeleteAll>Cancelar</TextButtonCancelModalDeleteAll>
-            </ButtonCancelModalDeleteAll>
-            <ButtonSubmitModalDeleteAll onPress={() => {
-                setOpenModal(false)
-
+        <ModalConfirm
+            data={data}
+            confirmText="Apagar"
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+            toastMessage="Dados Apagados"
+            title="Apagar todos os dados?"
+            onConfirm={() => {
                 AsyncStorage.removeItem('@secrets:password').then(() => {
                     AsyncStorage.removeItem('@secrets:securityConfiguration').then(() => {
                         AsyncStorage.removeItem('@secrets:theme').then(() => {
@@ -82,11 +73,8 @@ const ModalDelete: FC<Iprops> = ({ setOpenModal }) => {
                         })
                     })
                 })
-            }}>
-                <TextButtonSubmitModalDeleteAll>Apagar</TextButtonSubmitModalDeleteAll>
-            </ButtonSubmitModalDeleteAll>
-            </FooterModalDeleteAll>
-        </Container>
+            }}
+        />
     )
 }
 
