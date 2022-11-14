@@ -1,5 +1,5 @@
 import { ISecret } from '../../../../types'
-import { FC } from 'react'
+import { Dispatch, SetStateAction, FC } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import useAnimations from './useAnimations'
 import { Container, Icon, Name, Next } from './style'
@@ -10,14 +10,15 @@ import { Dimensions } from 'react-native'
 interface Iprops {
     secret: ISecret
     onVerify: (id: string) => void
+    setOpenModalizeOptions: Dispatch<SetStateAction<string | null>>
 }
 
-const Secret: FC<Iprops> = ({ secret, onVerify }) => {
+const Secret: FC<Iprops> = ({ secret, onVerify, setOpenModalizeOptions }) => {
     const navigation = useNavigation()
     const { animationPressed, animationPressedIcon, animationPressedName, animationPressedNext, events } = useAnimations()
     
     return (
-        <Container style={animationPressed} {...events(() => {
+        <Container onLongPress={() => setOpenModalizeOptions(secret.id)} style={animationPressed} {...events(() => {
             if (secret.secure) {
                 onVerify(secret.id)
             } else {

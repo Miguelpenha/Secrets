@@ -9,6 +9,7 @@ import { Modalize } from 'react-native-modalize'
 import Loading from '../../components/Loading'
 import useTypes from './useTypes'
 import ModalizeSelectType from './ModalizeSelectType'
+import ModalizeOptions from './ModalizeOptions'
 
 export default function Home() {
   const [loading, setLoading] = useState(false)
@@ -18,7 +19,13 @@ export default function Home() {
   const [openModalVerify, setOpenModalVerify] = useState<string | null>(null)
   const navigation = useNavigation()
   const modalizeSelectType = useRef<Modalize>(null)
+  const modalizeOptions = useRef<Modalize>(null)
   const [openModalizeSelectType, setOpenModalizeSelectType] = useState(false)
+  const [openModalizeOptions, setOpenModalizeOptions] = useState<string | null>()
+
+  useEffect(() => {
+    openModalizeOptions && modalizeOptions.current.open()
+  }, [openModalizeOptions])
 
   useEffect(() => {
     setLoading(true)
@@ -36,6 +43,7 @@ export default function Home() {
           onVerify={id => setOpenModalVerify(id)}
           modalizeSelectType={modalizeSelectType}
           openModalizeSelectType={openModalizeSelectType}
+          setOpenModalizeOptions={setOpenModalizeOptions}
         />
         <Modal
           isVisible={openModalVerify ? true : false}
@@ -55,6 +63,7 @@ export default function Home() {
           setTypeSelect={setTypeSelect}
           setOpenModalize={setOpenModalizeSelectType}
         />
+        <ModalizeOptions modalize={modalizeOptions} setOpenModalize={setOpenModalizeOptions}/>
       </ContainerPd>
     )
   } else {

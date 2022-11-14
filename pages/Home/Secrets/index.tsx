@@ -1,4 +1,4 @@
-import { MutableRefObject, FC, useState, memo } from 'react'
+import { MutableRefObject, Dispatch, SetStateAction, FC, useState, memo } from 'react'
 import { IHandles } from 'react-native-modalize/lib/options'
 import { useSecrets } from '../../../contexts/secretsContext'
 import useShowEmoji from '../../../contexts/emojiContext'
@@ -13,9 +13,10 @@ interface Iprops {
   onVerify: (id: string) => void
   openModalizeSelectType: boolean
   modalizeSelectType: MutableRefObject<IHandles>
+  setOpenModalizeOptions: Dispatch<SetStateAction<string | null>>
 }
 
-const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, type, onVerify }) => {
+const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, setOpenModalizeOptions, type, onVerify }) => {
   const [refreshing, setRefreshing] = useState(false)
   const { secrets, loadSecrets } = useSecrets()
   const { showEmoji } = useShowEmoji()
@@ -38,7 +39,7 @@ const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, type,
         if (!find || (find.length >= 1 && !item.hideName)) {
           if (item.name.toUpperCase().includes(find.toUpperCase())) {
             if (!type || (item.type === type)) {
-              return <Secret secret={item} onVerify={onVerify}/>
+              return <Secret secret={item} onVerify={onVerify} setOpenModalizeOptions={setOpenModalizeOptions}/>
             }
           }
         }
