@@ -51,7 +51,7 @@ function Secret() {
                         />
                     </Header>
                     <Icon name={visibility ? secret.icon : 'lock'} size={35}/>
-                    <ContainerValue activeOpacity={0.4} onPress={() => {
+                    <ContainerValue onLongPress={() => setVisibility(!visibility)} activeOpacity={0.4} onPress={() => {
                         Clipboard.setString(secret.value)
 
                         Toast.show({
