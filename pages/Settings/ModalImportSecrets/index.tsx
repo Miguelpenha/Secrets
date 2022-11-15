@@ -27,6 +27,8 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
     })
 
     async function handleSubmit() {
+        setSecrets('')
+
         if (secrets) {
             await setSecretsStorage(JSON.parse(decrypt(secrets, passwordDefault)))
 
