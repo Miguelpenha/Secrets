@@ -51,7 +51,7 @@ function Secret() {
                         />
                     </Header>
                     <Icon name={visibility ? secret.icon : 'lock'} size={35}/>
-                    <ContainerValue onLongPress={() => setVisibility(!visibility)} activeOpacity={0.4} onPress={() => {
+                    <ContainerValue onLongPress={() => {
                         Clipboard.setString(secret.value)
 
                         Toast.show({
@@ -61,7 +61,7 @@ function Secret() {
                                 Toast.hide()
                             }
                         })
-                    }}>
+                    }} activeOpacity={0.4} onPress={() => setVisibility(!visibility)}>
                         <Value editable={false} multiline={visibility} secureTextEntry={!visibility}>{secret.value}</Value>
                     </ContainerValue>
                 </ScrollView>
