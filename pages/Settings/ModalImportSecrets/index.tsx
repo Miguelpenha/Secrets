@@ -27,8 +27,6 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
     })
 
     async function handleSubmit() {
-        setSecrets('')
-
         if (secrets) {
             await setSecretsStorage(JSON.parse(decrypt(secrets, passwordDefault)))
 
@@ -47,6 +45,7 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
     return (
         <Modal
             isVisible={openModal}
+            onModalHide={() => setSecrets('')}
             onBackdropPress={() => setOpenModal(false)}
             onBackButtonPress={() => setOpenModal(false)}
         >

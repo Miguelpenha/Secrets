@@ -32,9 +32,6 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, openModal, setOpenModal, onSubmit
     })
 
     async function handleSubmit() {
-        setPassword('')
-        setShowPassword(false)
-
         if ((secret && secret.password) ? await compare(password, secret.password) : await compare(password, passwordDefault)) {
             setOpenModal(null)
 
@@ -62,9 +59,13 @@ const ModalVerifyPassword: FC<Iprops> = ({ id, openModal, setOpenModal, onSubmit
 
     return (
         <Modal
-          isVisible={openModal ? true : false}
-          onBackdropPress={() => setOpenModal(null)}
-          onBackButtonPress={() => setOpenModal(null)}
+            isVisible={openModal ? true : false}
+            onBackdropPress={() => setOpenModal(null)}
+            onBackButtonPress={() => setOpenModal(null)}
+            onModalHide={() => {
+                setPassword('')
+                setShowPassword(false)
+            }}
         >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                 <Container>
