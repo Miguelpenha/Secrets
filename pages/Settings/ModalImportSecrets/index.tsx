@@ -1,63 +1,66 @@
-import { Dispatch, SetStateAction, FC, useState, useRef, useEffect } from 'react'
-import { useTheme } from 'styled-components'
-import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
-import { Container, Title, Input, ButtonSubmit, TextButtonSubmit } from './style'
+import { Dispatch, SetStateAction, FC, useState } from 'react'
+import { useSecrets } from '../../../contexts/secretsContext'
+import usePassword from '../../../contexts/passwordContext'
 import { decrypt } from '../../../utils/encrypt'
 import Toast from 'react-native-toast-message'
-import { TextInput, InteractionManager } from 'react-native'
-import usePassword from '../../../contexts/passwordContext'
-import useSecrets, { useSecret } from '../../../contexts/secretsContext'
+import { useTheme } from 'styled-components'
+import Modal from 'react-native-modal'
+import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { Container, Title, Input } from './style'
+import ButtonSubmit from './ButtonSubmit'
 
 interface Iprops {
+    openModal: boolean
     setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const ModalImportSecrets: FC<Iprops> = ({ setOpenModal }) => {
+const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
     const [secrets, setSecrets] = useState('')
-    const theme = useTheme()
-    const passwordRef = useRef<TextInput>(null)
-    const { password: passwordDefault } = usePassword()
     const { setSecrets: setSecretsStorage } = useSecrets()
-
-    useEffect(() => {
-        InteractionManager.runAfterInteractions(() => passwordRef.current.focus())
-    }, [])
+    const { password: passwordDefault } = usePassword()
+    const theme = useTheme()
 
     async function handleSubmit() {
-        await setSecretsStorage(JSON.parse(decrypt(secrets, passwordDefault)))
+        if (secrets) {
+            await setSecretsStorage(JSON.parse(decrypt(secrets, passwordDefault)))
 
-        setOpenModal(false)
-        
-        Toast.show({
-            text1: 'Segredos importados com sucesso!',
-            type: 'success',
-            onPress() {
-                Toast.hide()
-            }
-        })
+            setOpenModal(false)
+            
+            Toast.show({
+                text1: 'Segredos importados com sucesso!',
+                type: 'success',
+                onPress() {
+                    Toast.hide()
+                }
+            })
+        }
     }
 
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <Container>
-                <Title>Importar segredos</Title>
-                <KeyboardAvoidingView behavior="height" enabled>
-                    <Input
-                        value={secrets}
-                        ref={passwordRef}
-                        autoCapitalize="none"
-                        placeholder="Segredos..."
-                        onChangeText={setSecrets}
-                        selectionColor={theme.primary}
-                        onSubmitEditing={handleSubmit}
-                        placeholderTextColor={theme.primary}
-                    />
-                    <ButtonSubmit activeOpacity={0.5} onPress={handleSubmit}>
-                        <TextButtonSubmit>Importar</TextButtonSubmit>
-                    </ButtonSubmit>
-                </KeyboardAvoidingView>
-            </Container> 
-        </TouchableWithoutFeedback>
+        <Modal
+            isVisible={openModal}
+            onBackdropPress={() => setOpenModal(false)}
+            onBackButtonPress={() => setOpenModal(false)}
+        >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+                <Container>
+                    <Title>Importar</Title>
+                    <KeyboardAvoidingView behavior="height" enabled>
+                        <Input
+                            autoFocus
+                            value={secrets}
+                            autoCapitalize="none"
+                            placeholder="Segredos..."
+                            onChangeText={setSecrets}
+                            selectionColor={theme.primary}
+                            onSubmitEditing={handleSubmit}
+                            placeholderTextColor={theme.primary}
+                        />
+                        <ButtonSubmit onPress={handleSubmit}/>
+                    </KeyboardAvoidingView>
+                </Container>
+            </TouchableWithoutFeedback>
+        </Modal>
     )
 }
 

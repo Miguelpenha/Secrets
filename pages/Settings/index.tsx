@@ -204,13 +204,10 @@ function Settings() {
                     setOpenModal={setOpenModalVerifyPasswordOnImportSecrets}
                 />
             </Modal>
-            <Modal
-                isVisible={openModalImportSecrets}
-                onBackdropPress={() => setOpenModalImportSecrets(false)}
-                onBackButtonPress={() => setOpenModalImportSecrets(false)}
-            >
-                <ModalImportSecrets setOpenModal={setOpenModalImportSecrets}/>
-            </Modal>
+            <ModalImportSecrets
+                openModal={openModalImportSecrets}
+                setOpenModal={setOpenModalImportSecrets}
+            />
         </ContainerPd>
     )
 }
