@@ -145,13 +145,13 @@ function Secret() {
                         navigation.goBack()
                     }}
                 />
-                <Modal
-                    isVisible={openModalVerify ? true : false}
-                    onBackdropPress={() => setOpenModalVerify(null)}
-                    onBackButtonPress={() => setOpenModalVerify(null)}
-                >
-                    <ModalVerifyPassword hideToastFinal id={id} onSubmit={() => setOpenModalSave(true)} setOpenModal={setOpenModalVerify}/>
-                </Modal>
+                <ModalVerifyPassword
+                    id={id}
+                    hideToastFinal
+                    openModal={openModalVerify}
+                    setOpenModal={setOpenModalVerify}
+                    onSubmit={() => setOpenModalSave(true)}
+                />
             </ContainerPd>
         </TouchableWithoutFeedback>
     )

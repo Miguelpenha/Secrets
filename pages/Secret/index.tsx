@@ -11,7 +11,6 @@ import * as Clipboard from 'expo-clipboard'
 import Toast from 'react-native-toast-message'
 import ButtonShareAnimated from './ButtonShareAnimated'
 import Loading from '../../components/Loading'
-import Modal from 'react-native-modal'
 import ModalConfirm from '../../components/ModalConfirm'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
@@ -83,27 +82,15 @@ function Secret() {
                     navigation.navigate('Home')
                 }}
             />
-            <Modal
-                isVisible={openModalVerifyDelete ? true : false}
-                onBackdropPress={() => setOpenModalVerifyDelete(null)}
-                onBackButtonPress={() => setOpenModalVerifyDelete(null)}
-            >
-                <ModalVerifyPassword hideToastFinal id={id} onSubmit={() => setOpenModalDelete(true)} setOpenModal={setOpenModalVerifyDelete}/>
-            </Modal>
-            <Modal
-                isVisible={openModalVerifyShare ? true : false}
-                onBackdropPress={() => setOpenModalVerifyShare(null)}
-                onBackButtonPress={() => setOpenModalVerifyShare(null)}
-            >
-                <ModalVerifyPassword hideToastFinal id={id} onSubmit={() => setTimeout(async () => {
-                    await Share.share({
-                        title: secret.name,
-                        message: secret.value
-                    }, {
-                        dialogTitle: secret.name
-                    })
-                }, 150)} setOpenModal={setOpenModalVerifyShare}/>
-            </Modal>
+            <ModalVerifyPassword openModal={openModalVerifyDelete} hideToastFinal id={id} onSubmit={() => setOpenModalDelete(true)} setOpenModal={setOpenModalVerifyDelete}/>
+            <ModalVerifyPassword openModal={openModalVerifyShare} hideToastFinal id={id} onSubmit={() => setTimeout(async () => {
+                await Share.share({
+                    title: secret.name,
+                    message: secret.value
+                }, {
+                    dialogTitle: secret.name
+                })
+            }, 150)} setOpenModal={setOpenModalVerifyShare}/>
         </ContainerPd>
     )
 }

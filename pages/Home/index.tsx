@@ -3,7 +3,6 @@ import useSecrets from '../../contexts/secretsContext'
 import { useNavigation } from '@react-navigation/native'
 import ContainerPd from '../../components/ContainerPd'
 import Secrets from './Secrets'
-import Modal from 'react-native-modal'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import { Modalize } from 'react-native-modalize'
 import Loading from '../../components/Loading'
@@ -45,18 +44,13 @@ export default function Home() {
           openModalizeSelectType={openModalizeSelectType}
           setOpenModalizeOptions={setOpenModalizeOptions}
         />
-        <Modal
-          isVisible={openModalVerify ? true : false}
-          onBackdropPress={() => setOpenModalVerify(null)}
-          onBackButtonPress={() => setOpenModalVerify(null)}
-        >
-          <ModalVerifyPassword
-            hideToastFinal
-            id={openModalVerify}
-            setOpenModal={setOpenModalVerify}
-            onSubmit={id => navigation.navigate('Secret', { id })}
-          />
-        </Modal>
+        <ModalVerifyPassword
+          hideToastFinal
+          id={openModalVerify}
+          openModal={openModalVerify}
+          setOpenModal={setOpenModalVerify}
+          onSubmit={id => navigation.navigate('Secret', { id })}
+        />
         <ModalizeSelectType
           types={types}
           modalize={modalizeSelectType}

@@ -1,13 +1,14 @@
-import { Dispatch, SetStateAction, FC, useState } from 'react'
+import { Dispatch, SetStateAction, FC, useState, useRef } from 'react'
 import { useSecrets } from '../../../contexts/secretsContext'
 import usePassword from '../../../contexts/passwordContext'
 import { decrypt } from '../../../utils/encrypt'
 import Toast from 'react-native-toast-message'
 import { useTheme } from 'styled-components'
 import Modal from 'react-native-modal'
-import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
+import { TextInput, InteractionManager, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView } from 'react-native'
 import { Container, Title, Input } from './style'
 import ButtonSubmit from './ButtonSubmit'
+import { useFocusEffect } from '@react-navigation/native'
 
 interface Iprops {
     openModal: boolean
@@ -16,9 +17,14 @@ interface Iprops {
 
 const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
     const [secrets, setSecrets] = useState('')
+    const secretsRef = useRef<TextInput>(null)
     const { setSecrets: setSecretsStorage } = useSecrets()
     const { password: passwordDefault } = usePassword()
     const theme = useTheme()
+
+    useFocusEffect(() => {
+        InteractionManager.runAfterInteractions(() => secretsRef.current?.focus())
+    })
 
     async function handleSubmit() {
         if (secrets) {
@@ -47,8 +53,8 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
                     <Title>Importar</Title>
                     <KeyboardAvoidingView behavior="height" enabled>
                         <Input
-                            autoFocus
                             value={secrets}
+                            ref={secretsRef}
                             autoCapitalize="none"
                             placeholder="Segredos..."
                             onChangeText={setSecrets}

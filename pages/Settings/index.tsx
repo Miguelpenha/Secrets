@@ -11,7 +11,6 @@ import { blue, magenta } from '../../utils/colorsLogs'
 import useShowEmoji from '../../contexts/emojiContext'
 import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
 import useShowPageTitle from '../../contexts/showPageTitleContext'
-import Modal from 'react-native-modal'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
@@ -136,74 +135,44 @@ function Settings() {
                 openModal={openModalDelete}
                 setOpenModal={setOpenModalDelete}
             />
-            <Modal
-                isVisible={openModalVerifyPasswordOnChangePassword ? true : false}
-                onBackdropPress={() => setOpenModalVerifyPasswordOnChangePassword(null)}
-                onBackButtonPress={() => setOpenModalVerifyPasswordOnChangePassword(null)}
-            >
-                <ModalVerifyPassword
-                    hideToastFinal
-                    setOpenModal={setOpenModalVerifyPasswordOnChangePassword}
-                    onSubmit={() => navigation.navigate('Password', {
-                        initial: false
-                    })}
-                />
-            </Modal>
-            <Modal
-                isVisible={openModalVerifyPasswordOnDeleteData ? true : false}
-                onBackdropPress={() => setOpenModalVerifyPasswordOnDeleteData(null)}
-                onBackButtonPress={() => setOpenModalVerifyPasswordOnDeleteData(null)}
-            >
-                <ModalVerifyPassword
-                    hideToastFinal
-                    setOpenModal={setOpenModalVerifyPasswordOnDeleteData}
-                    onSubmit={() => setOpenModalDelete(true)}
-                />
-            </Modal>
-            <Modal
-                isVisible={openModalVerifyPasswordOnSecurity ? true : false}
-                onBackdropPress={() => setOpenModalVerifyPasswordOnSecurity(null)}
-                onBackButtonPress={() => setOpenModalVerifyPasswordOnSecurity(null)}
-            >
-                <ModalVerifyPassword
-                    hideToastFinal
-                    setOpenModal={setOpenModalVerifyPasswordOnSecurity}
-                    onSubmit={() => navigation.navigate('Security')}
-                />
-            </Modal>
-            <Modal
-                isVisible={openModalVerifyPasswordOnStatistics ? true : false}
-                onBackdropPress={() => setOpenModalVerifyPasswordOnStatistics(null)}
-                onBackButtonPress={() => setOpenModalVerifyPasswordOnStatistics(null)}
-            >
-                <ModalVerifyPassword
-                    hideToastFinal
-                    setOpenModal={setOpenModalVerifyPasswordOnStatistics}
-                    onSubmit={() => navigation.navigate('Statistics')}
-                />
-            </Modal>
-            <Modal
-                isVisible={openModalVerifyPasswordOnExportSecrets ? true : false}
-                onBackdropPress={() => setOpenModalVerifyPasswordOnExportSecrets(null)}
-                onBackButtonPress={() => setOpenModalVerifyPasswordOnExportSecrets(null)}
-            >
-                <ModalVerifyPassword
-                    hideToastFinal
-                    onSubmit={handleExportSecrets}
-                    setOpenModal={setOpenModalVerifyPasswordOnExportSecrets}
-                />
-            </Modal>
-            <Modal
-                isVisible={openModalVerifyPasswordOnImportSecrets ? true : false}
-                onBackdropPress={() => setOpenModalVerifyPasswordOnImportSecrets(null)}
-                onBackButtonPress={() => setOpenModalVerifyPasswordOnImportSecrets(null)}
-            >
-                <ModalVerifyPassword
-                    hideToastFinal
-                    onSubmit={() => setOpenModalImportSecrets(true)}
-                    setOpenModal={setOpenModalVerifyPasswordOnImportSecrets}
-                />
-            </Modal>
+            <ModalVerifyPassword
+                hideToastFinal
+                openModal={openModalVerifyPasswordOnChangePassword}
+                setOpenModal={setOpenModalVerifyPasswordOnChangePassword}
+                onSubmit={() => navigation.navigate('Password', {
+                    initial: false
+                })}
+            />
+            <ModalVerifyPassword
+                hideToastFinal
+                openModal={openModalVerifyPasswordOnDeleteData}
+                setOpenModal={setOpenModalVerifyPasswordOnDeleteData}
+                onSubmit={() => setOpenModalDelete(true)}
+            />
+            <ModalVerifyPassword
+                hideToastFinal
+                openModal={openModalVerifyPasswordOnSecurity}
+                setOpenModal={setOpenModalVerifyPasswordOnSecurity}
+                onSubmit={() => navigation.navigate('Security')}
+            />
+            <ModalVerifyPassword
+                hideToastFinal
+                openModal={openModalVerifyPasswordOnStatistics}
+                setOpenModal={setOpenModalVerifyPasswordOnStatistics}
+                onSubmit={() => navigation.navigate('Statistics')}
+            />
+            <ModalVerifyPassword
+                hideToastFinal
+                onSubmit={handleExportSecrets}
+                openModal={openModalVerifyPasswordOnExportSecrets}
+                setOpenModal={setOpenModalVerifyPasswordOnExportSecrets}
+            />
+            <ModalVerifyPassword
+                hideToastFinal
+                onSubmit={() => setOpenModalImportSecrets(true)}
+                openModal={openModalVerifyPasswordOnImportSecrets}
+                setOpenModal={setOpenModalVerifyPasswordOnImportSecrets}
+            />
             <ModalImportSecrets
                 openModal={openModalImportSecrets}
                 setOpenModal={setOpenModalImportSecrets}
