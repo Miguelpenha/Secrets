@@ -1,4 +1,4 @@
-import { MutableRefObject, Dispatch, SetStateAction, FC, useState, memo } from 'react'
+import { Dispatch, SetStateAction, MutableRefObject, FC, useState, memo } from 'react'
 import { IHandles } from 'react-native-modalize/lib/options'
 import { useSecrets } from '../../../contexts/secretsContext'
 import useShowEmoji from '../../../contexts/emojiContext'
@@ -12,11 +12,12 @@ interface Iprops {
   type: string
   onVerify: (id: string) => void
   openModalizeSelectType: boolean
+  setType: Dispatch<SetStateAction<string>>
   modalizeSelectType: MutableRefObject<IHandles>
   setOpenModalizeOptions: Dispatch<SetStateAction<string | null>>
 }
 
-const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, setOpenModalizeOptions, type, onVerify }) => {
+const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, setOpenModalizeOptions, type, setType, onVerify }) => {
   const [refreshing, setRefreshing] = useState(false)
   const { secrets, loadSecrets } = useSecrets()
   const { showEmoji } = useShowEmoji()
@@ -34,7 +35,7 @@ const Secrets: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, setOp
     <FlatList
       data={secrets}
       keyExtractor={item => item.id}
-      ListHeaderComponent={<HeaderRaw modalizeSelectType={modalizeSelectType} openModalizeSelectType={openModalizeSelectType} find={find} type={type} setFind={setFind}/>}
+      ListHeaderComponent={<HeaderRaw setType={setType} modalizeSelectType={modalizeSelectType} openModalizeSelectType={openModalizeSelectType} find={find} type={type} setFind={setFind}/>}
       renderItem={({ item }) => {
         if (!find || (find.length >= 1 && !item.hideName)) {
           if (item.name.toUpperCase().includes(find.toUpperCase())) {

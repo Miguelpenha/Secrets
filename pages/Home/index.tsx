@@ -39,6 +39,7 @@ export default function Home() {
       <ContainerPd>
         <Secrets
           type={typeSelect}
+          setType={setTypeSelect}
           onVerify={id => setOpenModalVerify(id)}
           modalizeSelectType={modalizeSelectType}
           openModalizeSelectType={openModalizeSelectType}

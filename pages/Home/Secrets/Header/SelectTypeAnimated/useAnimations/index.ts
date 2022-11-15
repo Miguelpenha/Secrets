@@ -2,7 +2,7 @@ import { useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
 import events from './events'
 import animationRotateIcon from './animationRotateIcon'
 
-function useAnimations() {
+function useAnimations(type: string) {
     const pressed = useSharedValue(1)
     const rotateIcon = useSharedValue(0)
 
@@ -10,8 +10,8 @@ function useAnimations() {
         animationContainer: useAnimatedStyle(() => ({
             transform: [{ scale: pressed.value }]
         }), []),
-        events: (onPress: () => void) => events(pressed, onPress),
-        animationRotateIcon: (openModalize: boolean) => animationRotateIcon(rotateIcon, openModalize)
+        animationRotateIcon: (openModalize: boolean) => animationRotateIcon(rotateIcon, openModalize),
+        events: (onPress: () => void, onLongPress: () => void) => events(pressed, onPress, onLongPress, type)
     }
 }
 

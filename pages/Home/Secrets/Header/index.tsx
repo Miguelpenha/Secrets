@@ -12,11 +12,12 @@ interface Iprops {
     find: string
     type: string
     openModalizeSelectType: boolean
+    setType: Dispatch<SetStateAction<string>>
     setFind: Dispatch<SetStateAction<string>>
     modalizeSelectType: MutableRefObject<IHandles>
 }
 
-const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, setFind, type }) => {
+const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, setFind, type, setType }) => {
     const navigation = useNavigation()
     const { showEmoji } = useShowEmoji()
     const { secrets } = useSecrets()
@@ -44,6 +45,7 @@ const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, 
                 {secrets.length ? (
                     <SelectTypeAnimated
                         type={type}
+                        onLongPress={() => setType('')}
                         openModalizeSelectType={openModalizeSelectType}
                         onPress={() => modalizeSelectType.current.open()}
                     />
