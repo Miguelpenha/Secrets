@@ -116,7 +116,7 @@ export function useSecret(id: string) {
     const [secret, setSecret] = useState<ISecret>()
     
     useEffect(() => {
-        secrets.map(secretMap => id === secretMap.id && setSecret(secretMap))
+        secrets && secrets.map(secretMap => id === secretMap.id && setSecret(secretMap))
     }, [secrets])
     
     return secret

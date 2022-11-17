@@ -1,6 +1,7 @@
 const data = [
     '@secrets:theme',
     '@secrets:secrets',
+    '@secrets:statistic',
     '@secrets:password',
     '@secrets:showEmoji',
     '@secrets:showPageTitle',

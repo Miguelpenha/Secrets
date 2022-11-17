@@ -7,6 +7,7 @@ import { SecurityConfigurationProvider } from './contexts/securityConfigurationC
 import { ThemeProvider } from './theme'
 import { SecretsProvider } from './contexts/secretsContext'
 import { EmojiProvider } from './contexts/emojiContext'
+import { StatisticProvider } from './contexts/statisticContext'
 import { HideSecretOnShowProvider } from './contexts/hideSecretOnShowContext'
 import { ShowPageTitleProvider } from './contexts/showPageTitleContext'
 import Routes from './routes'
@@ -31,11 +32,13 @@ function App() {
           <ThemeProvider>
             <SecretsProvider>
               <EmojiProvider>
-                <HideSecretOnShowProvider>
-                  <ShowPageTitleProvider>
-                    <Routes/>
-                  </ShowPageTitleProvider>
-                </HideSecretOnShowProvider>
+                <StatisticProvider>
+                  <HideSecretOnShowProvider>
+                    <ShowPageTitleProvider>
+                      <Routes/>
+                    </ShowPageTitleProvider>
+                  </HideSecretOnShowProvider>
+                </StatisticProvider>
               </EmojiProvider>
             </SecretsProvider>
           </ThemeProvider>

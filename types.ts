@@ -59,3 +59,7 @@ export interface ISecurity {
   verifyPasswordWhenChangePassword: boolean
   verifyPasswordWhenSecurityConfiguration: boolean
 }
+
+export interface IStatistic {
+  timeUsing: number
+}

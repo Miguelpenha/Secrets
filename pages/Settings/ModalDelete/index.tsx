@@ -42,30 +42,32 @@ const ModalDelete: FC<Iprops> = ({ openModal, setOpenModal }) => {
                         AsyncStorage.removeItem('@secrets:theme').then(() => {
                             AsyncStorage.removeItem('@secrets:secrets').then(() => {
                                 AsyncStorage.removeItem('@secrets:showEmoji').then(() => {
-                                    AsyncStorage.removeItem('@secrets:hideSecretOnShow').then(async () => {
-                                        AsyncStorage.removeItem('@secrets:showPageTitle').then(async () => {
-                                            console.log(yellow('>> All data has been deleted'))
-                                            console.log(red('   >> @secrets:password'))
-                                            console.log(red('   >> @secrets:securityConfiguration'))
-                                            console.log(red('   >> @secrets:theme'))
-                                            console.log(red('   >> @secrets:secrets'))
-                                            console.log(red('   >> @secrets:showEmoji'))
-                                            console.log(red('   >> @secrets:hideSecretOnShow'))
-                
-                                            Toast.show({
-                                                type: 'error',
-                                                text1: 'Dados Apagados'
+                                    AsyncStorage.removeItem('@secrets:hideSecretOnShow').then(() => {
+                                        AsyncStorage.removeItem('@secrets:showPageTitle').then(() => {
+                                            AsyncStorage.removeItem('@secrets:statistic').then(async () => {
+                                                console.log(yellow('>> All data has been deleted'))
+                                                console.log(red('   >> @secrets:password'))
+                                                console.log(red('   >> @secrets:securityConfiguration'))
+                                                console.log(red('   >> @secrets:theme'))
+                                                console.log(red('   >> @secrets:secrets'))
+                                                console.log(red('   >> @secrets:showEmoji'))
+                                                console.log(red('   >> @secrets:hideSecretOnShow'))
+                    
+                                                Toast.show({
+                                                    type: 'error',
+                                                    text1: 'Dados Apagados'
+                                                })
+                    
+                                                await loadPassword()
+                                                await loadTheme()
+                                                await loadHideSecretOnShow()
+                                                await loadShowPageTitle()
+                                                await loadShowEmoji()
+                                                await loadSecurityConfiguration()
+                                                await loadSecrets()
+                                                
+                                                !password && navigation.goBack()
                                             })
-                
-                                            await loadPassword()
-                                            await loadTheme()
-                                            await loadHideSecretOnShow()
-                                            await loadShowPageTitle()
-                                            await loadShowEmoji()
-                                            await loadSecurityConfiguration()
-                                            await loadSecrets()
-                                            
-                                            !password && navigation.goBack()
                                         })
                                     })
                                 })
