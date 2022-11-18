@@ -25,7 +25,8 @@ const ModalizeOptions: FC<Iprops> = ({ modalize, setOpenModalize }) => {
                 <Option icon="delete" onPress={() => {}}>Excluir</Option>
                 <Option icon="file-copy" onPress={() => {}}>Copiar</Option>
                 <Option icon="share" onPress={() => {}}>Compartilhar</Option>
-                <Option icon="security"onPress={() => {}}>Deixar seguro</Option>
+                <Option icon="security"onPress={() => {}}>Deixar seguro</Option> 
+                <Option icon="content-copy" onPress={() => {}}>Usar como modelo (Desenvolvimento)</Option>
                 <Option icon="qr-code-scanner" onPress={() => {}}>QR code (Desenvolvimento)</Option>
             </Options>
         </Modalize>
