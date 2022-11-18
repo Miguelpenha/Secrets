@@ -12,7 +12,7 @@ function useAnimations() {
         animationText: useAnimatedStyle(() => ({
             transform: [{ scale: pressedText.value }]
         })),
-        events: (onPress: () => void) => events(pressed, pressedText, onPress)
+        events: (onPress: () => void, onLongPress: () => void) => events(pressed, pressedText, onPress, onLongPress)
     }
 }
 
