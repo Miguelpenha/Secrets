@@ -15,7 +15,8 @@ export default function Home() {
   const { secrets, loadSecrets } = useSecrets()
   const [typeSelect, setTypeSelect] = useState('')
   const types = useTypes(secrets)
-  const [openModalVerify, setOpenModalVerify] = useState<string | null>(null)
+  const [openModalVerifySecret, setOpenModalVerifySecret] = useState<string | null>(null)
+  const [openModalVerifyOptions, setOpenModalVerifyOptions] = useState<string | null>(null)
   const navigation = useNavigation()
   const modalizeSelectType = useRef<Modalize>(null)
   const modalizeOptions = useRef<Modalize>(null)
@@ -40,17 +41,24 @@ export default function Home() {
         <Secrets
           type={typeSelect}
           setType={setTypeSelect}
-          onVerify={id => setOpenModalVerify(id)}
           modalizeSelectType={modalizeSelectType}
+          onVerify={id => setOpenModalVerifySecret(id)}
           openModalizeSelectType={openModalizeSelectType}
           setOpenModalizeOptions={setOpenModalizeOptions}
         />
         <ModalVerifyPassword
           hideToastFinal
-          id={openModalVerify}
-          openModal={openModalVerify}
-          setOpenModal={setOpenModalVerify}
+          id={openModalVerifySecret}
+          openModal={openModalVerifySecret}
+          setOpenModal={setOpenModalVerifySecret}
           onSubmit={id => navigation.navigate('Secret', { id })}
+        />
+        <ModalVerifyPassword
+          hideToastFinal
+          id={openModalVerifyOptions}
+          openModal={openModalVerifyOptions}
+          setOpenModal={setOpenModalVerifyOptions}
+          onSubmit={id => navigation.navigate('CreateSecret', { id })}
         />
         <ModalizeSelectType
           types={types}
@@ -58,7 +66,7 @@ export default function Home() {
           setTypeSelect={setTypeSelect}
           setOpenModalize={setOpenModalizeSelectType}
         />
-        <ModalizeOptions openModalize={openModalizeOptions} modalize={modalizeOptions} setOpenModalize={setOpenModalizeOptions}/>
+        <ModalizeOptions setOpenModalVerifyOptions={setOpenModalVerifyOptions} openModalize={openModalizeOptions} modalize={modalizeOptions} setOpenModalize={setOpenModalizeOptions}/>
       </ContainerPd>
     )
   } else {

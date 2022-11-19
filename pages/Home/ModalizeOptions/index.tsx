@@ -1,8 +1,6 @@
 import { MutableRefObject, Dispatch, SetStateAction, FC } from 'react'
 import { IHandles } from 'react-native-modalize/lib/options'
 import { useTheme } from 'styled-components'
-import { useNavigation } from '@react-navigation/native'
-import { useSecret } from '../../../contexts/secretsContext'
 import { Modalize } from 'react-native-modalize'
 import optionsModalize from '../../../components/optionsModalize'
 import { Options } from './style'
@@ -12,11 +10,11 @@ interface Iprops {
     openModalize: string | null
     modalize: MutableRefObject<IHandles>
     setOpenModalize: Dispatch<SetStateAction<string | null>>
+    setOpenModalVerifyOptions: Dispatch<SetStateAction<string | null>>
 }
 
-const ModalizeOptions: FC<Iprops> = ({ modalize, openModalize, setOpenModalize }) => {
+const ModalizeOptions: FC<Iprops> = ({ modalize, openModalize, setOpenModalize, setOpenModalVerifyOptions }) => {
     const theme = useTheme()
-    const navigation = useNavigation()
     
     return (
         <Modalize
@@ -31,9 +29,7 @@ const ModalizeOptions: FC<Iprops> = ({ modalize, openModalize, setOpenModalize }
                 <Option icon="share" onPress={() => {}}>Compartilhar</Option>
                 <Option icon="security"onPress={() => {}}>Deixar seguro</Option> 
                 <Option icon="content-copy" onPress={() => {
-                    navigation.navigate('CreateSecret', {
-                        id: openModalize
-                    })
+                    setOpenModalVerifyOptions(openModalize)
 
                     modalize.current.close()
                 }}>Usar como modelo (Desenvolvimento)</Option>
