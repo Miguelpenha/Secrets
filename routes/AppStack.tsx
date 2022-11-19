@@ -25,7 +25,7 @@ function AppStack() {
             <Screen name="Security" component={Security}/>
             <Screen name="Statistics" component={Statistics}/>
             <Screen name="EditSecret" component={EditSecret}/>
-            <Screen name="CreateSecret" component={CreateSecret}/>
+            <Screen name="CreateSecret" component={CreateSecret} initialParams={{ secret: null }}/>
             <Screen name="Password" component={Password} initialParams={{ initial: false }}/>
         </Navigator>
     )

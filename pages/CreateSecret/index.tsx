@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import { useTheme } from 'styled-components'
 import { useState, useRef } from 'react'
 import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ListRenderItemInfo } from 'react-native'
@@ -17,20 +17,26 @@ import usePassword from '../../contexts/passwordContext'
 import { useStatistic } from '../../contexts/statisticContext'
 import { ScrollView } from 'react-native'
 import ButtonSubmitAnimated from './ButtonSubmitAnimated'
+import { ISecret } from '../../types'
+
+interface IParams {
+    secret: ISecret
+}
 
 function CreateSecret() {
     const navigation = useNavigation()
+    const { secret } = useRoute().params as IParams
     const theme = useTheme()
     const { password: passwordDefault } = usePassword()
-    const [icon, setIcon] = useState<keyof typeof MaterialIcons.glyphMap>('vpn-key')
-    const [name, setName] = useState('')
-    const [type, setType] = useState('')
-    const [value, setValue] = useState('')
-    const [hideIcon, setHideIcon] = useState(false)
-    const [hideName, setHideName] = useState(false)
-    const [secure, setSecure] = useState(false)
+    const [icon, setIcon] = useState<keyof typeof MaterialIcons.glyphMap>(secret && secret.icon || 'vpn-key')
+    const [name, setName] = useState(secret && secret.name || '')
+    const [type, setType] = useState(secret && secret.type || '')
+    const [value, setValue] = useState(secret && secret.value || '')
+    const [hideIcon, setHideIcon] = useState(secret && secret.hideIcon || false)
+    const [hideName, setHideName] = useState(secret && secret.hideName || false)
+    const [secure, setSecure] = useState(secret && secret.secure || false)
     const { createSecret } = useSecrets()
-    const [password, setPassword] = useState('')
+    const [password, setPassword] = useState(secret && secret.password || '')
     const [showPassword, setShowPassword] = useState(false)
     const modalizeSelectIcon = useRef<Modalize>(null)
     const { statistic, setStatistic } = useStatistic()

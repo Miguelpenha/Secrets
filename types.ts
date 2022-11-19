@@ -24,7 +24,9 @@ export type Inavigation = {
   Settings: undefined
   Security: undefined
   Statistics: undefined
-  CreateSecret: undefined
+  CreateSecret: {
+    secret?: ISecret
+  }
   Secret: {
     id: string
   }

@@ -58,7 +58,7 @@ export default function Home() {
           setTypeSelect={setTypeSelect}
           setOpenModalize={setOpenModalizeSelectType}
         />
-        <ModalizeOptions modalize={modalizeOptions} setOpenModalize={setOpenModalizeOptions}/>
+        <ModalizeOptions openModalize={openModalizeOptions} modalize={modalizeOptions} setOpenModalize={setOpenModalizeOptions}/>
       </ContainerPd>
     )
   } else {
