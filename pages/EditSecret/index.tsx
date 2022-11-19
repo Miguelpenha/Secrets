@@ -9,9 +9,9 @@ import HeaderBack from '../../components/HeaderBack'
 import { Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
 import Loading from '../../components/Loading'
-import Modal from 'react-native-modal'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
+import { useStatistic } from '../../contexts/statisticContext'
 import { ScrollView } from 'react-native'
 import ModalConfirm from '../../components/ModalConfirm'
 
@@ -36,6 +36,7 @@ function Secret() {
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalSave, setOpenModalSave] = useState(false)
     const [openModalVerify, setOpenModalVerify] = useState<string | null>()
+    const { statistic, setStatistic } = useStatistic()
 
     useEffect(() => {
         if (secret) {
@@ -75,6 +76,7 @@ function Secret() {
                             onChangeText={setValue}
                             selectionColor={theme.primary}
                             placeholderTextColor={theme.primary}
+                            onTextInput={() => setStatistic({...statistic, timeWriting: statistic.timeWriting+0.5})}
                         />
                         <Field>
                             <Label>Nome do segredo</Label>

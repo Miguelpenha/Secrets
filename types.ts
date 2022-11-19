@@ -62,4 +62,5 @@ export interface ISecurity {
 
 export interface IStatistic {
   timeUsing: number
+  timeWriting: number
 }

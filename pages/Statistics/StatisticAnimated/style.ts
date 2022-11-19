@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
 export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
+    width: 75%;
     padding: 6%;
     elevation: 15;
     margin-bottom: 10%;

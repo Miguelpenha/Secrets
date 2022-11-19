@@ -14,10 +14,10 @@ export const StatisticContext = createContext<IStatisticContext>({} as IStatisti
 export const StatisticProvider: FC = ({ children }) => {
     const [statistic, setStatistic] = useState<IStatistic>()
 
-    async function setStatisticOnStorage(statistic: IStatistic) {
-        AsyncStorage.setItem('@secrets:statistic', JSON.stringify(statistic))
+    async function setStatisticOnStorage(newStatistic: IStatistic) {
+        AsyncStorage.setItem('@secrets:statistic', JSON.stringify(newStatistic))
 
-        setStatistic(statistic)
+        setStatistic(() => newStatistic)
     }
     
     async function loadStatistic() {
@@ -35,12 +35,16 @@ export const StatisticProvider: FC = ({ children }) => {
     }, [])
 
     useEffect(() => {
-        setTimeout(() => {
-            statistic && setStatisticOnStorage({
-                timeUsing: statistic.timeUsing+1
+        const interval = setInterval(() => {
+            setStatistic(statistic => {
+                AsyncStorage.setItem('@secrets:statistic', JSON.stringify({...statistic, timeUsing: statistic.timeUsing+1} as IStatistic))
+                
+                return {...statistic, timeUsing: statistic.timeUsing+1}
             })
         }, 1000)
-    }, [statistic])
+            
+        return () => clearInterval(interval)
+    }, [])
     
     return (
         <StatisticContext.Provider value={{statistic, setStatistic: setStatisticOnStorage, loadStatistic}}>

@@ -14,6 +14,7 @@ import icons from './icons'
 import { Switch } from 'react-native'
 import onSubmit from './onSubmit'
 import usePassword from '../../contexts/passwordContext'
+import { useStatistic } from '../../contexts/statisticContext'
 import { ScrollView } from 'react-native'
 
 function CreateSecret() {
@@ -31,6 +32,7 @@ function CreateSecret() {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const modalizeSelectIcon = useRef<Modalize>(null)
+    const { statistic, setStatistic } = useStatistic()
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -69,6 +71,7 @@ function CreateSecret() {
                                     onChangeText={setValue}
                                     selectionColor={theme.primary}
                                     placeholderTextColor={theme.primary}
+                                    onTextInput={() => setStatistic({...statistic, timeWriting: statistic.timeWriting+0.5})}
                                 />
                             </Field>
                             <ContainerSwitch>
