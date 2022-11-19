@@ -17,7 +17,6 @@ interface Iprops {
 const ModalizeOptions: FC<Iprops> = ({ modalize, openModalize, setOpenModalize }) => {
     const theme = useTheme()
     const navigation = useNavigation()
-    const secret = useSecret(openModalize)
     
     return (
         <Modalize
@@ -33,8 +32,10 @@ const ModalizeOptions: FC<Iprops> = ({ modalize, openModalize, setOpenModalize }
                 <Option icon="security"onPress={() => {}}>Deixar seguro</Option> 
                 <Option icon="content-copy" onPress={() => {
                     navigation.navigate('CreateSecret', {
-                        secret
+                        id: openModalize
                     })
+
+                    modalize.current.close()
                 }}>Usar como modelo (Desenvolvimento)</Option>
                 <Option icon="qr-code-scanner" onPress={() => {}}>QR code (Desenvolvimento)</Option>
             </Options>
