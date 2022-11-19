@@ -5,7 +5,7 @@ import { TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, ListRenderIte
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
 import ButtonSelectIconAnimated from './ButtonSelectIconAnimated'
-import { Field, Label, ContainerInput, ContainerIconShow, IconShow, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
+import { Field, Label, ContainerInput, ContainerIconShow, IconShow, Input, ContainerSwitch, TextSwitch } from './style'
 import useSecrets from '../../contexts/secretsContext'
 import { Modalize } from 'react-native-modalize'
 import optionsModalize from '../../components/optionsModalize'
@@ -16,6 +16,7 @@ import onSubmit from './onSubmit'
 import usePassword from '../../contexts/passwordContext'
 import { useStatistic } from '../../contexts/statisticContext'
 import { ScrollView } from 'react-native'
+import ButtonSubmitAnimated from './ButtonSubmitAnimated'
 
 function CreateSecret() {
     const navigation = useNavigation()
@@ -130,11 +131,9 @@ function CreateSecret() {
                                 </Field>
                             )}
                         </ScrollView>
-                        <ButtonSubmit onPress={async () => (
+                        <ButtonSubmitAnimated onPress={async () => (
                             await onSubmit(icon, name, type, value, hideIcon, hideName, secure, password, passwordDefault, createSecret, navigation as any)
-                        )}>
-                            <TextButtonSubmit>Criar</TextButtonSubmit>
-                        </ButtonSubmit>
+                        )}/>
                     </ContainerPd>
                 </KeyboardAvoidingView>
                 <Modalize
