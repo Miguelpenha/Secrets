@@ -51,7 +51,6 @@ function CreateSecret() {
             setHideIcon(secret.hideIcon)
             setHideName(secret.hideName)
             setSecure(secret.secure)
-            setPassword(secret.password)
         }
     }, [secret])
     
