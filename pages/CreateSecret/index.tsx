@@ -153,7 +153,11 @@ function CreateSecret() {
                             )}
                         </ScrollView>
                         <ButtonSubmitAnimated onPress={async () => (
-                            await onSubmit(icon, name, type, value, hideIcon, hideName, secure, password, passwordDefault, createSecret, navigation as any, type => setTypes([...types, type]))
+                            await onSubmit(icon, name, type, value, hideIcon, hideName, secure, password, passwordDefault, createSecret, navigation as any, type => {
+                                if (!types.includes(type)) {
+                                    setTypes([...types, type])
+                                }
+                            })
                         )}/>
                     </ContainerPd>
                 </KeyboardAvoidingView>

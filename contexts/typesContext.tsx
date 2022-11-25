@@ -19,10 +19,13 @@ export const TypesProvider: FC = ({ children }) => {
     }
     
     async function loadTypes() {
-        const types = await AsyncStorage.getItem('@secrets:types') as unknown as string[]
+        const typesRaw = await AsyncStorage.getItem('@secrets:types')
+        const types = typesRaw.split(',')
         
         if (types) {
             setTypesOnStorage(types)
+        } else {
+            setTypesOnStorage([])
         }
     }
 

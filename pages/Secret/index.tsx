@@ -15,16 +15,18 @@ import ModalConfirm from '../../components/ModalConfirm'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import useSecurityConfiguration from '../../contexts/securityConfigurationContext'
 import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
+import useTypes from '../../contexts/typesContext'
 import { Share } from 'react-native'
 import { ScrollView } from 'react-native'
 
 function Secret() {
     const { id } = useRoute().params as IParams
     const secret = useSecret(id)
-    const { deleteSecret } = useSecrets()
+    const { secrets, deleteSecret } = useSecrets()
     const navigation = useNavigation()
     const { securityConfiguration } = useSecurityConfiguration()
     const { hideSecretOnShow } = useHideSecretOnShow()
+    const { types, setTypes } = useTypes()
     const [visibility, setVisibility] = useState(!hideSecretOnShow)
     const [openModalVerifyDelete, setOpenModalVerifyDelete] = useState<string | null>()
     const [openModalDelete, setOpenModalDelete] = useState(false)
@@ -77,6 +79,23 @@ function Secret() {
                 title="Deseja deletar esse segredo?"
                 toastMessage="Segredo deletado com sucesso!"
                 onConfirm={async () => {
+                    let typeExists = false
+                    const typesNews: string[] = []
+
+                    secrets.map(secretMap => {
+                        if (secretMap.id !== secret.id) {
+                            if (secretMap.type === secret.type) {
+                                typeExists = true
+                            }
+
+                            typesNews.push(secretMap.type)
+                        }
+                    })
+
+                    if (!typeExists) {
+                        setTypes(typesNews)
+                    }
+                    
                     await deleteSecret(id)
                     
                     navigation.navigate('Home')

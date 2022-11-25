@@ -12,6 +12,7 @@ import Loading from '../../components/Loading'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import usePassword from '../../contexts/passwordContext'
 import { useStatistic } from '../../contexts/statisticContext'
+import useTypes from '../../contexts/typesContext'
 import { ScrollView } from 'react-native'
 import ModalConfirm from '../../components/ModalConfirm'
 
@@ -22,7 +23,7 @@ interface IParams {
 function Secret() {
     const { id } = useRoute().params as IParams
     const secret = useSecret(id)
-    const { editSecret } = useSecrets()
+    const { secrets, editSecret } = useSecrets()
     const navigation = useNavigation()
     const [value, setValue] = useState('')
     const [name, setName] = useState('')
@@ -37,6 +38,7 @@ function Secret() {
     const [openModalSave, setOpenModalSave] = useState(false)
     const [openModalVerify, setOpenModalVerify] = useState<string | null>()
     const { statistic, setStatistic } = useStatistic()
+    const { types, setTypes } = useTypes()
 
     useEffect(() => {
         if (secret) {
@@ -143,6 +145,27 @@ function Secret() {
                     toastMessage="Alterações salvas com sucesso!"
                     onConfirm={async () => {
                         await editSecret({ ...secret, name, type, value, secure, hideIcon, hideName, password: secure && password })
+
+                        let typeExists = false
+                        const typesNews: string[] = []
+
+                        secrets.map(secretMap => {
+                            if (secretMap.id !== secret.id) {
+                                if (secretMap.type === secret.type) {
+                                    typeExists = true
+                                }
+
+                                typesNews.push(secretMap.type)
+                            }
+                        })
+
+                        if (!typeExists) {
+                            setTypes(typesNews)
+                        }
+
+                        if (!typesNews.includes(type)) {
+                            setTypes([...typesNews, type])
+                        }
 
                         navigation.goBack()
                     }}
