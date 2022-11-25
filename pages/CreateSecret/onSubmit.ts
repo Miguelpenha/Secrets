@@ -6,7 +6,7 @@ import { hash } from '../../utils/hash'
 import Toast from 'react-native-toast-message'
 
 
-async function onSubmit(icon: keyof typeof MaterialIcons.glyphMap, name: string, type: string, value: string, hideIcon: boolean, hideName: boolean, secure: boolean, password: string, passwordDefault: string, createSecret: (secret: ISecret) => Promise<void>, navigation: StackNavigationProp<ReactNavigation.RootParamList>) {
+async function onSubmit(icon: keyof typeof MaterialIcons.glyphMap, name: string, type: string, value: string, hideIcon: boolean, hideName: boolean, secure: boolean, password: string, passwordDefault: string, createSecret: (secret: ISecret) => Promise<void>, navigation: StackNavigationProp<ReactNavigation.RootParamList>, setType: (type: string) => void) {
     if (icon && name && value) {
         await createSecret({
             name,
@@ -21,6 +21,8 @@ async function onSubmit(icon: keyof typeof MaterialIcons.glyphMap, name: string,
         })
 
         navigation.navigate('Home')
+
+        setType(type)
 
         Toast.show({
             type: 'success',

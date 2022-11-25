@@ -6,6 +6,7 @@ import { PasswordProvider } from './contexts/passwordContext'
 import { SecurityConfigurationProvider } from './contexts/securityConfigurationContext'
 import { ThemeProvider } from './theme'
 import { SecretsProvider } from './contexts/secretsContext'
+import { TypesProvider } from './contexts/typesContext'
 import { EmojiProvider } from './contexts/emojiContext'
 import { StatisticProvider } from './contexts/statisticContext'
 import { HideSecretOnShowProvider } from './contexts/hideSecretOnShowContext'
@@ -31,15 +32,17 @@ function App() {
         <SecurityConfigurationProvider>
           <ThemeProvider>
             <SecretsProvider>
-              <EmojiProvider>
-                <StatisticProvider>
-                  <HideSecretOnShowProvider>
-                    <ShowPageTitleProvider>
-                      <Routes/>
-                    </ShowPageTitleProvider>
-                  </HideSecretOnShowProvider>
-                </StatisticProvider>
-              </EmojiProvider>
+                <TypesProvider>
+                  <EmojiProvider>
+                    <StatisticProvider>
+                      <HideSecretOnShowProvider>
+                        <ShowPageTitleProvider>
+                          <Routes/>
+                        </ShowPageTitleProvider>
+                      </HideSecretOnShowProvider>
+                    </StatisticProvider>
+                  </EmojiProvider>
+                </TypesProvider>
             </SecretsProvider>
           </ThemeProvider>
         </SecurityConfigurationProvider>

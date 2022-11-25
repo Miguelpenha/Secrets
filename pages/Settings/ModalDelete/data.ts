@@ -1,4 +1,5 @@
 const data = [
+    '@secrets:types',
     '@secrets:theme',
     '@secrets:secrets',
     '@secrets:statistic',

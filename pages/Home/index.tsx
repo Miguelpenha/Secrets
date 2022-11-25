@@ -6,7 +6,6 @@ import Secrets from './Secrets'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
 import { Modalize } from 'react-native-modalize'
 import Loading from '../../components/Loading'
-import useTypes from './useTypes'
 import ModalizeSelectType from './ModalizeSelectType'
 import ModalizeOptions from './ModalizeOptions'
 
@@ -14,7 +13,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const { secrets, loadSecrets } = useSecrets()
   const [typeSelect, setTypeSelect] = useState('')
-  const types = useTypes(secrets)
   const [openModalVerifySecret, setOpenModalVerifySecret] = useState<string | null>(null)
   const [openModalVerifyOptions, setOpenModalVerifyOptions] = useState<string | null>(null)
   const navigation = useNavigation()
@@ -61,7 +59,6 @@ export default function Home() {
           onSubmit={id => navigation.navigate('CreateSecret', { id })}
         />
         <ModalizeSelectType
-          types={types}
           modalize={modalizeSelectType}
           setTypeSelect={setTypeSelect}
           setOpenModalize={setOpenModalizeSelectType}

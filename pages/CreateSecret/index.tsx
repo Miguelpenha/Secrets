@@ -7,6 +7,7 @@ import HeaderBack from '../../components/HeaderBack'
 import ButtonSelectIconAnimated from './ButtonSelectIconAnimated'
 import { Field, Label, ContainerInput, ContainerIconShow, IconShow, Input, ContainerSwitch, TextSwitch } from './style'
 import useSecrets from '../../contexts/secretsContext'
+import useTypes from '../../contexts/typesContext'
 import { Modalize } from 'react-native-modalize'
 import optionsModalize from '../../components/optionsModalize'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -37,6 +38,7 @@ function CreateSecret() {
     const [hideName, setHideName] = useState(false)
     const [secure, setSecure] = useState(false)
     const { createSecret } = useSecrets()
+    const { types, setTypes } = useTypes()
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const modalizeSelectIcon = useRef<Modalize>(null)
@@ -151,7 +153,7 @@ function CreateSecret() {
                             )}
                         </ScrollView>
                         <ButtonSubmitAnimated onPress={async () => (
-                            await onSubmit(icon, name, type, value, hideIcon, hideName, secure, password, passwordDefault, createSecret, navigation as any)
+                            await onSubmit(icon, name, type, value, hideIcon, hideName, secure, password, passwordDefault, createSecret, navigation as any, type => setTypes([...types, type]))
                         )}/>
                     </ContainerPd>
                 </KeyboardAvoidingView>

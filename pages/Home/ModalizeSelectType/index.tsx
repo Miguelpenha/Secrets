@@ -5,16 +5,17 @@ import { Modalize } from 'react-native-modalize'
 import optionsModalize from '../../../components/optionsModalize'
 import { Types } from './style'
 import Type from './Type'
+import useTypes from '../../../contexts/typesContext'
 
 interface Iprops {
-    types: string[]
     modalize: MutableRefObject<IHandles>
     setTypeSelect: Dispatch<SetStateAction<string>>
     setOpenModalize: Dispatch<SetStateAction<boolean>>
 }
 
-const ModalizeSelectType: FC<Iprops> = ({ modalize, setOpenModalize, setTypeSelect, types }) => {
+const ModalizeSelectType: FC<Iprops> = ({ modalize, setOpenModalize, setTypeSelect }) => {
     const theme = useTheme()
+    const { types } = useTypes()
 
     return (
         <Modalize
