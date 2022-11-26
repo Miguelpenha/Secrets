@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import ModalImportSecrets from './ModalImportSecrets'
 import ModalDelete from './ModalDelete'
+import useSecrets from '../../contexts/secretsContext'
 
 function Settings() {
     const navigation = useNavigation()
@@ -30,6 +31,7 @@ function Settings() {
     const { password } = usePassword()
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalDelete, setOpenModalDelete] = useState(false)
+    const { secrets } = useSecrets()
     const [openModalVerifyPasswordOnChangePassword, setOpenModalVerifyPasswordOnChangePassword] = useState<string | null>()
     const [openModalVerifyPasswordOnDeleteData, setOpenModalVerifyPasswordOnDeleteData] = useState<string | null>()
     const [openModalVerifyPasswordOnSecurity, setOpenModalVerifyPasswordOnSecurity] = useState<string | null>()
@@ -39,7 +41,7 @@ function Settings() {
     const [openModalImportSecrets, setOpenModalImportSecrets] = useState<boolean>()
 
     async function handleExportSecrets() {
-        Clipboard.setString(await AsyncStorage.getItem('@secrets:secrets'))
+        Clipboard.setString(JSON.stringify(secrets))
         
         Toast.show({
             text1: 'Exportação copiada para área de transferência'

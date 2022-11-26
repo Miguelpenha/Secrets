@@ -155,7 +155,9 @@ function Secret() {
                                     typeExists = true
                                 }
 
-                                typesNews.push(secretMap.type)
+                                if (!typesNews.includes(secretMap.type)) {
+                                    typesNews.push(secretMap.type)
+                                }
                             }
                         })
 

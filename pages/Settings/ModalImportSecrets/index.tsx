@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction, FC, useState, useRef } from 'react'
 import { useSecrets } from '../../../contexts/secretsContext'
-import usePassword from '../../../contexts/passwordContext'
-import { decrypt } from '../../../utils/encrypt'
 import Toast from 'react-native-toast-message'
 import { useTheme } from 'styled-components'
 import Modal from 'react-native-modal'
@@ -19,7 +17,6 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
     const [secrets, setSecrets] = useState('')
     const secretsRef = useRef<TextInput>(null)
     const { setSecrets: setSecretsStorage } = useSecrets()
-    const { password: passwordDefault } = usePassword()
     const theme = useTheme()
 
     useFocusEffect(() => {
@@ -28,7 +25,7 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
 
     async function handleSubmit() {
         if (secrets) {
-            await setSecretsStorage(JSON.parse(decrypt(secrets, passwordDefault)))
+            await setSecretsStorage(JSON.parse(secrets))
 
             setOpenModal(false)
             

@@ -45,6 +45,7 @@ const Header: FC<Iprops> = ({ modalizeSelectType, openModalizeSelectType, find, 
                 {secrets.length ? (
                     <SelectTypeAnimated
                         type={type}
+                        setType={setType}
                         onLongPress={() => setType('')}
                         openModalizeSelectType={openModalizeSelectType}
                         onPress={() => modalizeSelectType.current.open()}
