@@ -5,10 +5,10 @@ import { RFPercentage } from 'react-native-responsive-fontsize'
 import { MaterialIcons } from '@expo/vector-icons'
 
 export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
-    width: 10%;
     elevation: 10;
     margin-top: 8%;
-    margin-left: 85%;
+    margin-left: 80%;
+    align-self: center;
     border-radius: ${RFPercentage(4)}px;
     background-color: ${props => props.theme.primary};
 `
