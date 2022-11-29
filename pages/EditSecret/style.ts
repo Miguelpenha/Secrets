@@ -1,11 +1,18 @@
 import styled from 'styled-components/native'
 import { RFPercentage } from 'react-native-responsive-fontsize'
 
+export const Header = styled.View`
+    padding: 0% 10%;
+    margin-top: 30%;
+    margin-bottom: 8%;
+    flex-direction: row;
+    justify-content: center;
+`
+
 export const Value = styled.TextInput`
     padding: 5%;
     elevation: 12;
     max-width: 90%;
-    margin-top: 30%;
     margin-bottom: 5%;
     align-self: center;
     text-align: center;

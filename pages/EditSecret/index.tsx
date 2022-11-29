@@ -6,7 +6,7 @@ import useSecurityConfiguration from '../../contexts/securityConfigurationContex
 import { TouchableWithoutFeedback, Keyboard } from 'react-native'
 import ContainerPd from '../../components/ContainerPd'
 import HeaderBack from '../../components/HeaderBack'
-import { Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
+import { Header, Value, Field, Label, Input, ContainerSwitch, TextSwitch, ButtonSubmit, TextButtonSubmit } from './style'
 import { Switch } from 'react-native'
 import Loading from '../../components/Loading'
 import ModalVerifyPassword from '../../components/ModalVerifyPassword'
@@ -15,6 +15,8 @@ import { useStatistic } from '../../contexts/statisticContext'
 import useTypes from '../../contexts/typesContext'
 import { ScrollView } from 'react-native'
 import ModalConfirm from '../../components/ModalConfirm'
+import ButtonHeaderAnimated from './ButtonHeaderAnimated'
+import useHideSecretOnShow from '../../contexts/hideSecretOnShowContext'
 
 interface IParams {
     id: string
@@ -31,14 +33,16 @@ function Secret() {
     const theme = useTheme()
     const [secure, setSecure] = useState(false)
     const { password } = usePassword()
+    const { hideSecretOnShow } = useHideSecretOnShow()
     const [hideIcon, setHideIcon] = useState(false)
     const [hideName, setHideName] = useState(false)
     const [disabledSubmit, setDisabledSubmit] = useState(true)
     const { securityConfiguration } = useSecurityConfiguration()
     const [openModalSave, setOpenModalSave] = useState(false)
+    const [visibility, setVisibility] = useState(!hideSecretOnShow)
     const [openModalVerify, setOpenModalVerify] = useState<string | null>()
     const { statistic, setStatistic } = useStatistic()
-    const { types, setTypes } = useTypes()
+    const { setTypes } = useTypes()
 
     useEffect(() => {
         if (secret) {
@@ -71,11 +75,19 @@ function Secret() {
                 <HeaderBack onClick={() => navigation.goBack()} title="Editar segredo"/>
                 {secret ? <>
                     <ScrollView contentContainerStyle={{paddingBottom: '30%'}}>
+                        <Header>
+                            <ButtonHeaderAnimated
+                                onPress={() => setVisibility(!visibility)}
+                                icon={`visibility${visibility ? '' : '-off'}`}
+                            />
+                        </Header>
                         <Value
-                            multiline
                             value={value}
+                            editable={visibility}
                             placeholder="Valor..."
+                            multiline={visibility}
                             onChangeText={setValue}
+                            secureTextEntry={!visibility}
                             selectionColor={theme.primary}
                             placeholderTextColor={theme.primary}
                             onTextInput={() => setStatistic({...statistic, timeWriting: statistic.timeWriting+0.5})}
