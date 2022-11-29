@@ -1,0 +1,30 @@
+import styled from 'styled-components/native'
+import Animated from 'react-native-reanimated'
+import { TouchableOpacity } from 'react-native'
+import { RFPercentage } from 'react-native-responsive-fontsize'
+import { MaterialIcons } from '@expo/vector-icons'
+
+export const Container = styled(Animated.createAnimatedComponent(TouchableOpacity))`
+    width: 75.5%;
+    elevation: 8;
+    padding: 1.5%;
+    margin-top: 5%;
+    margin-right: 6%;
+    align-self: center;
+    margin-bottom: 5%;
+    flex-direction: row;
+    align-items: center;
+    border-radius: ${RFPercentage(2)}px;
+    background-color: ${props => props.theme.backgroundColorSecondary};
+`
+
+export const Text = styled.Text`
+    margin-left: auto;
+    font-size: ${RFPercentage(2.6)}px;
+    color: ${props => props.theme.primary};
+`
+
+export const Icon = styled(Animated.createAnimatedComponent(MaterialIcons))`
+    margin-left: auto;
+    color: ${props => props.theme.primary};
+`

@@ -53,6 +53,7 @@ const ModalImportSecrets: FC<Iprops> = ({ openModal, setOpenModal }) => {
                         <Input
                             value={secrets}
                             ref={secretsRef}
+                            multiline={true}
                             autoCapitalize="none"
                             placeholder="Segredos..."
                             onChangeText={setSecrets}

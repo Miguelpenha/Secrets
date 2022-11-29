@@ -19,6 +19,9 @@ import { useStatistic } from '../../contexts/statisticContext'
 import { ScrollView } from 'react-native'
 import ButtonSubmitAnimated from './ButtonSubmitAnimated'
 import { useSecret } from '../../contexts/secretsContext'
+import SelectTypeAnimated from './SelectTypeAnimated'
+import ModalizeSelectType from './ModalizeSelectType'
+import ModalCreateType from '../../components/ModalCreateType'
 
 interface IParams {
     id: string
@@ -42,7 +45,10 @@ function CreateSecret() {
     const [password, setPassword] = useState('')
     const [showPassword, setShowPassword] = useState(false)
     const modalizeSelectIcon = useRef<Modalize>(null)
+    const [openModalizeSelectType, setOpenModalizeSelectType] = useState(false)
     const { statistic, setStatistic } = useStatistic()
+    const modalizeSelectType = useRef<Modalize>(null)
+    const [openModalCreateType, setOpenModalCreateType] = useState(false)
 
     useEffect(() => {
         if (secret) {
@@ -75,16 +81,6 @@ function CreateSecret() {
                                 />
                             </Field>
                             <Field>
-                                <Label>Tipo do segredo</Label>
-                                <Input
-                                    value={type}
-                                    placeholder="Tipo..."
-                                    onChangeText={setType}
-                                    selectionColor={theme.primary}
-                                    placeholderTextColor={theme.primary}
-                                />
-                            </Field>
-                            <Field>
                                 <Label>Segredo</Label>
                                 <Input
                                     multiline
@@ -96,6 +92,13 @@ function CreateSecret() {
                                     onTextInput={() => setStatistic({...statistic, timeWriting: statistic.timeWriting+0.5})}
                                 />
                             </Field>
+                            <SelectTypeAnimated
+                                type={type}
+                                setType={setType}
+                                onLongPress={() => setType('')}
+                                openModalizeSelectType={openModalizeSelectType}
+                                onPress={() => modalizeSelectType.current.open()}
+                            />
                             <ContainerSwitch>
                                 <TextSwitch>Esconder ícone</TextSwitch>
                                 <Switch
@@ -180,6 +183,20 @@ function CreateSecret() {
                             flexBasis: 0,
                             paddingTop: '5%'
                         }
+                    }}
+                />
+                <ModalizeSelectType
+                    setTypeSelect={setType}
+                    modalize={modalizeSelectType}
+                    setOpenModalize={setOpenModalizeSelectType}
+                    setOpenModalCreateType={setOpenModalCreateType}
+                />
+                <ModalCreateType
+                    openModal={openModalCreateType}
+                    setOpenModal={setOpenModalCreateType}
+                    onSubmit={typeNew => {
+                        setTypes([...types, typeNew])
+                        setType(typeNew)
                     }}
                 />
             </>
