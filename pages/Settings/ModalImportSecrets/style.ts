@@ -20,6 +20,7 @@ export const Input = styled.TextInput`
     padding: 2%;
     elevation: 10;
     margin-top: 5%;
+    max-height: 70%;
     align-self: center;
     font-size: ${RFPercentage(2.5)}px;
     border-radius: ${RFPercentage(1)}px;
