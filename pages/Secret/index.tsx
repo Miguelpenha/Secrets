@@ -34,7 +34,7 @@ function Secret() {
     
     return (
         <ContainerPd>
-            <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} (${secret.type})`, 25)}/>
+            <HeaderBack onClick={() => navigation.goBack()} title={secret && limitText(`${secret.name} ${secret.type && `(${secret.type})`}`, 25)}/>
             {secret ? <>
                 <ScrollView>
                     <Header>
