@@ -13,7 +13,7 @@ export const Value = styled.TextInput`
     padding: 5%;
     elevation: 12;
     max-width: 90%;
-    margin-bottom: 5%;
+    margin-bottom: 4%;
     align-self: center;
     text-align: center;
     font-size: ${RFPercentage(3)}px;

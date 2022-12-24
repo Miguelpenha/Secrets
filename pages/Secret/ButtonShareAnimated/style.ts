@@ -13,7 +13,7 @@ export const Container = styled(Animated.createAnimatedComponent(TouchableOpacit
     align-self: center;
     align-items: center;
     justify-content: center;
-    border-radius: ${RFPercentage(4)}px;
+    border-radius: ${RFPercentage(5)}px;
     background-color: ${props => props.theme.primary};
 `
 
