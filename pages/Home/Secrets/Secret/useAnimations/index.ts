@@ -1,21 +1,22 @@
 import { useSharedValue, useAnimatedStyle } from 'react-native-reanimated'
-import makeAnimationScale from './makeAnimationScale'
-import events from './events'
+import eventsContainer from './eventsContainer'
 
 function useAnimations() {
-    const pressed = useSharedValue(1)
-    const pressedIcon = useSharedValue(1)
-    const pressedName = useSharedValue(1)
-    const pressedNext = useSharedValue(0)
+    const scaleContainer = useSharedValue(1)
+    const translateXIconNext = useSharedValue(0)
+
+    const animationPressed = useAnimatedStyle(() => ({
+        transform: [{ scale: scaleContainer.value }]
+    }))
+
+    const animationIconNextPressed = useAnimatedStyle(() => ({
+        transform: [{ translateX: translateXIconNext.value }]
+    }))
 
     return {
-        animationPressed: makeAnimationScale(pressed),
-        animationPressedIcon: makeAnimationScale(pressedIcon),
-        animationPressedName: makeAnimationScale(pressedName),
-        animationPressedNext: useAnimatedStyle(() => ({
-            transform: [{ translateX: pressedNext.value }]
-        }), []),
-        events: (onPress: () => void) => events(pressed, pressedIcon, pressedName, pressedNext, onPress)
+        animationPressed,
+        animationIconNextPressed,
+        eventsContainer: (onPress: () => void) => eventsContainer(scaleContainer, translateXIconNext, onPress)
     }
 }
 

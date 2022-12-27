@@ -27,7 +27,6 @@ const ModalDelete: FC<Iprops> = ({ openModal, setOpenModal }) => {
     const { loadShowPageTitle } = useShowPageTitle()
     const { loadHideSecretOnShow } = useHideSecretOnShow()
     const { loadSecrets } = useSecrets()
-    const { loadTypes } = useTypes()
     const navigation = useNavigation()
 
     return (
@@ -69,7 +68,6 @@ const ModalDelete: FC<Iprops> = ({ openModal, setOpenModal }) => {
                                                     await loadShowEmoji()
                                                     await loadSecurityConfiguration()
                                                     await loadSecrets()
-                                                    await loadTypes()
                                                     
                                                     !password && navigation.goBack()
                                                 })

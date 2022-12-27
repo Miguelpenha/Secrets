@@ -3,9 +3,10 @@ import { Dispatch, SetStateAction, FC } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import useAnimations from './useAnimations'
 import { Container, Icon, Name, Next } from './style'
+import onPress from './onPress'
 import { RFPercentage } from 'react-native-responsive-fontsize'
-import limitText from '../../../../utils/limitText'
-import { Dimensions } from 'react-native'
+import nameIcon from './nameIcon'
+import formatterName from './formatterName'
 
 interface Iprops {
     secret: ISecret
@@ -15,21 +16,17 @@ interface Iprops {
 
 const Secret: FC<Iprops> = ({ secret, onVerify, setOpenModalizeOptions }) => {
     const navigation = useNavigation()
-    const { animationPressed, animationPressedIcon, animationPressedName, animationPressedNext, events } = useAnimations()
+    const { animationPressed, animationIconNextPressed, eventsContainer } = useAnimations()
     
     return (
-        <Container onLongPress={() => setOpenModalizeOptions(secret.id)} style={animationPressed} {...events(() => {
-            if (secret.secure) {
-                onVerify(secret.id)
-            } else {
-                navigation.navigate('Secret', { id: secret.id })
-            }
-        })}>
-            <Icon size={RFPercentage(4)} name={!secret.hideIcon ? secret.icon : 'lock'} style={animationPressedIcon}/>
-            <Name editable={false} numberOfLines={1} secureTextEntry={secret.hideName} style={animationPressedName}>
-                {(!secret.hideName) ? limitText(secret.name, Dimensions.get('window').scale*8) : '                   '}
-            </Name>
-            <Next name="arrow-forward-ios" size={RFPercentage(4)} style={animationPressedNext}/>
+        <Container
+            style={animationPressed}
+            onLongPress={() => setOpenModalizeOptions(secret.id)}
+            {...eventsContainer(() => onPress(secret, onVerify, navigation))}
+        >
+            <Icon size={RFPercentage(4)} name={nameIcon(secret)}/>
+            <Name editable={false} numberOfLines={1} secureTextEntry={secret.hideName}>{formatterName(secret)}</Name>
+            <Next name="arrow-forward-ios" size={RFPercentage(4)} style={animationIconNextPressed}/>
         </Container>
     )
 }
